@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import {FirebaseHelper} from './core/services/firebase-helper'
+
 @Component({
   selector: 'hello',
   template: `<h1>Hello {{name}}!</h1>`,
@@ -7,4 +9,9 @@ import { Component, Input } from '@angular/core';
 })
 export class HelloComponent  {
   @Input() name: string;
+
+  constructor(private tt : FirebaseHelper)
+  {
+
+  }
 }
