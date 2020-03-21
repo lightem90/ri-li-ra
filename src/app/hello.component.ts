@@ -12,6 +12,6 @@ export class HelloComponent  {
 
   constructor(private tt : FirebaseHelper)
   {
-
+    this.tt.test()
   }
 }
