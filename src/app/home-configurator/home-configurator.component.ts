@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import {ConfiguratorService} from '../core/services/configurator.service'
+
 @Component({
   selector: 'app-home-configurator',
   templateUrl: './home-configurator.component.html',
@@ -8,7 +10,9 @@ import { Router } from '@angular/router';
 })
 export class HomeConfiguratorComponent implements OnInit {
 
-  constructor(private router: Router)
+  constructor(
+    private router: Router,
+    private configuratorService : ConfiguratorService)
   {
 
   }
@@ -18,6 +22,7 @@ export class HomeConfiguratorComponent implements OnInit {
 
   startConfigurator()
   {
+    this.configuratorService.startNewSession();
     this.router.navigate(['configurator']);
   }
 

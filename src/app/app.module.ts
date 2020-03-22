@@ -14,6 +14,7 @@ import { environment } from './environments/environment';
 import { AppComponent } from './app.component';
 
 import {FirebaseHelper} from './core/services/firebase-helper'
+import {ConfiguratorService} from './core/services/configurator.service'
 
 import * as firebase from 'firebase/app';
 import { LoginComponent } from './static/login/login.component';
@@ -52,6 +53,6 @@ if (!firebase.apps.length) {
     ConfiguratorComponent,
     HomeConfiguratorComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [FirebaseHelper]
+  providers: [FirebaseHelper, ConfiguratorService]
 })
 export class AppModule { }

@@ -11,6 +11,8 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 import { AppComponent } from './app.component';
 
+import { ConfiguratorService } from './core/services/configurator.service'
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },  
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent},
   { path: 'contacts', component: ContactsComponent},
   { path: 'faq', component: FaqComponent},
-  { path: 'configurator', component: ConfiguratorComponent},
+  { path: 'configurator', 
+    canActivate: [ConfiguratorService],
+    component: ConfiguratorComponent},
   { path: '', component: HomeConfiguratorComponent},
   // { path: '**', redirectTo: '/not-found'}
   { path: '**', redirectTo: '/not-found'} // MUST BE LAST, IT IDENTIFIES ALL PATHS!
