@@ -8,7 +8,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MatSliderModule } from '@angular/material/slider';
+import { MaterialModule } from './material.module';
 import { environment } from './environments/environment';
 
 import { AppComponent } from './app.component';
@@ -34,12 +34,12 @@ if (!firebase.apps.length) {
   imports:      [ 
     BrowserModule, 
     FormsModule, 
-    MatSliderModule,   
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    AppRoutingModule    ],
+    AppRoutingModule,
+    MaterialModule    ],
   declarations: [ 
     AppComponent, 
     HelloComponent, 
