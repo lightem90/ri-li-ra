@@ -24,6 +24,7 @@ import { FaqComponent } from './static/faq/faq.component';
 import { ContactsComponent } from './static/contacts/contacts.component';
 import { HeaderComponent } from './header/header.component';
 import { ConfiguratorComponent } from './configurator/configurator.component';
+import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
@@ -48,7 +49,8 @@ if (!firebase.apps.length) {
     FaqComponent, 
     ContactsComponent, 
     HeaderComponent, 
-    ConfiguratorComponent ],
+    ConfiguratorComponent,
+    HomeConfiguratorComponent ],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper]
 })

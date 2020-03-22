@@ -8,6 +8,7 @@ import { AboutComponent } from './static/about/about.component';
 import { ContactsComponent } from './static/contacts/contacts.component';
 import { FaqComponent } from './static/faq/faq.component';
 import { ConfiguratorComponent } from './configurator/configurator.component';
+import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
   { path: 'contacts', component: ContactsComponent},
   { path: 'faq', component: FaqComponent},
   { path: 'configurator', component: ConfiguratorComponent},
-  { path: '', component: AppComponent},
+  { path: '', component: HomeConfiguratorComponent},
   // { path: '**', redirectTo: '/not-found'}
   { path: '**', redirectTo: '/not-found'} // MUST BE LAST, IT IDENTIFIES ALL PATHS!
 ];

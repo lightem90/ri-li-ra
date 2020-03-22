@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, } from '@angular/core';
+
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'my-app',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  name = 'Angular';
+
+  @ViewChild('sidenav') sidenav: MatSidenav;  
+
+  constructor()
+  {
+
+  }
+
+  toggleSideNavigator()
+  {
+    this.sidenav.toggle()
+  }
 }

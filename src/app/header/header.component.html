@@ -1,8 +1,22 @@
-<mat-toolbar color="primary" role="heading">
-  <span>Title</span>
+<div> 
+  <mat-toolbar color="primary">
+    <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="toggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
 
-  <!-- This fills the remaining space of the current row -->
-  <span class="example-fill-remaining-space"></span>
+    <a mat-button class="companyName" routerLink="/">
+      <span>Site name</span>
+    </a>
+    <span class="example-spacer"></span>
+    <div fxShow="true" fxHide.lt-md="true">
+      <a mat-button routerLink="/configurator">Configuratore</a>
+      <a mat-button routerLink="/about">About</a>
+      <a mat-button routerLink="/faq">Faq</a>
+      <a mat-button routerLink="/contacts">Contatti</a>
+      <a mat-button routerLink="/login">Login</a>
+    </div>
 
-  <span>One</span>
-</mat-toolbar>
+  </mat-toolbar>
+</div>

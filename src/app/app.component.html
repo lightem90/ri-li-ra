@@ -1,8 +1,25 @@
-<app-header></app-header>
 <body>
-  <span>CALCOLARE LE SPESE DI PRODUZIONE NON E' MAI STATO COSI' SEMPLICE</span>
-  <a color="primary" mat-flat-button routerLink="configurator">INIZIA SUBITO</a>
-  <router-outlet></router-outlet>
+  <div>
+    <app-header (toggleNav)="toggleSideNavigator()"></app-header>
+    
+    <!-- To render stuff correctly on mobile -->
+    <mat-sidenav-container fxFlexFill class="example-container">
+      <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+        <a mat-button routerLink="/configurator">Configuratore</a>
+        <a mat-button routerLink="/about">About</a>
+        <a mat-button routerLink="/faq">Faq</a>
+        <a mat-button routerLink="/contacts">Contatti</a>
+        <a mat-button routerLink="/login">Login</a>
+        </div>
+      </mat-sidenav>    
+      <mat-sidenav-content fxFlexFill>
+        <div>
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="/__/firebase/7.12.0/firebase-app.js"></script>
 <!-- TODO: Add SDKs for Firebase products that you want to use
