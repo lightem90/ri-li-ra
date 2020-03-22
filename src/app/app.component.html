@@ -10,7 +10,9 @@
         <a mat-button routerLink="/about">About</a>
         <a mat-button routerLink="/faq">Faq</a>
         <a mat-button routerLink="/contacts">Contatti</a>
-        <a mat-button routerLink="/login">Login</a>
+        <a [routerLink]="['/login']" mat-icon-button>
+          <mat-icon>account_circle</mat-icon> 
+        </a>
         </div>
       </mat-sidenav>    
       <mat-sidenav-content fxFlexFill>
