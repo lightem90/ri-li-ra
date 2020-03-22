@@ -12,13 +12,12 @@ import { MaterialModule } from './material.module';
 import { environment } from './environments/environment';
 
 import { AppComponent } from './app.component';
-import { HelloComponent } from './hello.component';
 
 import {FirebaseHelper} from './core/services/firebase-helper'
 
 import * as firebase from 'firebase/app';
 import { LoginComponent } from './static/login/login.component';
-import { RegisterComponent } from './static/register/register.component';
+import { RegisterComponent } from './static/register/register.component'
 import { NotFoundComponent } from './static/not-found/not-found.component';
 import { AboutComponent } from './static/about/about.component';
 import { FaqComponent } from './static/faq/faq.component';
@@ -42,7 +41,6 @@ if (!firebase.apps.length) {
     MaterialModule    ],
   declarations: [ 
     AppComponent, 
-    HelloComponent, 
     LoginComponent, 
     RegisterComponent, 
     NotFoundComponent, 

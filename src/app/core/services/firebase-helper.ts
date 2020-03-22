@@ -29,10 +29,6 @@ export class FirebaseHelper
     this.firebaseRefs = [];
   }
 
-  test(){
-    this.updateDataForUser('aa', 'test', {aa: 'aa'}, 'tt')
-  }
-
   updateDataForUser(
     userId: string,
     dataKey: string, 
