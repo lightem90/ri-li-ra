@@ -16,6 +16,9 @@ import { HelloComponent } from './hello.component';
 import {FirebaseHelper} from './core/services/firebase-helper'
 
 import * as firebase from 'firebase/app';
+import { LoginComponent } from './static/login/login.component';
+import { RegisterComponent } from './static/register/register.component';
+import { NotFoundComponent } from './static/not-found/not-found.component';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
@@ -30,7 +33,7 @@ if (!firebase.apps.length) {
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule    ],
-  declarations: [ AppComponent, HelloComponent ],
+  declarations: [ AppComponent, HelloComponent, LoginComponent, RegisterComponent, NotFoundComponent ],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper]
 })
