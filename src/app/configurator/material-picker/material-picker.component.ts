@@ -8,12 +8,16 @@ import {Material} from '../../core/domain/material'
 })
 export class MaterialPickerComponent implements OnInit {
 
+  selectedMaterialId : string;
+  defaultSelected : string;
+
   materials: Material[]= [
     new Material("1", "aa", "bb"), 
     new Material("2", "cc", "dd")]
   constructor() { }
 
   ngOnInit() {
+    this.defaultSelected = this.materials[0].id
   }
 
 }
