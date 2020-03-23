@@ -1,1 +1,91 @@
-<p> configurator works! </p>
+
+<div layout="row">
+  <mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        1.SCEGLI IL MATERIALE
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field> -->
+
+    <mat-action-row>
+      <button mat-button color="primary" (click)="nextStep()">Avanti</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        2. INSERISCI LE DIMENSIONI DEL PEZZO
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Indietro</button>
+      <button mat-button color="primary" (click)="nextStep()">Avanti</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        3. INSERISCI I COSTI
+      </mat-panel-title>
+      <!-- <mat-panel-description>
+        Inform the date you wish to travel
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description> -->
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Indietro</button>
+      <button mat-button color="primary" (click)="nextStep()">Avanti</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        4. LAVORAZIONI INTERNE
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Indietro</button>
+      <button mat-button color="primary" (click)="nextStep()">Avanti</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        5. LAVORAZIONI ESTERNE
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Indietro</button>
+      <button mat-button color="primary" (click)="nextStep()">Avanti</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        6. CONSIDERAZIONI FINALI
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Indietro</button>
+      <button mat-button color="primary" (click)="nextStep()">Avanti</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>
+</div>

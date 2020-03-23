@@ -7,6 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {  MatSidenavModule} from '@angular/material/sidenav';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
     imports: [
@@ -16,7 +19,10 @@ import {  MatSidenavModule} from '@angular/material/sidenav';
         MatButtonModule,
         MatSidenavModule,
         BrowserAnimationsModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     exports: [
         MatSliderModule,
@@ -25,7 +31,10 @@ import {  MatSidenavModule} from '@angular/material/sidenav';
         MatButtonModule,
         MatSidenavModule,
         BrowserAnimationsModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 export class MaterialModule { }
