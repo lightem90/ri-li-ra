@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Material} from '../../core/domain/material'
 
 @Component({
   selector: 'app-material-picker',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MaterialPickerComponent implements OnInit {
 
+  materials: Material[]= [
+    new Material("1", "aa", "bb"), 
+    new Material("2", "cc", "dd")]
   constructor() { }
 
   ngOnInit() {

@@ -1,0 +1,8 @@
+<div layout="row" layout-xs="column">
+  <mat-radio-group>
+    <app-material-picker-item
+      *ngFor="let material of materials"
+      [material]="material"> 
+    </app-material-picker-item>
+  </mat-radio-group>    
+<div>

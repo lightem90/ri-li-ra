@@ -10,6 +10,11 @@ import {  MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import {MatCardModule} from '@angular/material/card';
+
+
 
 @NgModule({
     imports: [
@@ -22,7 +27,10 @@ import {MatInputModule} from '@angular/material/input';
         FlexLayoutModule,
         MatExpansionModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatCardModule
     ],
     exports: [
         MatSliderModule,
@@ -34,7 +42,10 @@ import {MatInputModule} from '@angular/material/input';
         FlexLayoutModule,
         MatExpansionModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatCardModule
     ]
 })
 export class MaterialModule { }
