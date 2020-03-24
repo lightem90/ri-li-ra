@@ -3,7 +3,6 @@ import {Material} from '../../core/domain/material'
 
 import {ConfiguratorService} from '../../core/services/configurator.service'
 
-
 @Component({
   selector: 'app-material-picker',
   templateUrl: './material-picker.component.html',
@@ -15,11 +14,17 @@ export class MaterialPickerComponent implements OnInit {
   defaultSelected : string;
 
   materials: Material[] = []
-  constructor(private configuratorService : ConfiguratorService) {    
+  constructor(private configuratorService : ConfiguratorService) { 
+    this.fetchMaterials()   
   }
 
   ngOnInit() {
-    this.configuratorService.getDefaultMaterials().then(res => this.materials = res);
+  }
+
+  fetchMaterials(){
+    this.configuratorService
+      .getDefaultMaterials()
+      .then(res => this.materials = res);
   }
 
   async getMaterialUrl(material: Material){

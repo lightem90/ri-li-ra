@@ -43,8 +43,8 @@ export class ConfiguratorService implements CanActivate {
     //return this.currentSession !== null
   }
 
-  async getDefaultMaterials(){
-    return await this.firbaseHelper.getDefaultMaterials();
+  getDefaultMaterials(){
+    return this.firbaseHelper.getDefaultMaterials();
   }
 
 }
