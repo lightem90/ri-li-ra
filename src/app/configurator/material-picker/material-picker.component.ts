@@ -32,12 +32,14 @@ export class MaterialPickerComponent implements OnInit {
           this.materials = res
           this.defaultSelected = this.materials[0].uid
           this.materials.forEach(mat => {            
-            this.configuratorService.getAssetUrl(mat.img_url).subscribe(res => {
-              if (res) {
-                //to display correctly, first time img_url is the address stored into firebase
-                //second time is the downloadurl for the view
-                mat.img_url = res
-              }
+            this.configuratorService
+              .getAssetUrl(mat.img_url)
+              .subscribe(res => {
+                if (res) {
+                  //to display correctly, first time img_url is the address stored into firebase
+                  //second time is the downloadurl for the view
+                  mat.img_url = res
+                }
             })
           })     
         } else {

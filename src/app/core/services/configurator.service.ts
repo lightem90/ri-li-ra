@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanActivateChild } from '@angular/router';
 
 import { Budget } from '../domain/budget'
@@ -18,7 +19,8 @@ export class ConfiguratorService implements CanActivate {
 
 
   getAssetUrl(assetUrl : string){
-    return this.firbaseHelper.getAssetSrc(assetUrl)
+    //take 1 so i don't need to unsubscribe
+    return this.firbaseHelper.getAssetSrc(assetUrl).pipe(take(1))
   }
   
   //needed to display configurator only if session has started, otherwise I'll show the button to start
