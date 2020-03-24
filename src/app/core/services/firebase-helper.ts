@@ -30,6 +30,7 @@ export class FirebaseHelper
   getDefaultMaterials() {
 
     const feedPromise = this._getFeed('default_materials').then((data) => {
+      console.log(data)
       const entries = data.val() || {}
       return entries;
     })
@@ -51,12 +52,7 @@ export class FirebaseHelper
       }
 
       return result;
-    },
-    (err) => {
-      console.log('cannot create default material list')
-      console.log(err)
-      }
-    )
+    })
   }
 
   /**

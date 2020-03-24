@@ -14,6 +14,7 @@ export class MaterialPickerComponent implements OnInit {
   defaultSelected : string;
 
   materials: Material[] = []
+  
   constructor(private configuratorService : ConfiguratorService) { 
     this.fetchMaterials()   
   }
@@ -24,11 +25,19 @@ export class MaterialPickerComponent implements OnInit {
   fetchMaterials(){
     this.configuratorService
       .getDefaultMaterials()
-      .then(res => this.materials = res);
+      .then(res => {
+        if (res)
+        {
+          this.materials = res
+          this.defaultSelected = this.materials[0].name        
+        } else {
+          console.log('error fetching materials')
+        }
+      });
   }
 
-  async getMaterialUrl(material: Material){
-    return await this.configuratorService.getAssetUrl(material.img_url)
+  getMaterialUrl(material: Material){
+    return this.configuratorService.getAssetUrl(material.img_url)
   }
 
 }
