@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireStorage } from 'angularfire2/storage';
+
+import {Material} from '../domain/material'
 
 @Injectable()
 export class FirebaseHelper
@@ -15,10 +17,46 @@ export class FirebaseHelper
   constructor(
     private auth: AngularFireAuth,
     private database: AngularFireDatabase,
-    private storage: AngularFireStorageModule) 
+    private storage: AngularFireStorage) 
   {
     // Firebase references that are listened to.
     this.firebaseRefs = [];
+  }
+
+  getAssetSrc(assetPath: string){
+    return this.storage.ref(assetPath).getDownloadURL();
+  }
+
+  getDefaultMaterials() {
+
+    const feedPromise = this._getFeed('default_materials').then((data) => {
+      const entries = data.val() || {}
+      return entries;
+    })
+
+    return feedPromise.then((res) => {
+      console.log('default materials' + res)      
+      const materialIds = Object.keys(res);
+      var result : Material[] = []
+      for (let i = materialIds.length - 1; i >= 0; i--) {
+        var dbMaterial = res[materialIds[i]]
+        console.log('i: ' + i + ' matId[i]: ' + materialIds[i]+ ' mat: ' + dbMaterial) 
+        result.push(new Material(
+          dbMaterial.uid, 
+          dbMaterial.name, 
+          dbMaterial.price_p, 
+          dbMaterial.price_t, 
+          dbMaterial.spec_weigth, 
+          dbMaterial.img_url))
+      }
+
+      return result;
+    },
+    (err) => {
+      console.log('cannot create default material list')
+      console.log(err)
+      }
+    )
   }
 
   /**
@@ -29,7 +67,11 @@ export class FirebaseHelper
     this.firebaseRefs = [];
   }
 
-  updateDataForUser(
+  _getFeed(uri: string){
+    return this.database.database.ref(uri).once('value')
+  }
+
+  _updateDataForUser(
     userId: string,
     dataKey: string, 
     dataToAdd: any, 
@@ -53,7 +95,7 @@ export class FirebaseHelper
   }
 
   //adds into a table a new document and if any a relation table for selected user
-  addDataForUser(
+  _addDataForUser(
     userId: string, 
     dataToAdd: any, 
     dataTableName: string,
@@ -62,6 +104,6 @@ export class FirebaseHelper
     var newDataKey = this.database.database.ref().child(dataTableName).push().key;
     dataToAdd.id = newDataKey;
 
-    return this.updateDataForUser(userId, newDataKey, dataToAdd, dataTableName, relationTableName)
+    return this._updateDataForUser(userId, newDataKey, dataToAdd, dataTableName, relationTableName)
   }
 }

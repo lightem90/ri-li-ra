@@ -16,6 +16,11 @@ export class ConfiguratorService implements CanActivate {
     private firbaseHelper : FirebaseHelper, 
     private router: Router) { }
 
+
+  async getAssetUrl(assetUrl : string){
+    return await this.firbaseHelper.getAssetSrc(assetUrl)
+  }
+  
   //needed to display configurator only if session has started, otherwise I'll show the button to start
   canActivate(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -36,6 +41,10 @@ export class ConfiguratorService implements CanActivate {
   isSessionActive(){
     return this.test
     //return this.currentSession !== null
+  }
+
+  async getDefaultMaterials(){
+    return await this.firbaseHelper.getDefaultMaterials();
   }
 
 }

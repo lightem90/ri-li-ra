@@ -19,7 +19,7 @@
         <button mat-button>SHARE</button>
       </mat-card-actions> -->
       <img mat-card-image 
-        [src]="material.url" 
+        [src]="getMaterialUrl(material)" 
         [alt]="material.name">
       <mat-card-content>
         <span id="tooltip"> {{material.name}} </span>

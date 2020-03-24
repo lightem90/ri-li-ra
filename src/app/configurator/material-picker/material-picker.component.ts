@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {Material} from '../../core/domain/material'
+
+import {ConfiguratorService} from '../../core/services/configurator.service'
+
 
 @Component({
   selector: 'app-material-picker',
@@ -11,13 +14,16 @@ export class MaterialPickerComponent implements OnInit {
   selectedMaterialId : string;
   defaultSelected : string;
 
-  materials: Material[]= [
-    new Material("1", "aa", "bb"), 
-    new Material("2", "cc", "dd")]
-  constructor() { }
+  materials: Material[] = []
+  constructor(private configuratorService : ConfiguratorService) {    
+  }
 
   ngOnInit() {
-    this.defaultSelected = this.materials[0].id
+    this.configuratorService.getDefaultMaterials().then(res => this.materials = res);
+  }
+
+  async getMaterialUrl(material: Material){
+    return await this.configuratorService.getAssetUrl(material.img_url)
   }
 
 }
