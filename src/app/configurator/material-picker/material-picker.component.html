@@ -25,9 +25,9 @@
         <span id="tooltip"> {{material.name}} </span>
         <!-- Needed because I'm not using a group -->
         <mat-radio-button 
-          [checked]="material.id == defaultSelected"
-          (change)="selectedMaterialId = $event.value"
-          [value]="material.id">
+          [checked]="material.uid == defaultSelected"
+          (change)="udapteSelectedMaterial($event.value)"
+          [value]="material.uid">
         </mat-radio-button>
       </mat-card-content>
     </mat-card>

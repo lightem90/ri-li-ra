@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Material} from '../../core/domain/material'
 
 import {ConfiguratorService} from '../../core/services/configurator.service'
@@ -16,10 +16,10 @@ export class MaterialPickerComponent implements OnInit {
   materials: Material[] = []
   
   constructor(private configuratorService : ConfiguratorService) { 
-    this.fetchMaterials()   
   }
 
   ngOnInit() {
+    this.fetchMaterials()   
   }
 
   fetchMaterials(){
@@ -28,8 +28,18 @@ export class MaterialPickerComponent implements OnInit {
       .then(res => {
         if (res)
         {
+          console.log(res)
           this.materials = res
-          this.defaultSelected = this.materials[0].name        
+          this.defaultSelected = this.materials[0].uid
+          this.materials.forEach(mat => {            
+            this.configuratorService.getAssetUrl(mat.img_url).subscribe(res => {
+              if (res) {
+                //to display correctly, first time img_url is the address stored into firebase
+                //second time is the downloadurl for the view
+                mat.img_url = res
+              }
+            })
+          })     
         } else {
           console.log('error fetching materials')
         }
@@ -39,5 +49,10 @@ export class MaterialPickerComponent implements OnInit {
   getMaterialUrl(material: Material){
     return this.configuratorService.getAssetUrl(material.img_url)
   }
+
+  udapteSelectedMaterial(material: any){    
+    this.selectedMaterialId = material
+  }
+
 
 }

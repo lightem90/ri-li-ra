@@ -17,8 +17,8 @@ export class ConfiguratorService implements CanActivate {
     private router: Router) { }
 
 
-  async getAssetUrl(assetUrl : string){
-    return await this.firbaseHelper.getAssetSrc(assetUrl)
+  getAssetUrl(assetUrl : string){
+    return this.firbaseHelper.getAssetSrc(assetUrl)
   }
   
   //needed to display configurator only if session has started, otherwise I'll show the button to start

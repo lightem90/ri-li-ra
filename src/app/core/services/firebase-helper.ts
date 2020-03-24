@@ -30,18 +30,15 @@ export class FirebaseHelper
   getDefaultMaterials() {
 
     const feedPromise = this._getFeed('default_materials').then((data) => {
-      console.log(data)
       const entries = data.val() || {}
       return entries;
     })
 
-    return feedPromise.then((res) => {
-      console.log('default materials' + res)      
+    return feedPromise.then((res) => {    
       const materialIds = Object.keys(res);
       var result : Material[] = []
-      for (let i = materialIds.length - 1; i >= 0; i--) {
+      for (let i = 0; i < materialIds.length; i++) {
         var dbMaterial = res[materialIds[i]]
-        console.log('i: ' + i + ' matId[i]: ' + materialIds[i]+ ' mat: ' + dbMaterial) 
         result.push(new Material(
           dbMaterial.uid, 
           dbMaterial.name, 
