@@ -42,7 +42,7 @@ if (!firebase.apps.length) {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
-    MaterialModule    ],
+    MaterialModule],
   declarations: [ 
     AppComponent, 
     LoginComponent, 

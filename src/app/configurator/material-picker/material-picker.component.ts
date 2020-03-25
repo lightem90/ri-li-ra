@@ -45,7 +45,6 @@ export class MaterialPickerComponent implements OnInit {
       .then(res => {
         if (res)
         {
-          console.log(res)
           this.materials = res
           this.selectedMaterialId = this.materials[0].uid
           this.materials.forEach(mat => {            
@@ -72,11 +71,10 @@ export class MaterialPickerComponent implements OnInit {
 
   udapteSelectedMaterial(material: any){    
     this.selectedMaterialId = material
-    
+
     //questo funziona solo perchè ad oggi i materiali hanno un uid che comincia da 1, se cambierà bisogna prendere l'indice del material nell'array
 
     this.budget.material = this.materials[+this.selectedMaterialId-1]
-    console.log(this.budget.material.uid)
   }
 
 
