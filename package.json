@@ -16,6 +16,8 @@
     "@angular/platform-browser-dynamic": "9.0.7",
     "@angular/router": "9.0.7",
     "@firebase/app": "^0.6.0",
+    "@ngx-translate/core": "^12.1.2",
+    "@ngx-translate/http-loader": "^4.0.0",
     "angular": "1.7.9",
     "angularfire2": "5.4.2",
     "core-js": "3.6.4",

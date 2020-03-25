@@ -1,0 +1,9 @@
+{
+  "Quadrangular" : "SEZIONE QUADRANGOLARE",
+  "Cylinder" : "SEZIONE CILINDRICA",
+  "CylinderTube" : "SEZIONE TUBOLARE CILINDRICA",
+  "QuadrangularTube" : "SEZIONE TUBOLARE QUADRANGOLARE",
+  "Hexagonal" : "SEZIONE ESAGONALE",
+  "LAngular" : "SEZIONE ANGOLARE ‘’L’’",
+  "Sheet" : "DA LASTRA"
+}

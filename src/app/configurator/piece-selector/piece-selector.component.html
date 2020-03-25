@@ -2,9 +2,9 @@
   <div flex="">
     <mat-form-field>
     <mat-label>Seleziona profilo</mat-label>
-    <mat-select [(ngModel)]="selectedShap">
+    <mat-select [(ngModel)]="selectedShape">
       <mat-option *ngFor="let shape of shapes" [value]="shape">
-        {{shape}}
+      {{shape | translate}}
       </mat-option>
     </mat-select>
   </mat-form-field>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -15,6 +16,9 @@ import { AppComponent } from './app.component';
 
 import {FirebaseHelper} from './core/services/firebase-helper'
 import {ConfiguratorService} from './core/services/configurator.service'
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import * as firebase from 'firebase/app';
 import { LoginComponent } from './static/login/login.component';
@@ -33,8 +37,20 @@ if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
 }
 
+export function translateHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   imports:      [ 
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: translateHttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HttpClientModule,
     BrowserModule, 
     FormsModule, 
     AngularFireModule.initializeApp(environment.firebase),
