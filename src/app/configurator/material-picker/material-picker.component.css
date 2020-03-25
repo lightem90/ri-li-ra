@@ -4,3 +4,9 @@ img {
   object-fit: cover; 
   object-position: center;
 }
+
+test {
+	flex-basis: 25%;
+	flex-shrink: 0;
+	flex-grow: 1;
+}

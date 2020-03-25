@@ -18,7 +18,7 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   saveMaterial() {
-    console.log('saveMaterialReque')
+    console.log('saveMaterialRequest')
   }
 
   ngOnInit() {
