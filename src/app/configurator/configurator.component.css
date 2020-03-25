@@ -2,6 +2,11 @@
   flex-basis: 0;
 }
 
+.mat-expansion-panel-header-title {
+   justify-content: center !important; 
+/*todo: font-size, family ecc...*/
+}
+
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
