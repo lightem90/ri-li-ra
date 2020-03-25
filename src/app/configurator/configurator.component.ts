@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {Budget} from '../core/domain/budget'
+
 @Component({
   selector: 'app-configurator',
   templateUrl: './configurator.component.html',
@@ -8,8 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class ConfiguratorComponent implements OnInit {
 
   step = 0;
+  budget : Budget
   
   ngOnInit() {
+    //todo query db
+    this.budget = new Budget()
   }
 
 

@@ -18,28 +18,26 @@
               <mat-form-field>
                 <mat-label>Prezzo piatto</mat-label>
                 <!-- <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="1"> -->
-                <input matInput #priceP value="1">
+                <input matInput (change)="setChanged()" [(ngModel)]="material.price_p" value="1">
                 <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->
               </mat-form-field>
-              <!-- Non ho idea di come far visualizzare correttamente l'icona DENTRO al bottone -->
-              <button mat-icon-button (click)="saveMaterial()">
-                <mat-icon>mode_save</mat-icon>
-              </button>
             </div>
             <div>
               <mat-form-field>
                 <mat-label>Prezzo tondo</mat-label>
                 <!-- <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="1"> -->
-                <input matInput #priceT value="1">
+                <input matInput (change)="setChanged()" [(ngModel)]="material.price_t" value="1">
                 <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->   
-              </mat-form-field>       
-              <button mat-icon-button (click)="saveMaterial()">
-                <mat-icon>mode_save</mat-icon>
-              </button>
+              </mat-form-field>  
             </div>
           </div>
         </div>
-        </mat-card-content>
+        </mat-card-content> 
     </mat-card>
   </div>
+  <!-- Non ho idea di come far visualizzare correttamente l'icona DENTRO al bottone -->
+  <button mat-icon-button *ngIf="priceChanged()" (click)="saveMaterial()">
+    <mat-label>Salva modifiche ai materiali</mat-label>    
+    <mat-icon>mode_save</mat-icon>
+  </button>
 <div>

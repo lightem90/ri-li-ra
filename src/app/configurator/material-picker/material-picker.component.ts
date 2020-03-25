@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Material} from '../../core/domain/material'
+import {Budget} from '../../core/domain/budget'
 
 import {ConfiguratorService} from '../../core/services/configurator.service'
 
@@ -11,14 +12,27 @@ import {ConfiguratorService} from '../../core/services/configurator.service'
 export class MaterialPickerComponent implements OnInit {
 
   selectedMaterialId : string;
-
+  changed : boolean = false;
   materials: Material[] = []
+
+  @Input() budget : Budget
   
   constructor(private configuratorService : ConfiguratorService) { 
   }
 
   saveMaterial() {
-    console.log('saveMaterialRequest')
+    //todo update su db
+    //parse string to int!
+    // var x = "32";
+    // var y = +x;
+  }
+
+  setChanged() {
+    this.changed = true
+  }
+
+  priceChanged() {
+    return this.changed
   }
 
   ngOnInit() {
@@ -49,6 +63,7 @@ export class MaterialPickerComponent implements OnInit {
           console.log('error fetching materials')
         }
       });
+      this.changed = false;
   }
 
   getMaterialUrl(material: Material){
@@ -57,6 +72,11 @@ export class MaterialPickerComponent implements OnInit {
 
   udapteSelectedMaterial(material: any){    
     this.selectedMaterialId = material
+    
+    //questo funziona solo perchè ad oggi i materiali hanno un uid che comincia da 1, se cambierà bisogna prendere l'indice del material nell'array
+
+    this.budget.material = this.materials[+this.selectedMaterialId-1]
+    console.log(this.budget.material.uid)
   }
 
 

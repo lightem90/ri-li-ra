@@ -1,9 +1,12 @@
+import {Material} from './material';
+
 export class Budget {
   constructor(
     public uid: string = "",
     public customer: string = "",
     public customerDetail: string = "",
     public pieceCount: number = 1,
+    public material: Material = null,
     public date : string = null)
   {
       if (date == null) {
@@ -20,7 +23,5 @@ export class Budget {
       var yyyy = today.getFullYear();
 
       this.date = mm + '/' + dd + '/' + yyyy;
-      document.write(this.date);
-
   }
 }

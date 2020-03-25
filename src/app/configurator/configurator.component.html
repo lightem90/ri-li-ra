@@ -10,7 +10,7 @@
 
     <mat-divider></mat-divider>
     <br>
-    <app-material-picker> </app-material-picker>
+    <app-material-picker [budget]="budget"> </app-material-picker>
     <!-- <mat-form-field>
       <mat-label>First name</mat-label>
       <input matInput>
@@ -32,7 +32,7 @@
     <br>
 
     <app-piece-selector></app-piece-selector>
-    
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Indietro</button>
       <button mat-button color="primary" (click)="nextStep()">Avanti</button>
