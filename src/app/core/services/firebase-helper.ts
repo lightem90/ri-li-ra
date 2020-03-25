@@ -39,13 +39,7 @@ export class FirebaseHelper
       var result : Material[] = []
       for (let i = 0; i < materialIds.length; i++) {
         var dbMaterial = res[materialIds[i]]
-        result.push(new Material(
-          dbMaterial.uid, 
-          dbMaterial.name, 
-          dbMaterial.price_p, 
-          dbMaterial.price_t, 
-          dbMaterial.spec_weigth, 
-          dbMaterial.img_url))
+        result.push(new Material().map(dbMaterial))
       }
 
       return result;

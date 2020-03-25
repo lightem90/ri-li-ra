@@ -1,35 +1,44 @@
 <div fxLayout="row wrap" fxLayout.xs="column wrap">
   <div flex="" *ngFor="let material of materials">
     <mat-card class="material_card">
-      <!-- <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-          bred for hunting.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions> -->
       <img mat-card-image 
         [src]="material.img_url" 
         [alt]="material.name">
       <mat-card-content>
-        <span id="tooltip"> {{material.name}} </span>
-        <!-- Needed because I'm not using a group -->
-        <mat-radio-button 
-          [checked]="material.uid == defaultSelected"
-          (change)="udapteSelectedMaterial($event.value)"
-          [value]="material.uid">
-        </mat-radio-button>
-      </mat-card-content>
+        <div>
+          <span id="tooltip"> {{material.name}} </span>
+          <!-- Needed because I'm not using a group -->
+          <mat-radio-button 
+            [checked]="material.uid === selectedMaterialId"
+            (change)="udapteSelectedMaterial($event.value)"
+            [value]="material.uid">
+          </mat-radio-button>
+          <div *ngIf="selectedMaterialId === material.uid">
+            <div>
+              <mat-form-field>
+                <mat-label>Prezzo piatto</mat-label>
+                <!-- <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="1"> -->
+                <input matInput #priceP value="1">
+                <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->
+              </mat-form-field>
+              <button mat-icon-button (click)="saveMaterial()">
+                <mat-icon matSuffix>mode_save</mat-icon>
+              </button>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Prezzo tondo</mat-label>
+                <!-- <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="1"> -->
+                <input matInput #priceT value="1">
+                <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->          
+              </mat-form-field>
+              <button mat-icon-button (click)="saveMaterial()">
+                <mat-icon matSuffix>mode_save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        </mat-card-content>
     </mat-card>
   </div>
 <div>

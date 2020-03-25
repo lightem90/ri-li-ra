@@ -11,11 +11,14 @@ import {ConfiguratorService} from '../../core/services/configurator.service'
 export class MaterialPickerComponent implements OnInit {
 
   selectedMaterialId : string;
-  defaultSelected : string;
 
   materials: Material[] = []
   
   constructor(private configuratorService : ConfiguratorService) { 
+  }
+
+  saveMaterial() {
+    console.log('saveMaterialReque')
   }
 
   ngOnInit() {
@@ -30,7 +33,7 @@ export class MaterialPickerComponent implements OnInit {
         {
           console.log(res)
           this.materials = res
-          this.defaultSelected = this.materials[0].uid
+          this.selectedMaterialId = this.materials[0].uid
           this.materials.forEach(mat => {            
             this.configuratorService
               .getAssetUrl(mat.img_url)

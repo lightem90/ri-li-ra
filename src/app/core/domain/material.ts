@@ -10,4 +10,14 @@ export class Material
     {
 
     }
+
+    public map(dbObj : any) {      
+        this.uid = dbObj.uid, 
+        this.name = dbObj.name, 
+        this.price_p = dbObj.price_p, 
+        this.price_t = dbObj.price_t, 
+        this.spec_weigth = dbObj.spec_weigth, 
+        this.img_url = dbObj.img_url
+        return this;
+    }
 }

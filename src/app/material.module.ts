@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 
@@ -30,7 +31,8 @@ import {MatCardModule} from '@angular/material/card';
         MatInputModule,
         MatCheckboxModule,
         MatRadioModule,
-        MatCardModule
+        MatCardModule,
+        MatDividerModule
     ],
     exports: [
         MatSliderModule,
@@ -45,7 +47,8 @@ import {MatCardModule} from '@angular/material/card';
         MatInputModule,
         MatCheckboxModule,
         MatRadioModule,
-        MatCardModule
+        MatCardModule,
+        MatDividerModule
     ]
 })
 export class MaterialModule { }

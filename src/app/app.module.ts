@@ -26,6 +26,7 @@ import { ContactsComponent } from './static/contacts/contacts.component';
 import { HeaderComponent } from './header/header.component';
 import { ConfiguratorComponent } from './configurator/configurator.component';
 import { MaterialPickerComponent } from './configurator/material-picker/material-picker.component';
+import { PieceSelectorComponent } from './configurator/piece-selector/piece-selector.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 
 if (!firebase.apps.length) {
@@ -54,7 +55,7 @@ if (!firebase.apps.length) {
     ConfiguratorComponent,
     HomeConfiguratorComponent,
     MaterialPickerComponent,
-     ],
+    PieceSelectorComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService]
 })
