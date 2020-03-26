@@ -4,7 +4,7 @@
       <mat-form-field>
         <mat-label>Seleziona profilo</mat-label>
         <mat-select 
-          (selectionChange)="updateInputs()"
+          (selectionChange)="updateInputs(selectedShape)"
           [(ngModel)]="selectedShape"
           name="shapeSelector">
           <mat-option *ngFor="let shape of shapes" [value]="shape">

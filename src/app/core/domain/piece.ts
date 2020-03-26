@@ -5,7 +5,8 @@ export enum Shape {
   QuadrangularTube,
   Hexagonal,
   LAngular,
-  Sheet
+  Sheet,
+  SheetR
 }
 
 export class Piece
