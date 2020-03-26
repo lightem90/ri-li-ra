@@ -11,3 +11,13 @@
   justify-content: space-between;
   align-items: center;
 }
+
+ hr.separator-center-style {
+    display: block;
+    min-width: 72px;
+    width: 20%;
+    border: 0;
+    border-bottom: 2px solid #46c5e8;
+    justify-content: center !important; 
+    /* margin: 2.5em auto 2.3em; */
+}
