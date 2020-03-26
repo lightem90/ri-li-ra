@@ -17,6 +17,8 @@ import { AppComponent } from './app.component';
 import {FirebaseHelper} from './core/services/firebase-helper'
 import {ConfiguratorService} from './core/services/configurator.service'
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -60,7 +62,7 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
     ],
   declarations: [ 
     AppComponent, 
