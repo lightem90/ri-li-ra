@@ -10,10 +10,19 @@ import {ConfiguratorService} from '../core/services/configurator.service'
 })
 export class HomeConfiguratorComponent implements OnInit {
 
+  background : any
   constructor(
     private router: Router,
     private configuratorService : ConfiguratorService)
   {
+    this.configuratorService.getAssetUrl('assets/home_background.jpg')
+      .subscribe(res => {
+        if (res)
+        {
+          this.background = res
+          console.log(this.background)
+        }
+    })
 
   }
 

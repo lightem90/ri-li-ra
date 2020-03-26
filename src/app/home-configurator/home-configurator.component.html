@@ -1,4 +1,10 @@
-<div layout="row">
+<!-- NON CAPISCO PERCHE' NON FUNZIONA 
+  ng-style="{'background-image': 'url(' + background + ')'}"-->
+<div 
+  id="mydiv"
+  layout="row" >
+  <!-- così funziona
+  <img [src]="background" />  -->
   <span>CALCOLARE LE SPESE DI PRODUZIONE NON E' MAI STATO COSI' SEMPLICE</span>
   <button mat-flat-button color="primary" (click)="startConfigurator()">INIZIA SUBITO</button>
 </div>
