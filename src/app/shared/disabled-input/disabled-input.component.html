@@ -1,0 +1,6 @@
+  <mat-form-field >
+    <mat-label>{{input.label | translate}}</mat-label>
+    <input 
+      [(ngModel)]="input.text" matInput disabled 
+      [value]="input.text ">
+  </mat-form-field>

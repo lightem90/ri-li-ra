@@ -22,5 +22,8 @@
   "AltezzaEsterna" : "Altezza esterna",
   "LunghezzaLastra" : "Lunghezza della lastra",
   "LarghezzaLastra" : "Larghezza della lastra",
-  "SpessoreLastra" : "Spessore della lastra"
+  "PercRic" : "Percentuale di ricarico sul prezzo",
+  "PesoTot" : "Peso totale (Kg)",
+  "CostoAlPz" : "Costo della materia prima al pezzo",
+  "NonCalc" : "Impossibile calcolare"
 }

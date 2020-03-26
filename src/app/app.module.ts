@@ -33,8 +33,10 @@ import { HeaderComponent } from './header/header.component';
 import { ConfiguratorComponent } from './configurator/configurator.component';
 import { MaterialPickerComponent } from './configurator/material-picker/material-picker.component';
 import { PieceSelectorComponent } from './configurator/piece-selector/piece-selector.component';
+import { PiecePriceComponent } from './configurator/piece-price/piece-price.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 import { NumberInputComponent } from './shared/number-input/number-input.component';
+import { DisabledInputComponent } from './shared/disabled-input/disabled-input.component';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
@@ -77,7 +79,9 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     HomeConfiguratorComponent,
     MaterialPickerComponent,
     PieceSelectorComponent,
-    NumberInputComponent],
+    PiecePriceComponent,
+    NumberInputComponent,
+    DisabledInputComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService]
 })

@@ -84,6 +84,5 @@ export class PieceSelectorComponent implements OnInit {
         console.log("ERROR")
         break;
     }
-    console.log(this.inputs)
   }
 }
