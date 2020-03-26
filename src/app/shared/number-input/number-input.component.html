@@ -1,0 +1,8 @@
+<!-- serve ngModelOptions è dentro un ciclo ngfor di solito-->
+<mat-form-field>
+  <mat-label>{{input.label}}</mat-label>
+  <input 
+    [(ngModel)]="input.value"    
+    [ngModelOptions]="{standalone: true}"
+    type="number" matInput>
+</mat-form-field>

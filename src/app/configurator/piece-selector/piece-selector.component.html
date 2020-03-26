@@ -1,13 +1,22 @@
 <div fxLayout="row wrap" fxLayout.xs="column wrap">
   <div flex="">
-    <mat-form-field>
-    <mat-label>Seleziona profilo</mat-label>
-    <mat-select [(ngModel)]="selectedShape">
-      <mat-option *ngFor="let shape of shapes" [value]="shape">
-      {{shape | translate}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form>   
+      <mat-form-field>
+        <mat-label>Seleziona profilo</mat-label>
+        <mat-select 
+          (selectionChange)="updateInputs()"
+          [(ngModel)]="selectedShape"
+          name="shapeSelector">
+          <mat-option *ngFor="let shape of shapes" [value]="shape">
+          {{shape | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <app-number-input 
+        *ngFor="let input of inputs"
+        [input]="input">
+      </app-number-input>
+    </form>
 
   </div>
 </div>

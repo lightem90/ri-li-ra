@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AngularFireModule } from 'angularfire2';
@@ -32,6 +32,7 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
 import { MaterialPickerComponent } from './configurator/material-picker/material-picker.component';
 import { PieceSelectorComponent } from './configurator/piece-selector/piece-selector.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
+import { NumberInputComponent } from './shared/number-input/number-input.component';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
@@ -53,12 +54,14 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     BrowserModule, 
     FormsModule, 
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
-    MaterialModule],
+    MaterialModule
+    ],
   declarations: [ 
     AppComponent, 
     LoginComponent, 
@@ -71,7 +74,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     ConfiguratorComponent,
     HomeConfiguratorComponent,
     MaterialPickerComponent,
-    PieceSelectorComponent],
+    PieceSelectorComponent,
+    NumberInputComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService]
 })
