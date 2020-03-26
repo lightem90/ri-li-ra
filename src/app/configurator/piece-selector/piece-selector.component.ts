@@ -24,14 +24,13 @@ export class PieceSelectorComponent implements OnInit {
   }
 
   updateInputs(shape : Shape) {
-
-    switch(shape){
+    switch(Shape[shape]){
       case Shape.Quadrangular:
         this.inputs = [
           {label:"Lunghezza", value:0}, 
           {label:"Larghezza", value:0}, 
-          {label:"Larghezza", value:0}]
-        break;
+          {label:"Spessore", value:0}]
+          break;
       case Shape.Cylinder:
         this.inputs = [
           {label:"Diametro", value:0}, 
@@ -66,8 +65,8 @@ export class PieceSelectorComponent implements OnInit {
         break;
       case Shape.Sheet:
       this.inputs = [
-          {label:"LunghezzaPezzo", value:0}, 
-          {label:"LarghezzaPezzo", value:0}, 
+          {label:"Lunghezza", value:0}, 
+          {label:"Larghezza", value:0}, 
           {label:"LunghezzaLastra", value:0}, 
           {label:"LarghezzaLastra", value:0},
           {label:"SpessoreLastra", value:0}, 
@@ -75,7 +74,7 @@ export class PieceSelectorComponent implements OnInit {
         break;
       case Shape.SheetR:
         this.inputs = [
-          {label:"DiametroPezzo", value:0}, 
+          {label:"Diametro", value:0}, 
           {label:"LunghezzaLastra", value:0}, 
           {label:"LarghezzaLastra", value:0},
           {label:"SpessoreLastra", value:0}, 

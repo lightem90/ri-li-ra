@@ -5,5 +5,22 @@
   "QuadrangularTube" : "SEZIONE TUBOLARE QUADRANGOLARE",
   "Hexagonal" : "SEZIONE ESAGONALE",
   "LAngular" : "SEZIONE ANGOLARE ‘’L’’",
-  "Sheet" : "DA LASTRA"
+  "Sheet" : "DA LASTRA",
+  "SheetR" : "PEZZO TONDO DA LASTRA",
+  "Lunghezza" : "Lunghezza del pezzo",
+  "Larghezza" : "Larghezza del pezzo",
+  "Diametro" : "Diametro del pezzo",
+  "DiametroEsterno" : "Diametro esterno del pezzo",
+  "DiametroInterno" : "Diametro interno del pezzo",
+  "Base" : "Base del pezzo",
+  "Altezza" :"Altezza del pezzo",
+  "LunghezzaLato" : "Lunghezza lato del pezzo",
+  "BaseEsterna" : "Base esterna del pezzo",
+  "Spessore" : "Spessore del pezzo",
+  "BaseInterna" : "Base interna",
+  "AltezzaInterna" : "Altezza interna",
+  "AltezzaEsterna" : "Altezza esterna",
+  "LunghezzaLastra" : "Lunghezza della lastra",
+  "LarghezzaLastra" : "Larghezza della lastra",
+  "SpessoreLastra" : "Spessore della lastra"
 }
