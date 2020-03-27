@@ -1,2 +1,7 @@
 /* Add application styles & imports to this file! */
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+
+.mat-expansion-panel-body {
+  align-self: center !important;
+  background: darkgoldenrod;
+}
