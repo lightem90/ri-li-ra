@@ -1,11 +1,11 @@
 <div fxLayout="row wrap" fxLayout.xs="column wrap">
   <div flex="">
-  <form>   
+  <form [formGroup]="pieceSelector">   
       <mat-form-field>
         <mat-label>Seleziona profilo</mat-label>
         <mat-select 
           (selectionChange)="updateInputs(selectedShape)"
-          [(ngModel)]="selectedShape"
+          [(value)]="selectedShape"
           name="shapeSelector">
           <mat-option *ngFor="let shape of shapes" [value]="shape">
           {{shape | translate}}
@@ -16,7 +16,20 @@
         *ngFor="let input of inputs"
         [input]="input">
       </app-number-input>
+      <mat-form-field>
+        <ngx-mat-file-input 
+          appearance="fill"
+          formControlName="drawPdfFile" 
+          placeholder="{{ 'UploadDraw' | translate }}"
+          [accept]="'.pdf'"
+          (change)="uploadFile()" >
+        </ngx-mat-file-input>
+        <mat-icon matSuffix>cloud_upload</mat-icon>
+    </mat-form-field>
     </form>
-
+    <!-- TODO <pdf-viewer [src]="pdfSrc" 
+              [render-text]="true"
+              style="display: block;"
+    ></pdf-viewer> -->
   </div>
 </div>

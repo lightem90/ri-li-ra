@@ -25,5 +25,6 @@
   "PercRic" : "Percentuale di ricarico sul prezzo",
   "PesoTot" : "Peso totale (Kg)",
   "CostoAlPz" : "Costo della materia prima al pezzo",
-  "NonCalc" : "Impossibile calcolare"
+  "NonCalc" : "Impossibile calcolare",
+  "UploadDraw" : "Carica disegno tecnico"
 }

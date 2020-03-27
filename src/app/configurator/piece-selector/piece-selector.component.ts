@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+
+import { FileValidator } from 'ngx-material-file-input';
 
 import { Shape } from '../../core/domain/piece'
 
@@ -10,17 +12,35 @@ import { Shape } from '../../core/domain/piece'
 })
 export class PieceSelectorComponent implements OnInit {
 
+  //25 mb
+  maxSize : number = 26214400;
+
   shapes: Shape[]
   selectedShape : Shape = null
   inputs: {label:string, value:number}[] = []
+  formDoc : FormControl
+  pieceSelector : FormGroup
 
-  constructor() { 
+  constructor(private _fb: FormBuilder) { 
+
     this.shapes = Object.values(Shape).filter(x => typeof x === 'string')
     this.selectedShape = this.shapes[0]
     this.updateInputs(this.selectedShape)
+    
+    this.pieceSelector = this._fb.group({
+        drawPdfFile: [
+          undefined,
+          [FileValidator.maxContentSize(this.maxSize)]
+        ]
+      });
   }
 
   ngOnInit() {
+  }
+
+  uploadFile() {
+    //TODO: upload to firebase
+    console.log(this.pieceSelector.controls["drawPdfFile"].value)
   }
 
   updateInputs(shape : Shape) {

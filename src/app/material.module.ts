@@ -15,7 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
-
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 
 
@@ -35,7 +35,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatRadioModule,
         MatCardModule,
         MatDividerModule,
-        MatSelectModule
+        MatSelectModule,
+        MaterialFileInputModule
     ],
     exports: [
         MatSliderModule,
@@ -52,7 +53,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatRadioModule,
         MatCardModule,
         MatDividerModule,
-        MatSelectModule
+        MatSelectModule,
+        MaterialFileInputModule
     ]
 })
 export class MaterialModule { }
