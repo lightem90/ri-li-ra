@@ -2,30 +2,31 @@
 <div  class="flex-container" layout="row">
   <mat-accordion class="example-headers-align">
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div>
+        <div class="center-div">
           1.SCEGLI IL MATERIALE
           <hr class="separator-center-style">
         </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
     <br>
+    <div class="center-div">
     <app-material-picker [budget]="budget"> </app-material-picker>
     <!-- <mat-form-field>
       <mat-label>First name</mat-label>
       <input matInput>
     </mat-form-field> -->
-
+    </div>
     <mat-action-row>
       <button mat-button color="primary" (click)="nextStep()">Avanti</button>
     </mat-action-row>
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
         <div>
           2. INSERISCI LE DIMENSIONI DEL PEZZO
@@ -34,7 +35,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
     <br>
 
     <app-piece-selector></app-piece-selector>
@@ -46,7 +47,7 @@
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
         <div>
           3. INSERISCI I COSTI
@@ -59,7 +60,7 @@
       </mat-panel-description> -->
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
     <br>
 
     <app-piece-price></app-piece-price>
@@ -71,7 +72,7 @@
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
         <div>
           4. LAVORAZIONI INTERNE
@@ -80,7 +81,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
     <br>
 
     <mat-action-row>
@@ -90,7 +91,7 @@
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
         <div>
           5. LAVORAZIONI ESTERNE
@@ -99,7 +100,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
     <br>
 
     <mat-action-row>
@@ -109,7 +110,7 @@
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
         <div>
           6. CONSIDERAZIONI FINALI
@@ -118,7 +119,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
     <br>
 
     <mat-action-row>
