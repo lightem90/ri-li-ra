@@ -29,5 +29,6 @@
   "UploadDraw" : "Carica disegno tecnico",
   "ShowPDF" : "Mostra pdf",
   "Zoom" : "Zoom",
-  "Rotate" : "Ruota"
+  "Rotate" : "Ruota",
+  "Page" : "Pagine totali: "
 }

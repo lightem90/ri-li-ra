@@ -52,7 +52,20 @@ export class PdfUploaderComponent implements OnInit {
     const rotation = this.rotation - 90
     rotation === -360 ? this.rotation = 0 : this.rotation -= 90
   }
-  
+
+  previousPage() {
+    this._updatePage(this.page -1)
+  }
+
+  nextPage() {
+    this._updatePage(this.page +1)
+  }
+
+  _updatePage(newPageNumber : number)  {
+    if (newPageNumber >= 1 && newPageNumber <= this.totalPages) {
+      this.page = newPageNumber
+    }
+  }
 
   // togglePdfViewer(e) {
   //   this.showPdf = e.checked;

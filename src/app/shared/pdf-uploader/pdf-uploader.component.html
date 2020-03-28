@@ -57,17 +57,17 @@
         <mat-icon>rotate_left</mat-icon>
       </button>
 
-      <!-- TODO pagin <br>
-      <button mat-icon-button (click)="rotateCw()">
-        <mat-icon>rotate_right</mat-icon>
+      <br>
+      <button mat-icon-button (click)="previousPage()">
+        <mat-icon>skip_previous</mat-icon>
       </button>
       <mat-form-field>
-        <mat-label>{{'Rotate' | translate}}</mat-label>
-        <input disabled matInput type="number" [(ngModel)]="rotation">
+        <mat-label>{{'Page' | translate}} {{totalPages}}</mat-label>
+        <input matInput type="number" [(ngModel)]="page">
       </mat-form-field>
-      <button mat-icon-button (click)="rotateCcw()">
-        <mat-icon>rotate_left</mat-icon>
-      </button> -->
+      <button mat-icon-button (click)="nextPage()">
+        <mat-icon>skip_next</mat-icon>
+      </button>
 
     </div>
 </div>
