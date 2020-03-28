@@ -27,5 +27,7 @@
   "CostoAlPz" : "Costo della materia prima al pezzo",
   "NonCalc" : "Impossibile calcolare",
   "UploadDraw" : "Carica disegno tecnico",
-  "ShowPDF" : "Mostra pdf"
+  "ShowPDF" : "Mostra pdf",
+  "Zoom" : "Zoom",
+  "Rotate" : "Ruota"
 }

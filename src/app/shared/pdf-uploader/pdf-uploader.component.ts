@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FileValidator } from 'ngx-material-file-input';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
+import {  PDFDocumentProxy} from 'pdfjs-dist';
+
 @Component({
   selector: 'app-pdf-uploader',
   templateUrl: './pdf-uploader.component.html',
@@ -18,6 +20,7 @@ export class PdfUploaderComponent implements OnInit {
   page : number = 1
   zoom : number = 1
   rotation : number = 0
+  totalPages = 0
 
   constructor(private _fb: FormBuilder) {
     this.pdfManager = this._fb.group({
@@ -31,11 +34,29 @@ export class PdfUploaderComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  zoomIn() {
+    this.zoom++
+  }
+
+  zoomOut() {
+    this.zoom--
+  }
+
+  rotateCw() {
+    const rotation = this.rotation + 90
+    rotation === 360 ? this.rotation = 0 : this.rotation += 90
+  }
+
+  rotateCcw() {
+    const rotation = this.rotation - 90
+    rotation === -360 ? this.rotation = 0 : this.rotation -= 90
+  }
   
 
-  togglePdfViewer(e) {
-    this.showPdf = e.checked;
-  }
+  // togglePdfViewer(e) {
+  //   this.showPdf = e.checked;
+  // }
 
   uploadFile(event) {
 
@@ -55,6 +76,7 @@ export class PdfUploaderComponent implements OnInit {
     }
     //NO! this.pdfSrc = this.pieceSelector.controls["drawPdfFile"].value
   }
+  afterLoadComplete(pdf: PDFDocumentProxy) { this.totalPages = pdf.numPages; }
 
   _handleReaderLoaded(e) {
     var reader = e.target;

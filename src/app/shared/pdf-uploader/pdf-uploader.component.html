@@ -11,27 +11,63 @@
       <mat-icon matSuffix>cloud_upload</mat-icon>
     </mat-form-field>
 
-    <pdf-viewer *ngIf="showPdf" 
-      [src]="pdfSrc" 
-      [render-text]="false"
-      [original-size]="false"
-      [show-all]="false"
-      [(page)]="page"
-      [(zoom)]="zoom"
-      [(rotation)]="rotation"
-      style="display: block;">
-    </pdf-viewer>
-
-      <mat-slide-toggle 
-        *ngIf="pdfSrc" 
-        formControlName="showPdfForm" 
-        (change)="togglePdfViewer($event)"
-        [checked]="showPdf"> {{'ShowPDF' | translate}}
-      </mat-slide-toggle> 
-
-    <div>
-
+    <div class="pdfContainer">
+        <pdf-viewer *ngIf="showPdf" 
+          [src]="pdfSrc" 
+          [render-text]="false"
+          [original-size]="false"
+          [show-all]="false"
+          [autoresize]="false"
+          [(page)]="page"
+          [(zoom)]="zoom"
+          [(rotation)]="rotation"
+          (after-load-complete)="afterLoadComplete($event)"
+          style="display: block;">
+        </pdf-viewer>
     </div>
 
   </form>
+    <mat-slide-toggle 
+      matInput
+      *ngIf="pdfSrc" 
+      [(ngModel)]="showPdf"> {{'ShowPDF' | translate}}
+    </mat-slide-toggle> 
+
+    <div *ngIf="showPdf">
+      <button mat-icon-button (click)="zoomIn()">
+        <mat-icon>zoom_in</mat-icon>
+      </button>
+      <mat-form-field>
+        <mat-label>{{'Zoom' | translate}}</mat-label>
+        <input matInput type="number" [(ngModel)]="zoom">
+      </mat-form-field>
+      <button mat-icon-button (click)="zoomOut()">
+        <mat-icon>zoom_out</mat-icon>
+      </button>
+
+      <br>
+      <button mat-icon-button (click)="rotateCw()">
+        <mat-icon>rotate_right</mat-icon>
+      </button>
+      <mat-form-field>
+        <mat-label>{{'Rotate' | translate}}</mat-label>
+        <input disabled matInput type="number" [(ngModel)]="rotation">
+      </mat-form-field>
+      <button mat-icon-button (click)="rotateCcw()">
+        <mat-icon>rotate_left</mat-icon>
+      </button>
+
+      <!-- TODO pagin <br>
+      <button mat-icon-button (click)="rotateCw()">
+        <mat-icon>rotate_right</mat-icon>
+      </button>
+      <mat-form-field>
+        <mat-label>{{'Rotate' | translate}}</mat-label>
+        <input disabled matInput type="number" [(ngModel)]="rotation">
+      </mat-form-field>
+      <button mat-icon-button (click)="rotateCcw()">
+        <mat-icon>rotate_left</mat-icon>
+      </button> -->
+
+    </div>
 </div>
