@@ -37,6 +37,8 @@ import { PiecePriceComponent } from './configurator/piece-price/piece-price.comp
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 import { NumberInputComponent } from './shared/number-input/number-input.component';
 import { DisabledInputComponent } from './shared/disabled-input/disabled-input.component';
+import { PdfUploaderComponent } from './shared/pdf-uploader/pdf-uploader.component';
+
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
@@ -81,7 +83,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     PieceSelectorComponent,
     PiecePriceComponent,
     NumberInputComponent,
-    DisabledInputComponent],
+    DisabledInputComponent,
+    PdfUploaderComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService]
 })

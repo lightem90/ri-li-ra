@@ -1,0 +1,37 @@
+<div>
+  <form [formGroup]="pdfManager">
+    <mat-form-field>
+    <ngx-mat-file-input 
+        appearance="fill"
+        formControlName="drawPdfFile" 
+        placeholder="{{ 'UploadDraw' | translate }}"
+        [accept]="'.pdf'"
+        (change)="uploadFile($event)" >
+      </ngx-mat-file-input>
+      <mat-icon matSuffix>cloud_upload</mat-icon>
+    </mat-form-field>
+
+    <pdf-viewer *ngIf="showPdf" 
+      [src]="pdfSrc" 
+      [render-text]="false"
+      [original-size]="false"
+      [show-all]="false"
+      [(page)]="page"
+      [(zoom)]="zoom"
+      [(rotation)]="rotation"
+      style="display: block;">
+    </pdf-viewer>
+
+      <mat-slide-toggle 
+        *ngIf="pdfSrc" 
+        formControlName="showPdfForm" 
+        (change)="togglePdfViewer($event)"
+        [checked]="showPdf"> {{'ShowPDF' | translate}}
+      </mat-slide-toggle> 
+
+    <div>
+
+    </div>
+
+  </form>
+</div>

@@ -16,6 +16,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -36,7 +38,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
         MatCardModule,
         MatDividerModule,
         MatSelectModule,
-        MaterialFileInputModule
+        MaterialFileInputModule,
+        MatSlideToggleModule,
+        PdfViewerModule
     ],
     exports: [
         MatSliderModule,
@@ -54,7 +58,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
         MatCardModule,
         MatDividerModule,
         MatSelectModule,
-        MaterialFileInputModule
+        MaterialFileInputModule,
+        MatSlideToggleModule,
+        PdfViewerModule
     ]
 })
 export class MaterialModule { }

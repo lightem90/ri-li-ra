@@ -26,5 +26,6 @@
   "PesoTot" : "Peso totale (Kg)",
   "CostoAlPz" : "Costo della materia prima al pezzo",
   "NonCalc" : "Impossibile calcolare",
-  "UploadDraw" : "Carica disegno tecnico"
+  "UploadDraw" : "Carica disegno tecnico",
+  "ShowPDF" : "Mostra pdf"
 }
