@@ -34,6 +34,9 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
 import { MaterialPickerComponent } from './configurator/material-picker/material-picker.component';
 import { PieceSelectorComponent } from './configurator/piece-selector/piece-selector.component';
 import { PiecePriceComponent } from './configurator/piece-price/piece-price.component';
+import { InternalWorksComponent } from './configurator/internal-works/internal-works.component';
+import { ExternalWorksComponent } from './configurator/external-works/external-works.component';
+import { RecapComponent } from './configurator/recap/recap.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 import { NumberInputComponent } from './shared/number-input/number-input.component';
 import { DisabledInputComponent } from './shared/disabled-input/disabled-input.component';
@@ -84,7 +87,10 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     PiecePriceComponent,
     NumberInputComponent,
     DisabledInputComponent,
-    PdfUploaderComponent],
+    PdfUploaderComponent,
+    InternalWorksComponent,
+    ExternalWorksComponent,
+    RecapComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService]
 })
