@@ -4,7 +4,7 @@
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div class="center-div">
+        <div class="titleBold">
           1.SCEGLI IL MATERIALE
           <hr class="separator-center-style">
         </div>
@@ -13,7 +13,7 @@
 
     <!-- <mat-divider></mat-divider> -->
     <br>
-    <div class="center-div">
+    <div>
     <app-material-picker [budget]="budget"> </app-material-picker>
     <!-- <mat-form-field>
       <mat-label>First name</mat-label>
@@ -28,7 +28,7 @@
   <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div>
+        <div class="titleBold">
           2. INSERISCI LE DIMENSIONI DEL PEZZO
           <hr class="separator-center-style">
         </div>
@@ -49,7 +49,7 @@
   <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div>
+        <div class="titleBold">
           3. INSERISCI I COSTI
           <hr class="separator-center-style">
         </div>
@@ -74,7 +74,7 @@
   <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div>
+        <div class="titleBold">
           4. LAVORAZIONI INTERNE
           <hr class="separator-center-style">
         </div>
@@ -94,7 +94,7 @@
   <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div>
+        <div class="titleBold">
           5. LAVORAZIONI ESTERNE
           <hr class="separator-center-style">
         </div>
@@ -114,7 +114,7 @@
   <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
       <mat-panel-title>
-        <div>
+        <div class="titleBold">
           6. CONSIDERAZIONI FINALI
           <hr class="separator-center-style">
         </div>
