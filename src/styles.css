@@ -1,7 +1,26 @@
 /* Add application styles & imports to this file! */
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
-.mat-expansion-panel-body {
+.mat-expansion-panel {
+  display: block;
   align-self: center !important;
-  background: darkgoldenrod;
+  /* background: pink; */
 }
+.mat-expansion-panel-body {
+  display: block;
+  align-self: center !important;
+  /* align-content: center !important;  */
+  background: darkgoldenrod;
+  margin: 0px 10px;
+}
+
+.titleBold {
+  font-weight: bold;
+}
+
+mat-form-field {
+ margin: 0px 5px;
+}
+/* app-number-input {
+margin: 0px 5px;
+} */
