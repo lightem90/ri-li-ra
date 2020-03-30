@@ -1,6 +1,7 @@
 <div fxLayout="row wrap" fxLayout.xs="column wrap">
   <div flex="">
   <form [formGroup]="pieceSelector">   
+    <div>
       <mat-form-field>
         <mat-label>Seleziona profilo</mat-label>
         <mat-select 
@@ -12,10 +13,13 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+    <div>
       <app-number-input 
         *ngFor="let input of inputs"
         [input]="input">
       </app-number-input>
+    </div>
     </form>
     <app-pdf-uploader> </app-pdf-uploader>
   </div>
