@@ -7,8 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecapComponent implements OnInit {
 
-  constructor() { }
+  tot_pz = {label: "PrezzoAlPz", value: 0}
+  tot = {label: "TotConf", text: "NonCalc"}
+  tot_gain = {label: "TotGain", text: "NonCalc"}
+  pc_pz = {label: "PrezzoCostoAlPz", text: "NonCalc"}
+  pce_pz = {label: "TotAlPzExtAlPz", text: "NonCalc"}
 
-  ngOnInit() 
+  constructor() {
+
+  }
+
+  ngOnInit() {}
 
 }

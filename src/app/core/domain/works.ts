@@ -14,13 +14,24 @@ export enum WorkType {
 }
 
 export class WorkStage {
-  constructor(public uid: string = "",) {
+  constructor(public uid: string = "",
+    public mm : number = 0,
+    public piece_count : number = 0,
+    public steps : number = 0,
+    public mm_min : number = 0,
+    public tot_minutes : number = 0,
+    public total_price : number) {
 
   }
 }
 
 export class ToolChangePhase {
-  constructor(public uid : string = "") {
+  constructor(public uid : string = "",
+    public mm : number = 0,
+    public count : number = 0,
+    public mm_min : number = 0,
+    public tot_minutes : number = 0,
+    public total_price : number) {
 
   }
 }
@@ -78,7 +89,6 @@ export class ExternalWork {
     public pricePerPiece : number = 0,
     public charge : number = 0,
     public totalPrice : number = 0) {
-
     }
 
 }
