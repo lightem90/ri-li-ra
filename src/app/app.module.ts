@@ -39,6 +39,7 @@ import { ExternalWorksComponent } from './configurator/external-works/external-w
 import { RecapComponent } from './configurator/recap/recap.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
 import { NumberInputComponent } from './shared/number-input/number-input.component';
+import { StringInputComponent } from './shared/string-input/string-input.component';
 import { DisabledInputComponent } from './shared/disabled-input/disabled-input.component';
 import { PdfUploaderComponent } from './shared/pdf-uploader/pdf-uploader.component';
 
@@ -86,6 +87,7 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     PieceSelectorComponent,
     PiecePriceComponent,
     NumberInputComponent,
+    StringInputComponent,
     DisabledInputComponent,
     PdfUploaderComponent,
     InternalWorksComponent,

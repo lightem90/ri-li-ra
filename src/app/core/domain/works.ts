@@ -15,6 +15,7 @@ export enum WorkType {
 
 export class WorkStage {
   constructor(public uid: string = "",
+    public name : string = "",
     public mm : number = 0,
     public piece_count : number = 0,
     public steps : number = 0,
