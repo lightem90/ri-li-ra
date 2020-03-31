@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 
 import {FirebaseHelper} from './core/services/firebase-helper'
 import {ConfiguratorService} from './core/services/configurator.service'
+import {WorkFactoryService} from './core/services/work-factory.service'
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
@@ -94,6 +95,6 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     ExternalWorksComponent,
     RecapComponent],
   bootstrap:    [ AppComponent ],
-  providers: [FirebaseHelper, ConfiguratorService]
+  providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService]
 })
 export class AppModule { }
