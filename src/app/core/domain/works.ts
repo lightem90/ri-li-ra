@@ -20,16 +20,15 @@ export class TreeWorkNode {
 
   public name : string = ""
   public editable : boolean
-  public inputs : NumberInput[]= []
+  public inputs : NumberInput []= []
   public outputs : DisabledInput[]= []
-  //li chiamo stages percè i figli di un nodo sono solo le fasi della lavorazione
-  public stages : TreeWorkNode[]= []
+  public children : TreeWorkNode[]= []
 }
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
   
   public name : string = ""
-  level: number
+  level: number = 0
   expandable: boolean
   public inputs : NumberInput[] = []
   public outputs : DisabledInput[] = []

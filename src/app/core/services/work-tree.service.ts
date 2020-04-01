@@ -15,16 +15,28 @@ export class WorkTreeService {
 
   constructor(private _workFactory : WorkFactoryService) { }
 
-  insertItem(parent: TreeWorkNode, name: string) {
-    if (parent.stages) {
-      parent.stages.push({item: name} as TreeWorkNode);
+  addDefault(parent: TreeWorkNode) {
+        if (parent.children) {
+      parent.children.push(new TreeWorkNode()); //senza name, in modo che parta la gestione del nuovo stage
       this.dataChange.next(this.data);
     }
   }
 
   addWork(wTypeToAdd : WorkType) {
-    this.data.push(this._workFactory.createWork(wTypeToAdd))
+    const workNode = this._workFactory.createWork(wTypeToAdd)
+    this.data.push(workNode)
     this.dataChange.next(this.data);
+  }
+
+  //TODO: creare uno stage come TreeWorkNode, a seconda del tipo del parentNode (ogni lav ha stages differenti)
+  updateItem(node: TreeWorkNode, stageName: string, workName: string) {
+    const selectedWorkType = WorkType[workName]
+    const stage = this._workFactory.createStageForWork(selectedWorkType, stageName)
+    node.name = stage.name;
+    node.children = stage.children
+    node.inputs = stage.inputs
+    node.outputs = stage.outputs
+    this.dataChange.next(this.data)
   }
 
 }

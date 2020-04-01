@@ -1,30 +1,14 @@
 <div>  
   <div>
-    <mat-form-field>
-      <mat-label>{{'workTypeSel' | translate}}</mat-label>
-        <mat-select 
-          [(value)]="selectedWorkType">
-          <mat-option *ngFor="let wType of workTypes" 
-          [value]="wType">
-            {{wType | translate}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    <button mat-raised-button (click)="addWork()" translate>
-      {{'addWork' | translate}}
-    </button>
-  </div>
-  <br>
-  <div>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- Nodo dell'albero di default -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
       <!-- Il button serve come spacer, in tutti i mat-tree-node (esempio della doc.) -->
         <button mat-icon-button disabled></button>
-        <app-number-input 
+        <!-- <app-number-input 
           *ngFor="let in of node.inputs"
           [input]="in">
-        </app-number-input>
+        </app-number-input> -->
         <app-disabled-input 
           *ngFor="let out of node.outputs"
           [input]="out">
@@ -38,7 +22,7 @@
           <mat-label>{{'addStage' | translate}}</mat-label>
           <input matInput #itemValue >
         </mat-form-field>
-        <button mat-button (click)="createStage(node, itemValue.value)">Save</button>
+        <button mat-button (click)="createStage(node, itemValue.value)">{{'Save' | translate}}</button>
       </mat-tree-node>
 
       <!-- Nodo per visualizzare un unico parametro di input -->
@@ -59,17 +43,38 @@
         </button>        
         <p> {{node.name | translate}}</p>
         <div >        
-          <app-number-input 
+          <!-- <app-number-input 
             *ngFor="let in of node.inputs"
             [input]="in">
-          </app-number-input>
+          </app-number-input> -->
           <app-disabled-input 
             *ngFor="let out of node.outputs"
             [input]="out">
           </app-disabled-input>
         </div>
+        <button 
+          *ngIf="node.level === 0"
+          mat-icon-button 
+          (click)="addNewItem(node)">
+          <mat-icon>add</mat-icon>
+        </button>
       </mat-tree-node>
     </mat-tree>
   </div>
-
+  <br>
+  <div>
+    <mat-form-field>
+      <mat-label>{{'workTypeSel' | translate}}</mat-label>
+        <mat-select 
+          [(value)]="selectedWorkType">
+          <mat-option *ngFor="let wType of workTypes" 
+          [value]="wType">
+            {{wType | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button mat-raised-button (click)="addWork()" translate>
+      {{'addWork' | translate}}
+    </button>
+  </div>
 </div>

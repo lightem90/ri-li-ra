@@ -21,7 +21,7 @@ export class NumberInput implements DisabledInput{
 
   constructor(
     public label: string, 
-    public value: number) {
+    public value: number = 0) {
       this.text = value.toString()
   }
 }

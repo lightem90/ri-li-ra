@@ -21,7 +21,7 @@ export class InternalWorksComponent implements OnInit {
     //stati per l'albero (far diventare tutto un componente!)
     getLevel = (node: TreeWorkFlatNode) => node.level;
     isExpandable = (node: TreeWorkFlatNode) => node.expandable;
-    getChildren = (node: TreeWorkNode): TreeWorkNode[] => node.stages;
+    getChildren = (node: TreeWorkNode): TreeWorkNode[] => node.children;
     hasChild = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.name === '';
     hasOneInput = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.inputs.length === 1;
@@ -39,7 +39,7 @@ export class InternalWorksComponent implements OnInit {
           : new TreeWorkFlatNode();
       flatNode.name = node.name;
       flatNode.level = level;
-      flatNode.expandable = !!node.stages;
+      flatNode.expandable = !!node.children;
       flatNode.inputs = node.inputs
       flatNode.outputs = node.outputs
       this.flatNodeMap.set(flatNode, node);
@@ -70,15 +70,15 @@ export class InternalWorksComponent implements OnInit {
     /** Select the category so we can insert the new item. */
     addNewItem(node: TreeWorkFlatNode) {
       const parentNode = this.flatNodeMap.get(node);
-      //this._database.insertItem(parentNode!, '');
+      this._treeService.addDefault(parentNode)
       this.treeControl.expand(node);
     }
 
-    /** Save the node to database */
-    saveNode(node: TreeWorkFlatNode, itemValue: string) {
+    createStage(node: TreeWorkFlatNode, stageName: string) {
+      const parentNode = this.getParentNode(node) 
       const nestedNode = this.flatNodeMap.get(node);
-      //TODO: creare stage
-      //this._database.updateItem(nestedNode!, itemValue);
+      this._treeService.updateItem(nestedNode!, stageName, parentNode.name);
+      this.treeControl.expand(node);
     }
 
     constructor(private _treeService: WorkTreeService) { 
