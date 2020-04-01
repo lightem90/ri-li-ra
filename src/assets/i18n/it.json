@@ -36,5 +36,10 @@
   "PrezzoCostoAlPz" : "Costo singolo pezzo",
   "TotAlPzExtAlPz" : "Costo singolo pezzo e lavorazioni",
   "addWork" : "Aggiungi lavorazione interna",
-  "workTypeSel": "Lavorazioni disponibili"
+  "workTypeSel": "Lavorazioni disponibili",
+  "addStage" : "Aggiungi fase di lavorazione",
+  "wTPiaz" : "Tempo di piazzamento",
+  "wPriceH" : "Costo orario",
+  "wMinutes" : "Minuti di lavorazione",
+  "pricePerPiece": "Costo al pezzo"
 }

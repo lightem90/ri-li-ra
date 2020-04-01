@@ -19,7 +19,7 @@ export class InternalWorksComponent implements OnInit {
     //stati per l'albero (far diventare tutto un componente!)
     getLevel = (node: TreeWorkFlatNode) => node.level;
     isExpandable = (node: TreeWorkFlatNode) => node.expandable;
-    getChildren = (node: TreeWorkNode): TreeWorkNode[] => node.children;
+    getChildren = (node: TreeWorkNode): TreeWorkNode[] => node.stages;
     hasChild = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.name === '';
     
@@ -31,12 +31,14 @@ export class InternalWorksComponent implements OnInit {
     
     transformer = (node: TreeWorkNode, level: number) => {
       const existingNode = this.nestedNodeMap.get(node);
-      const flatNode = existingNode && existingNode.item === node.item
+      const flatNode = existingNode && existingNode.name === node.name
           ? existingNode
           : new TreeWorkFlatNode();
-      flatNode.item = node.item;
+      flatNode.name = node.name;
       flatNode.level = level;
-      flatNode.expandable = !!node.children;
+      flatNode.expandable = !!node.stages;
+      flatNode.inputs = node.inputs
+      flatNode.outputs = node.outputs
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
       return flatNode;
@@ -97,7 +99,7 @@ export class InternalWorksComponent implements OnInit {
     ngOnInit() {}
 
     addWork() {
-
+      this._treeService.addWork(this.selectedWorkType)
     }
 
 }

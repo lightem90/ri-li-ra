@@ -6,8 +6,11 @@ import {
   ToolChangeStage, 
   Work, 
   FixedWorkTimes, 
-  OptionalStageValue
+  OptionalStageValue,
+  TreeWorkNode
 } from '../domain/works'
+
+import {NumberInput, TextInput, DisabledInput} from '../domain/common'
 
 @Injectable()
 export class WorkFactoryService {
@@ -16,17 +19,35 @@ export class WorkFactoryService {
 
   }
 
-
-
   createSimpleWork(wType : WorkType) {
-    var fixedTimes: FixedWorkTimes[] = [
-      new FixedWorkTimes('TPiaz')
-    ]
-    return new Work(
-      wType, 
-      "", 
-      fixedTimes
-    )
+
+    // var fixedTimes: FixedWorkTimes[] = [
+    //   new FixedWorkTimes('TPiaz')
+    // ]
+    // return new Work(
+    //   wType, 
+    //   "", 
+    //   fixedTimes
+    // )
+
+    var tPiaz = new NumberInput('wTPiaz', 0)
+    var workPriceH = new NumberInput('wPriceH', 0)
+    var totMin = new NumberInput('wMinutes', 0)
+
+    var totMinIn = new TextInput('wMinutes', "NaN")
+    var pricePerPiece = new TextInput('pricePerPiece', "NaN")
+    var result = new TreeWorkNode()
+    result.name = wType.toString()
+    result.inputs = [tPiaz, workPriceH, totMin]
+    result.outputs = [totMinIn, pricePerPiece]
+    result.editable = true
+    //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
+    result.stages = [new TreeWorkNode()]
+    return result;
+  }
+
+  createToolChangeStage() {
+    return new TreeWorkNode() //todo in/out
   }
 
   createComplexWork(wType : WorkType) {

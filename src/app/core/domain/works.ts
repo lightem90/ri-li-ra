@@ -1,4 +1,4 @@
-import {NumberInput, TextInput} from "./common"
+import {NumberInput, TextInput, DisabledInput} from "./common"
 
 export enum WorkType {
   Taglio,
@@ -19,18 +19,20 @@ export enum WorkType {
 export class TreeWorkNode {
 
   public name : string = ""
-  public value : string
   public editable : boolean
-  public children : TreeWorkNode[]
+  public inputs : NumberInput[]
+  public outputs : DisabledInput[]
+  //li chiamo stages percè i figli di un nodo sono solo le fasi della lavorazione
+  public stages : TreeWorkNode[]
 }
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
   
   public name : string = ""
-  public price : string
-  public time : string
   level: number
   expandable: boolean
+  public inputs : NumberInput[]
+  public outputs : DisabledInput[]
 }
 
 export class WorkStage {
