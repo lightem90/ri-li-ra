@@ -15,13 +15,22 @@ export enum WorkType {
   ControlloQualita
 }
 
-//Classe per l'albero di interfaccia
+//Nodo che rappresenta un parametro della lavorazione (t. piazzamento etc..)
 export class TreeWorkNode {
 
+  public name : string = ""
+  public value : string
+  public editable : boolean
+  public children : TreeWorkNode[]
 }
-
+//nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
-
+  
+  public name : string = ""
+  public price : string
+  public time : string
+  level: number
+  expandable: boolean
 }
 
 export class WorkStage {
