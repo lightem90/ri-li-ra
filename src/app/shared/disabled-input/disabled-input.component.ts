@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import {DisabledInput} from '../../core/domain/common'
+
 @Component({
   selector: 'app-disabled-input',
   templateUrl: './disabled-input.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DisabledInputComponent implements OnInit {
 
-  @Input() input : {label: string, text: string}
+  @Input() input : DisabledInput
 
   constructor() { }
 

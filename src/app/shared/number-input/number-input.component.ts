@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import {NumberInput} from '../../core/domain/common'
+
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NumberInputComponent implements OnInit {
 
-  @Input() input : {label: string, value: number}
+  @Input() input : NumberInput
 
   constructor() { }
 

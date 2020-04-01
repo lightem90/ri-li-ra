@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {TextInput, NumberInput} from '../../core/domain/common'
+
 @Component({
   selector: 'app-piece-price',
   templateUrl: './piece-price.component.html',
@@ -7,15 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PiecePriceComponent implements OnInit {
 
-  chargePercentage: {label:string, value:number}
-  totWeigth: {label:string, text: string}
-  unitaryPrice: {label:string, text: string}
+  chargePercentage = new NumberInput("PercRic", 0)
+  totWeigth = new TextInput("PesoTot", "NonCalc")
+  unitaryPrice = new TextInput("CostoAlPz", "NonCalc")
 
   constructor() {
-    this.chargePercentage = {label:"PercRic", value:0}
-    this.totWeigth = {label:"PesoTot", text:"NonCalc"}
-    this.unitaryPrice = {label:"CostoAlPz", text:"NonCalc"}
-   }
+  }
 
 
   ngOnInit() {

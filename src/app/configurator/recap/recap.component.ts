@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {TextInput, NumberInput} from '../../core/domain/common'
+
 @Component({
   selector: 'app-recap',
   templateUrl: './recap.component.html',
@@ -7,11 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecapComponent implements OnInit {
 
-  tot_pz = {label: "PrezzoAlPz", value: 0}
-  tot = {label: "TotConf", text: "NonCalc"}
-  tot_gain = {label: "TotGain", text: "NonCalc"}
-  pc_pz = {label: "PrezzoCostoAlPz", text: "NonCalc"}
-  pce_pz = {label: "TotAlPzExtAlPz", text: "NonCalc"}
+  tot_prz = new NumberInput ("PrezzoAlPz", 0)
+  tot = new TextInput("TotConf", "NonCalc")
+  tot_gain = new TextInput("TotGain", "NonCalc")
+  pc_pz = new TextInput("PrezzoCostoAlPz", "NonCalc")
+  pce_pz = new TextInput("TotAlPzExtAlPz", "NonCalc")
 
   constructor() {
 

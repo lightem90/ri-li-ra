@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import {TextInput} from '../../core/domain/common'
+
 @Component({
   selector: 'app-string-input',
   templateUrl: './string-input.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class StringInputComponent implements OnInit {
 
-  @Input() input : {label: string, value: string}
+  @Input() input : TextInput
 
   constructor() { }
 
