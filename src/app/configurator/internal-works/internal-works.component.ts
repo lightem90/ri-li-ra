@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {WorkType} from '../../core/domain/works'
+
 @Component({
   selector: 'app-internal-works',
   templateUrl: './internal-works.component.html',
@@ -7,12 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InternalWorksComponent implements OnInit {
 
-  constructor() { }
+    workTypes: WorkType[]
+    selectedWorkType : WorkType = null
 
-  ngOnInit() {}
+    constructor() { 
+      this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
+      this.selectedWorkType = this.workTypes[0]
+    }
 
-  addWork() {
-    
-  }
+    ngOnInit() {}
+
+    addWork() {
+
+    }
 
 }

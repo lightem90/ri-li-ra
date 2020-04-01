@@ -35,5 +35,6 @@
   "TotGain" : "Guadagno",
   "PrezzoCostoAlPz" : "Costo singolo pezzo",
   "TotAlPzExtAlPz" : "Costo singolo pezzo e lavorazioni",
-  "addWork" : "Aggiungi lavorazione interna"
+  "addWork" : "Aggiungi lavorazione interna",
+  "workTypeSel": "Lavorazioni disponibili"
 }

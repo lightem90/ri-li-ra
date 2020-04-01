@@ -1,9 +1,21 @@
 <div>  
-  <button mat-raised-button (click)="addWork()" translate>
-    {{'addwork' | translate}}
-  </button>
+  <div>
+    <mat-form-field>
+      <mat-label>{{'workTypeSel' | transl}}</mat-label>
+        <mat-select 
+          [(value)]="selectedWorkType">
+          <mat-option *ngFor="let wType of workTypes" 
+          [value]="wType">
+            {{wType | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button mat-raised-button (click)="addWork()" translate>
+      {{'addWork' | translate}}
+    </button>
+  </div>
 
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
     <button mat-icon-button disabled></button>
     <mat-checkbox class="checklist-leaf-node"
@@ -32,6 +44,6 @@
                   (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
     <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
   </mat-tree-node>
-</mat-tree>
+</mat-tree> -->
 
 </div>
