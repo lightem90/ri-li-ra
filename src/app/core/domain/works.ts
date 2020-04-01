@@ -1,3 +1,5 @@
+import {NumberInput, TextInput} from "./common"
+
 export enum WorkType {
   Taglio,
   Sbavatura,
@@ -11,6 +13,15 @@ export enum WorkType {
   Saldatura,
   IncisioneLaser,
   ControlloQualita
+}
+
+//Classe per l'albero di interfaccia
+export class TreeWorkNode {
+
+}
+
+export class TreeWorkFlatNode {
+
 }
 
 export class WorkStage {
@@ -67,7 +78,6 @@ export class Work {
     public totalPrice : number = 0) {
 
   }
-
 }
 
 export enum ThermalWorkType {

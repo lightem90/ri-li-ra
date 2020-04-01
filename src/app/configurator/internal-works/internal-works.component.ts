@@ -11,4 +11,8 @@ export class InternalWorksComponent implements OnInit {
 
   ngOnInit() {}
 
+  addWork() {
+    
+  }
+
 }

@@ -34,5 +34,6 @@
   "TotConf" : "Totale preventivo",
   "TotGain" : "Guadagno",
   "PrezzoCostoAlPz" : "Costo singolo pezzo",
-  "TotAlPzExtAlPz" : "Costo singolo pezzo e lavorazioni"
+  "TotAlPzExtAlPz" : "Costo singolo pezzo e lavorazioni",
+  "addWork" : "Aggiungi lavorazione interna"
 }
