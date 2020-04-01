@@ -29,21 +29,30 @@ export class WorkFactoryService {
     //   "", 
     //   fixedTimes
     // )
-
-    var tPiaz = new NumberInput('wTPiaz', 0)
-    var workPriceH = new NumberInput('wPriceH', 0)
-    var totMin = new NumberInput('wMinutes', 0)
-
+  
     var totMinIn = new TextInput('wMinutes', "NaN")
     var pricePerPiece = new TextInput('pricePerPiece', "NaN")
     var result = new TreeWorkNode()
     result.name = wType.toString()
-    result.inputs = [tPiaz, workPriceH, totMin]
     result.outputs = [totMinIn, pricePerPiece]
     result.editable = true
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
-    result.stages = [new TreeWorkNode()]
+    result.stages = [
+      this.createSingleInput('wTPiaz', 0),
+      this.createSingleInput('wPriceH', 0),
+      this.createSingleInput('wMinutes', 0),
+      new TreeWorkNode()
+      ]
     return result;
+  }
+  
+
+  createSingleInput(name: string, value: number) {
+    var result = new TreeWorkNode();
+    var sIn = new NumberInput(name, value)
+    result.inputs = [sIn]
+    result.name = name
+    return result
   }
 
   createToolChangeStage() {

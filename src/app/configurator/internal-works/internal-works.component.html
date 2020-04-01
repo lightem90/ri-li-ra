@@ -17,7 +17,9 @@
   <br>
   <div>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <!-- Nodo dell'albero di default -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+      <!-- Il button serve come spacer, in tutti i mat-tree-node (esempio della doc.) -->
         <button mat-icon-button disabled></button>
         <app-number-input 
           *ngFor="let in of node.inputs"
@@ -29,6 +31,7 @@
         </app-disabled-input>
       </mat-tree-node>
 
+      <!-- Nodo dell'albero che si crea quandi si preme +, necessario inserire nome per creare nuovo stage -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
         <button mat-icon-button disabled></button>
         <mat-form-field>
@@ -38,13 +41,24 @@
         <button mat-button (click)="createStage(node, itemValue.value)">Save</button>
       </mat-tree-node>
 
+      <!-- Nodo per visualizzare un unico parametro di input -->
+      <mat-tree-node *matTreeNodeDef="let node; when: hasOneInput" matTreeNodePadding>
+        <div>        
+          <app-number-input
+            [input]="node.inputs[0]">
+          </app-number-input>
+        </div>
+      </mat-tree-node>
+
+      <!-- Nodo normale -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
         <button mat-icon-button matTreeNodeToggle>
           <mat-icon class="mat-icon-rtl-mirror">
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
-        </button>
-        <div background-color: lightskyblue>        
+        </button>        
+        <p> {{node.name | translate}}</p>
+        <div >        
           <app-number-input 
             *ngFor="let in of node.inputs"
             [input]="in">

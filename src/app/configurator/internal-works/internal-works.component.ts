@@ -5,6 +5,8 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {WorkType, TreeWorkNode, TreeWorkFlatNode} from '../../core/domain/works'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 
+import {NumberInput} from '../../core/domain/common'
+
 @Component({
   selector: 'app-internal-works',
   templateUrl: './internal-works.component.html',
@@ -22,6 +24,7 @@ export class InternalWorksComponent implements OnInit {
     getChildren = (node: TreeWorkNode): TreeWorkNode[] => node.stages;
     hasChild = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.name === '';
+    hasOneInput = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.inputs.length === 1;
     
     flatNodeMap = new Map<TreeWorkFlatNode, TreeWorkNode>();
     nestedNodeMap = new Map<TreeWorkNode, TreeWorkFlatNode>();    
