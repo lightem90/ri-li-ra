@@ -45,6 +45,8 @@ import { NumberInputComponent } from './shared/number-input/number-input.compone
 import { StringInputComponent } from './shared/string-input/string-input.component';
 import { DisabledInputComponent } from './shared/disabled-input/disabled-input.component';
 import { PdfUploaderComponent } from './shared/pdf-uploader/pdf-uploader.component';
+import { WorkTreeComponent } from './shared/work-tree/work-tree.component';
+
 
 
 if (!firebase.apps.length) {
@@ -95,7 +97,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     PdfUploaderComponent,
     InternalWorksComponent,
     ExternalWorksComponent,
-    RecapComponent],
+    RecapComponent,
+    WorkTreeComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, WorkTreeService]
 })
