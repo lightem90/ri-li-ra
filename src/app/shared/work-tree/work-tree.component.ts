@@ -71,7 +71,7 @@ export class WorkTreeComponent implements OnInit {
     createStage(node: TreeWorkFlatNode, stageName: string) {
       const parentNode = this.getParentNode(node) 
       const nestedNode = this.flatNodeMap.get(node);
-      this._treeService.updateItem(nestedNode!, stageName, parentNode.name);
+      this._treeService.updateWorkItem(nestedNode!, stageName, parentNode.name);
       this.treeControl.expand(node);
     }
     

@@ -15,11 +15,6 @@ import {NumberInput, TextInput, DisabledInput} from '../domain/common'
 @Injectable()
 export class WorkFactoryService {
 
-  constructor() { 
-
-  }
-  
-
   createSingleInput(name: string, value: number) {
     var result = new TreeWorkNode();
     var sIn = new NumberInput(name, value)
@@ -46,31 +41,46 @@ export class WorkFactoryService {
     return result
   }
 
-  createSimpleWork(wType : WorkType) {
+  createSimpleWork(wType : WorkType, addToolChangePhase: boolean  = false) {
  
     const result = this.createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
-    result.children = [
+    const inputs = [
       this.createSingleInput('wTPiaz', 0),
       this.createSingleInput('wPriceH', 0),
       this.createSingleInput('wMinutes', 0),
-      new TreeWorkNode()
       ]
+
+    if(addToolChangePhase) {
+      inputs.push(this.createToolChangeStage())
+    }
+    //Nodo vuoto per visualizzare subito l'input per la nuova fase
+    inputs.push(new TreeWorkNode())
+    result.children = inputs
     return result;
   }
 
-  createComplexWork(wType : WorkType) {
+  createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) {
 
     const result = this.createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
-    result.children = [
+
+    const inputs = [
       this.createSingleInput('wTPiaz', 0),
       this.createSingleInput('wTProg', 0),
       this.createSingleInput('wTAtt', 0),
       this.createSingleInput('wPriceH', 0),
-      this.createSingleInput('wMinutes', 0),
-      new TreeWorkNode()
+      this.createSingleInput('wMinutes', 0) 
       ]
+    
+    if(addToolChangePhase) {
+      inputs.push(this.createToolChangeStage())
+    }
+    
+    //Nodo vuoto per visualizzare subito l'input per la nuova fase
+    inputs.push(new TreeWorkNode())
+
+    result.children = inputs
     return result;
   }
 
@@ -106,7 +116,24 @@ export class WorkFactoryService {
   }
 
   createToolChangeStage() {
-    return new TreeWorkNode() //todo in/out
+    
+    const outputs = [
+      new TextInput('sMinutes', "0"), 
+      new TextInput('sPrice', "0")
+      ]
+    var result = new TreeWorkNode()
+
+    var inputs = []
+    inputs.push(new NumberInput('nStepCmUt'))
+    inputs.push(new NumberInput('mVelCmUt'))
+    inputs.push(new NumberInput('mMmCmUt'))
+
+    result.name = 'cmUt'
+    result.children = inputs.map(i => this.createSingleInputFrom(i))
+    result.outputs = outputs
+    result.inputs = inputs
+
+    return  result
   }
 
 
@@ -116,21 +143,28 @@ export class WorkFactoryService {
     switch(selectedWork) {
       case WorkType.Tornitura:
       case WorkType.Stozzatura:
-      case WorkType.ControlloQualita:
       case WorkType.Dentatura:
       case WorkType.Fresatura:
-      case WorkType.IncisioneLaser:
       case WorkType.RettificaTangenziale:
       case WorkType.RettificaVerticale:
       {
-        return this.createComplexWork(wType)
+        //lavorazioni con cambio utensile e tempi di attr/piazzamento
+        return this.createComplexWork(wType, true)
         break         
+      }
+      
+      case WorkType.ControlloQualita:
+      case WorkType.IncisioneLaser:
+      {
+        //lavorazioni SENZA cambio utensile e tempi di attr/piazzamento
+        return this.createComplexWork(wType)
       }
       case WorkType.Sabbiatura:
       case WorkType.Saldatura:
       case WorkType.Sbavatura:
       case WorkType.Taglio:
       {
+        //lavorazioni con solo tempo di piazzamento
         return this.createSimpleWork(wType)
         break;    
       }

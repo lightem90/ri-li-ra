@@ -44,12 +44,15 @@
   "mm_z": "Distanza da misurare in Z (mm)",
   "wTAtt": "Tempo di attrezzaggio",
   "wTProg": "Tempo del programma",
-  "sMinutes": "Minuti",
-  "sPrice": "Prezzo",
+  "sMinutes": "Tempo totale della fase (minuti)",
+  "sPrice": "Costo totale della ",
   "nPiece": "Numero di pezzi",
   "nStep": "Passate",
   "mVel": "Velocità (mm/min)",
   "mMm": "Distanza (mm)",
+  "nStepCmUt": "Numero di cambi",
+  "mVelCmUt": "Velocità cambio utensile (mm/min)",
+  "mMmCmUt": "Corsa cambio utensile (mm)",
   "p_z": "Passate in Z",
   "v_z": "Velocità in Z",
   "t_area": "Area della sezione da tagliare",
@@ -59,5 +62,6 @@
   "tor_mm_giro": "Avanzamento (mm/giro)",
   "tornMMin": "Velocità (mm/min)",
   "pricePerPiece": "Costo al pezzo",
-  "Save": "Conferma"
+  "Save": "Conferma",
+  "cmUt" : "Cambio utensile"
 }

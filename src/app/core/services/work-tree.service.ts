@@ -6,6 +6,9 @@ import {BehaviorSubject} from 'rxjs';
 import { TreeWorkNode, WorkType } from '../domain/works'
 import { WorkFactoryService } from './work-factory.service'
 
+
+
+
 @Injectable()
 export class WorkTreeService {
 
@@ -25,11 +28,11 @@ export class WorkTreeService {
   addWork(wTypeToAdd : WorkType) {
     const workNode = this._workFactory.createWork(wTypeToAdd)
     this.data.push(workNode)
-    this.dataChange.next(this.data);
+    this.dataChange.next(this.data)
   }
 
   //TODO: creare uno stage come TreeWorkNode, a seconda del tipo del parentNode (ogni lav ha stages differenti)
-  updateItem(node: TreeWorkNode, stageName: string, workName: string) {
+  updateWorkItem(node: TreeWorkNode, stageName: string, workName: string) {
     const selectedWorkType = WorkType[workName]
     const stage = this._workFactory.createStageForWork(selectedWorkType, stageName)
     node.name = stage.name;
