@@ -34,7 +34,7 @@ export class InternalWorksComponent implements OnInit {
     ngOnInit() {}
 
     addWork() {
-      this.treeService.addWork(this.selectedWorkType)
+      this.treeService.addWork(this.selectedWorkType.toString())
     }
 
 }

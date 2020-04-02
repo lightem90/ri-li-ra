@@ -23,7 +23,7 @@ export class WorkTreeComponent implements OnInit {
     getChildren = (node: TreeWorkNode): TreeWorkNode[] => node.children;
     hasChild = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.name === '';
-    hasOneInput = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.inputs.length === 1;
+    hasOneInput = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.isSingleNode;
     
     flatNodeMap = new Map<TreeWorkFlatNode, TreeWorkNode>();
     nestedNodeMap = new Map<TreeWorkNode, TreeWorkFlatNode>();    
@@ -41,6 +41,7 @@ export class WorkTreeComponent implements OnInit {
       flatNode.expandable = !!node.children;
       flatNode.inputs = node.inputs
       flatNode.outputs = node.outputs
+      flatNode.isSingleNode = node.isSingleNode
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
       return flatNode;

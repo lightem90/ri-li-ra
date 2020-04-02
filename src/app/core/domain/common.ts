@@ -35,8 +35,10 @@ export class TreeWorkNode {
   public name : string = ""
   public editable : boolean
   public inputs : NumberInput []= []
+  public textInputs : TextInput[] = []
   public outputs : DisabledInput[]= []
   public children : TreeWorkNode[]= []
+  public isSingleNode : boolean = false
 }
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
@@ -45,7 +47,9 @@ export class TreeWorkFlatNode {
   level: number = 0
   expandable: boolean
   public inputs : NumberInput[] = []
+  public textInputs : TextInput[] = []
   public outputs : DisabledInput[] = []
+  public isSingleNode : boolean = false
 }
 
 

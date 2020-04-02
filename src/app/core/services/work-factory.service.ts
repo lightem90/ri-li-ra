@@ -16,25 +16,58 @@ import {
 
 import {NumberInput, TextInput, DisabledInput} from '../domain/common'
 
-@Injectable()
-export class WorkFactoryService {
+export interface IWorkFactoryService 
+{
+  createWork(wTypeString : string) : TreeWorkNode
+  createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode
+}
 
-  createSingleInput(name: string, value: number) {
+@Injectable()
+export class ExternalWorkFactoryService implements IWorkFactoryService {
+
+  _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
+    const result = new TreeWorkNode()
+    result.textInputs.push(new TextInput('udm', 'Kg'))
+    result.inputs.push(new NumberInput('unitaryPrice', 0))
+    result.outputs = [
+      new TextInput('wMinutes', "0"),
+      new TextInput('wMinutes', "0")
+    ]
+    result.name = wTypeString
+    return result
+  }
+  //si possono specificare per ogni lavorazione estrna unità di misura e prezzo unitario
+  createWork(wTypeString : string) {
+    return this._createExternalWorkNode(wTypeString)
+  }
+  
+  createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode{
+    return this._createExternalWorkNode(stageName)
+  }
+}
+
+
+@Injectable()
+export class WorkFactoryService implements IWorkFactoryService {
+
+  _createSingleInput(name: string, value: number) {
     var result = new TreeWorkNode();
     var sIn = new NumberInput(name, value)
     result.inputs = [sIn]
     result.name = name
+    result.isSingleNode = true
     return result
   }
 
-  createSingleInputFrom(nInput : NumberInput) {
+  _createSingleInputFrom(nInput : NumberInput) {
     var result = new TreeWorkNode();
     result.inputs = [nInput]
     result.name = nInput.label
+    result.isSingleNode = true
     return result
   }  
 
-  createWorkWithoutInputs(wType : WorkType)
+  _createWorkWithoutInputs(wType : WorkType)
   {    
     var totMinIn = new TextInput('wMinutes', "0")
     var pricePerPiece = new TextInput('pricePerPiece', "0")
@@ -45,18 +78,18 @@ export class WorkFactoryService {
     return result
   }
 
-  createSimpleWork(wType : WorkType, addToolChangePhase: boolean  = false) {
+  _createSimpleWork(wType : WorkType, addToolChangePhase: boolean  = false) {
  
-    const result = this.createWorkWithoutInputs(wType)
+    const result = this._createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
     const inputs = [
-      this.createSingleInput('wTPiaz', 0),
-      this.createSingleInput('wPriceH', 0),
-      this.createSingleInput('wMinutes', 0),
+      this._createSingleInput('wTPiaz', 0),
+      this._createSingleInput('wPriceH', 0),
+      this._createSingleInput('wMinutes', 0),
       ]
 
     if(addToolChangePhase) {
-      inputs.push(this.createToolChangeStage())
+      inputs.push(this._createToolChangeStage())
     }
     //Nodo vuoto per visualizzare subito l'input per la nuova fase
     inputs.push(new TreeWorkNode())
@@ -64,22 +97,22 @@ export class WorkFactoryService {
     return result;
   }
 
-  createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
+  _createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
   {
     console.log(wType)
-    const result = this.createWorkWithoutInputs(wType)
+    const result = this._createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
 
     const inputs = [
-      this.createSingleInput('wTPiaz', 0),
-      this.createSingleInput('wTProg', 0),
-      this.createSingleInput('wTAtt', 0),
-      this.createSingleInput('wPriceH', 0),
-      this.createSingleInput('wMinutes', 0) 
+      this._createSingleInput('wTPiaz', 0),
+      this._createSingleInput('wTProg', 0),
+      this._createSingleInput('wTAtt', 0),
+      this._createSingleInput('wPriceH', 0),
+      this._createSingleInput('wMinutes', 0) 
       ]
     
     if(addToolChangePhase) {
-      inputs.push(this.createToolChangeStage())
+      inputs.push(this._createToolChangeStage())
     }
     
     //Nodo vuoto per visualizzare subito l'input per la nuova fase
@@ -89,7 +122,7 @@ export class WorkFactoryService {
     return result;
   }
 
-  internalCreateStageForWork(
+  _internalCreateStageForWork(
     wType : WorkType, 
     stageName: string,
     optOutputs: DisabledInput[] = [],
@@ -113,14 +146,14 @@ export class WorkFactoryService {
     }
 
     var result = new TreeWorkNode()
-    result.children = inputs.map(i => this.createSingleInputFrom(i))
+    result.children = inputs.map(i => this._createSingleInputFrom(i))
     result.outputs = outputs
     result.inputs = inputs
     result.name = stageName
     return result
   }
 
-  createToolChangeStage() {
+  _createToolChangeStage() {
     
     const outputs = [
       new TextInput('sMinutes', "0"), 
@@ -134,7 +167,7 @@ export class WorkFactoryService {
     inputs.push(new NumberInput('mMmCmUt'))
 
     result.name = 'cmUt'
-    result.children = inputs.map(i => this.createSingleInputFrom(i))
+    result.children = inputs.map(i => this._createSingleInputFrom(i))
     result.outputs = outputs
     result.inputs = inputs
 
@@ -142,9 +175,9 @@ export class WorkFactoryService {
   }
 
 
-  createWork(wType : WorkType){
-    const selectedWork = WorkType[wType];
-    switch(selectedWork) {
+  createWork(wTypeString : string){
+    const wType = WorkType[wTypeString]
+    switch(wType) {
       case WorkType.Tornitura:
       case WorkType.Stozzatura:
       case WorkType.Dentatura:
@@ -153,7 +186,7 @@ export class WorkFactoryService {
       case WorkType.RettificaVerticale:
       {
         //lavorazioni con cambio utensile e tempi di attr/piazzamento
-        return this.createComplexWork(wType, true)
+        return this._createComplexWork(wType, true)
         break         
       }
       
@@ -161,7 +194,7 @@ export class WorkFactoryService {
       case WorkType.IncisioneLaser:
       {
         //lavorazioni SENZA cambio utensile e tempi di attr/piazzamento
-        return this.createComplexWork(wType)
+        return this._createComplexWork(wType)
         break         
       }
       case WorkType.Sabbiatura:
@@ -170,21 +203,21 @@ export class WorkFactoryService {
       case WorkType.Taglio:
       {
         //lavorazioni con solo tempo di piazzamento
-        return this.createSimpleWork(wType)
+        return this._createSimpleWork(wType)
         break;    
       }
       default:
       {
-        console.log('error, work not supported: ' + wType.toString())
+        console.log('Error, work not supported: ' + wType.toString())
         return null
         break
       }
     }
   }
 
-  createStageForWork(wType : WorkType, stageName: string) {
-
-    switch(wType) {
+  createStageForWork(wTypeString : string, stageName: string) {
+    const wType = WorkType[wTypeString]
+    switch(+wTypeString) {
       case WorkType.Dentatura:
       case WorkType.Fresatura:
       case WorkType.IncisioneLaser:
@@ -195,7 +228,7 @@ export class WorkFactoryService {
       case WorkType.Sbavatura:
       case WorkType.Stozzatura:
       {
-        return this.internalCreateStageForWork(wType, stageName)
+        return this._internalCreateStageForWork(wType, stageName)
       }
       case WorkType.ControlloQualita:
       {
@@ -204,7 +237,7 @@ export class WorkFactoryService {
           new NumberInput('p_z'),
           new NumberInput('v_z')
         ]
-        return this.internalCreateStageForWork(wType, stageName, [], optValues)
+        return this._internalCreateStageForWork(wType, stageName, [], optValues)
       }
       case WorkType.Taglio:
       {
@@ -216,7 +249,7 @@ export class WorkFactoryService {
         const optOutput = [
           new TextInput('taglioSec', '0')
         ]
-        return this.internalCreateStageForWork(wType, stageName, optOutput, optValues, false)
+        return this._internalCreateStageForWork(wType, stageName, optOutput, optValues, false)
       }
       case WorkType.Tornitura:
       {
@@ -228,7 +261,7 @@ export class WorkFactoryService {
           new TextInput('tornMMin', '0')
         ]
           
-        return this.internalCreateStageForWork(wType, stageName, optOutput, optValues)
+        return this._internalCreateStageForWork(wType, stageName, optOutput, optValues)
       }
       default:
         console.log('Cannot create stage for: ' + wType)

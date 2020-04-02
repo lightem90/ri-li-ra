@@ -4,17 +4,16 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 
 import { TreeWorkNode, WorkType } from '../domain/works'
-import { IWorkTreeService } from '../domain/common'
-import { WorkFactoryService } from './work-factory.service'
+import { IWorkFactoryService } from './work-factory.service'
 
 @Injectable()
-export class WorkTreeService implements IWorkTreeService{
+export class WorkTreeService{
 
   dataChange = new BehaviorSubject<TreeWorkNode[]>([]);
 
   get data(): TreeWorkNode[] { return this.dataChange.value; }
 
-  constructor(private _workFactory : WorkFactoryService) { }
+  constructor(private _workFactory : IWorkFactoryService) { }
 
   addDefault(parent: TreeWorkNode) {
         if (parent.children) {
@@ -23,16 +22,15 @@ export class WorkTreeService implements IWorkTreeService{
     }
   }
 
-  addWork(wTypeToAdd : WorkType) {
-    const workNode = this._workFactory.createWork(wTypeToAdd)
+  addWork(wType : string) {
+    const workNode = this._workFactory.createWork(wType)
     this.data.push(workNode)
     this.dataChange.next(this.data)
   }
 
   //TODO: creare uno stage come TreeWorkNode, a seconda del tipo del parentNode (ogni lav ha stages differenti)
   updateWorkItem(node: TreeWorkNode, stageName: string, workName: string) {
-    const selectedWorkType = WorkType[workName]
-    const stage = this._workFactory.createStageForWork(selectedWorkType, stageName)
+    const stage = this._workFactory.createStageForWork(workName, stageName)
     node.name = stage.name;
     node.children = stage.children
     node.inputs = stage.inputs
