@@ -20,7 +20,6 @@ export class HomeConfiguratorComponent implements OnInit {
         if (res)
         {
           this.background = res
-          console.log(this.background)
         }
     })
 

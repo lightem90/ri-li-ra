@@ -1,5 +1,65 @@
-<p>
-
-external-works works!
-
-</p>
+<div>
+  <div>  
+    <app-work-tree
+    [treeService]="treeServiceThermal"> 
+    </app-work-tree>
+    <br>
+    <div>
+      <mat-form-field>
+        <mat-label>{{'workTypeThermalSel' | translate}}</mat-label>
+          <mat-select 
+            [(value)]="selectedWorkThermalType">
+            <mat-option *ngFor="let wType of workThermTypes" 
+            [value]="wType">
+              {{wType | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button mat-raised-button (click)="addThermWork()" translate>
+        {{'addThermWork' | translate}}
+      </button>
+    </div>
+  </div>
+  <div>  
+    <app-work-tree
+    [treeService]="treeServiceSuperficial"> 
+    </app-work-tree>
+    <br>
+    <div>
+      <mat-form-field>
+        <mat-label>{{'workTypeSuperficialSel' | translate}}</mat-label>
+          <mat-select 
+            [(value)]="selectedWorkSupType">
+            <mat-option *ngFor="let wType of workSupTypes" 
+            [value]="wType">
+              {{wType | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button mat-raised-button (click)="addSupWork()" translate>
+        {{'addSupWork' | translate}}
+      </button>
+    </div>
+  </div>
+  <div>  
+    <app-work-tree
+    [treeService]="treeServiceExternal"> 
+    </app-work-tree>
+    <br>
+    <div>
+      <mat-form-field>
+        <mat-label>{{'workTypeExtSel' | translate}}</mat-label>
+          <mat-select 
+            [(value)]="selectedExtWorkType">
+            <mat-option *ngFor="let wType of workExtTypes" 
+            [value]="wType">
+              {{wType | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button mat-raised-button (click)="addExtWork()" translate>
+        {{'addExtWork' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

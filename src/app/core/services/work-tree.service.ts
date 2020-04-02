@@ -22,6 +22,11 @@ export class WorkTreeService{
     }
   }
 
+  addNode(workNode : TreeWorkNode) {
+    this.data.push(workNode)
+    this.dataChange.next(this.data)
+  }
+
   addWork(wType : string) {
     const workNode = this._workFactory.createWork(wType)
     this.data.push(workNode)

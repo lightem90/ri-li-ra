@@ -25,24 +25,57 @@ export interface IWorkFactoryService
 @Injectable()
 export class ExternalWorkFactoryService implements IWorkFactoryService {
 
+  _createSingleInput(name: string, value: number) {
+    var result = new TreeWorkNode();
+    var sIn = new NumberInput(name, value)
+    result.inputs = [sIn]
+    result.name = name
+    result.isSingleNode = true
+    return result
+  }
+
+  _createSingleTextInput(name: string, value: string) {
+    var result = new TreeWorkNode();
+    var sIn = new TextInput(name, value)
+    result.textInputs = [sIn]
+    result.name = name
+    result.isSingleNode = true
+    return result
+  }
+
   _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
     const result = new TreeWorkNode()
+    //servono per gli if di interfaccia
     result.textInputs.push(new TextInput('udm', 'Kg'))
     result.inputs.push(new NumberInput('unitaryPrice', 0))
+    result.inputs.push(new NumberInput('PercRic', 0))
     result.outputs = [
-      new TextInput('wMinutes', "0"),
-      new TextInput('wMinutes', "0")
+      new TextInput('totPrice', "0")
+    ]
+    result.children = [
+      this._createSingleInput('unitaryPrice', 0),
+      this._createSingleInput('PercRic', 0),
+      this._createSingleTextInput('udm', 'Kg')
     ]
     result.name = wTypeString
+    result.canAddLevel = false
     return result
   }
   //si possono specificare per ogni lavorazione estrna unità di misura e prezzo unitario
+  //gli enum sono solo "da fuori" a me interessa solo il tipo
   createWork(wTypeString : string) {
     return this._createExternalWorkNode(wTypeString)
   }
   
   createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode{
     return this._createExternalWorkNode(stageName)
+  }
+
+  createHeaderNode(title : string) {
+    var result = new TreeWorkNode()
+    result.name = title
+    result.children = [new TreeWorkNode()]
+    return result
   }
 }
 
@@ -72,7 +105,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     var totMinIn = new TextInput('wMinutes', "0")
     var pricePerPiece = new TextInput('pricePerPiece', "0")
     var result = new TreeWorkNode()
-    result.name = wType.toString()
+    result.name = WorkType[wType]
     result.outputs = [totMinIn, pricePerPiece]
     result.editable = true
     return result
@@ -99,7 +132,6 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
   {
-    console.log(wType)
     const result = this._createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
 
@@ -129,6 +161,9 @@ export class WorkFactoryService implements IWorkFactoryService {
     optInputs: NumberInput[] = [],
     addDefault = true) {      //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
     
+    console.log(wType)
+    console.log(stageName)
+
     var sMin = new TextInput('sMinutes', "0")
     var sPrice = new TextInput('sPrice', "0")
     
@@ -144,7 +179,6 @@ export class WorkFactoryService implements IWorkFactoryService {
       inputs.push(new NumberInput('mVel'))
       inputs.push(new NumberInput('mMm'))
     }
-
     var result = new TreeWorkNode()
     result.children = inputs.map(i => this._createSingleInputFrom(i))
     result.outputs = outputs
@@ -217,7 +251,7 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   createStageForWork(wTypeString : string, stageName: string) {
     const wType = WorkType[wTypeString]
-    switch(+wTypeString) {
+    switch(wType) {
       case WorkType.Dentatura:
       case WorkType.Fresatura:
       case WorkType.IncisioneLaser:
@@ -229,6 +263,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.Stozzatura:
       {
         return this._internalCreateStageForWork(wType, stageName)
+        break;
       }
       case WorkType.ControlloQualita:
       {
@@ -238,6 +273,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           new NumberInput('v_z')
         ]
         return this._internalCreateStageForWork(wType, stageName, [], optValues)
+        break;
       }
       case WorkType.Taglio:
       {
@@ -250,6 +286,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           new TextInput('taglioSec', '0')
         ]
         return this._internalCreateStageForWork(wType, stageName, optOutput, optValues, false)
+        break;
       }
       case WorkType.Tornitura:
       {
@@ -262,6 +299,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         ]
           
         return this._internalCreateStageForWork(wType, stageName, optOutput, optValues)
+        break;
       }
       default:
         console.log('Cannot create stage for: ' + wType)

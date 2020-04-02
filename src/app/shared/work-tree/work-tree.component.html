@@ -26,10 +26,15 @@
 
       <!-- Nodo per visualizzare un unico parametro di input -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasOneInput" matTreeNodePadding>
-        <div>        
-          <app-number-input
+        <div>
+          <app-number-input 
+            *ngIf="node.inputs.length === 1"
             [input]="node.inputs[0]">
-          </app-number-input>
+          </app-number-input>       
+          <app-string-input 
+            *ngIf="node.textInputs.length === 1"
+            [input]="node.textInputs[0]">
+          </app-string-input>      
         </div>
       </mat-tree-node>
 
@@ -52,7 +57,7 @@
           </app-disabled-input>
         </div>
         <button 
-          *ngIf="node.level === 0"
+          *ngIf="node.canAddLevel()"
           mat-icon-button 
           (click)="addNewItem(node)">
           <mat-icon>add</mat-icon>

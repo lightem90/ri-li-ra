@@ -63,5 +63,14 @@
   "tornMMin": "Velocità (mm/min)",
   "pricePerPiece": "Costo al pezzo",
   "Save": "Conferma",
-  "cmUt" : "Cambio utensile"
+  "cmUt" : "Cambio utensile",
+  "addThermWork" : "Aggiungi trattamento termico",
+  "addSupWork" : "Aggiungi trattamento superficiale",
+  "addExtWork" : "Aggiunti lavorazione esterna",
+  "workTypeThermalSel" : "Trattamento termico",
+  "workTypeSuperficialSel" : "Trattamento superficiale",
+  "workTypeExtSel" : "Lavorazione externa",
+  "udm" : "Unità di misura",
+  "unitaryPrice" : "Costo unitario (dipende dall'unità di misura selezionata)",
+  "totPrice" : "Costo totale"
 }
