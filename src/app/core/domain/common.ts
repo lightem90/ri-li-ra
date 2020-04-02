@@ -1,3 +1,6 @@
+
+import {BehaviorSubject} from 'rxjs';
+
 export interface DisabledInput {
   label : string
   text : string
@@ -24,4 +27,30 @@ export class NumberInput implements DisabledInput{
     public value: number = 0) {
       this.text = value.toString()
   }
+}
+
+//Nodo che rappresenta un parametro della lavorazione (t. piazzamento etc..)
+export class TreeWorkNode {
+
+  public name : string = ""
+  public editable : boolean
+  public inputs : NumberInput []= []
+  public outputs : DisabledInput[]= []
+  public children : TreeWorkNode[]= []
+}
+//nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
+export class TreeWorkFlatNode {
+  
+  public name : string = ""
+  level: number = 0
+  expandable: boolean
+  public inputs : NumberInput[] = []
+  public outputs : DisabledInput[] = []
+}
+
+
+export interface IWorkTreeService {
+  dataChange : BehaviorSubject<TreeWorkNode[]>
+  addDefault(parent: TreeWorkNode)
+  updateWorkItem(node: TreeWorkNode, stageName: string, workName: string)
 }

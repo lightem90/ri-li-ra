@@ -6,9 +6,13 @@ import {
   ToolChangeStage, 
   Work, 
   FixedWorkTimes, 
-  OptionalStageValue,
-  TreeWorkNode
+  OptionalStageValue
 } from '../domain/works'
+
+import {
+  TreeWorkNode,
+  TreeWorkFlatNode
+} from "../domain/common"
 
 import {NumberInput, TextInput, DisabledInput} from '../domain/common'
 
@@ -60,8 +64,9 @@ export class WorkFactoryService {
     return result;
   }
 
-  createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) {
-
+  createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
+  {
+    console.log(wType)
     const result = this.createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
 
@@ -138,7 +143,6 @@ export class WorkFactoryService {
 
 
   createWork(wType : WorkType){
-
     const selectedWork = WorkType[wType];
     switch(selectedWork) {
       case WorkType.Tornitura:
@@ -158,6 +162,7 @@ export class WorkFactoryService {
       {
         //lavorazioni SENZA cambio utensile e tempi di attr/piazzamento
         return this.createComplexWork(wType)
+        break         
       }
       case WorkType.Sabbiatura:
       case WorkType.Saldatura:

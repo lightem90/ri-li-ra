@@ -3,7 +3,9 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {WorkType, TreeWorkNode, TreeWorkFlatNode} from '../../core/domain/works'
+import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
+import {WorkFactoryService} from '../../core/services/work-factory.service'
 
 import {NumberInput} from '../../core/domain/common'
 
@@ -17,8 +19,13 @@ export class InternalWorksComponent implements OnInit {
     //stati per il combo
     workTypes: WorkType[]
     selectedWorkType : WorkType = null
+    
+    public treeService: WorkTreeService
 
-    constructor(private _treeService: WorkTreeService) { 
+    constructor(private _workFactory : WorkFactoryService) {  
+
+      this.treeService = new WorkTreeService(_workFactory)
+
       this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
       this.selectedWorkType = this.workTypes[0]
     }
@@ -27,7 +34,7 @@ export class InternalWorksComponent implements OnInit {
     ngOnInit() {}
 
     addWork() {
-      this._treeService.addWork(this.selectedWorkType)
+      this.treeService.addWork(this.selectedWorkType)
     }
 
 }

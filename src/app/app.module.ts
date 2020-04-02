@@ -100,6 +100,6 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     RecapComponent,
     WorkTreeComponent],
   bootstrap:    [ AppComponent ],
-  providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, WorkTreeService]
+  providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService]
 })
 export class AppModule { }

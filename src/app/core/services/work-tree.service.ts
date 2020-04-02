@@ -4,13 +4,11 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 
 import { TreeWorkNode, WorkType } from '../domain/works'
+import { IWorkTreeService } from '../domain/common'
 import { WorkFactoryService } from './work-factory.service'
 
-
-
-
 @Injectable()
-export class WorkTreeService {
+export class WorkTreeService implements IWorkTreeService{
 
   dataChange = new BehaviorSubject<TreeWorkNode[]>([]);
 

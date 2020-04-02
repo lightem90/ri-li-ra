@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {WorkType, TreeWorkNode, TreeWorkFlatNode} from '../../core/domain/works'
+import {WorkType} from '../../core/domain/works'
+
 import {WorkTreeService} from '../../core/services/work-tree.service'
 
-import {NumberInput} from '../../core/domain/common'
+import {NumberInput, TreeWorkFlatNode, TreeWorkFlaNode, IWorkTreeService} from '../../core/domain/common'
 
 @Component({
   selector: 'app-work-tree',
   templateUrl: './work-tree.component.html',
   styleUrls: ['./work-tree.component.css']
 })
-export class WorkTreeComponent implements OnInit {
-  
+export class WorkTreeComponent implements OnInit {  
+
+    @Input() treeService: IWorkTreeService
+
     //stati per l'albero (far diventare tutto un componente!)
     getLevel = (node: TreeWorkFlatNode) => node.level;
     isExpandable = (node: TreeWorkFlatNode) => node.expandable;
@@ -43,7 +46,7 @@ export class WorkTreeComponent implements OnInit {
       return flatNode;
     }
 
-    constructor(private _treeService: WorkTreeService) { 
+    constructor() { 
       
       this.treeFlattener = new MatTreeFlattener(
         this.transformer, 
@@ -53,25 +56,25 @@ export class WorkTreeComponent implements OnInit {
       this.treeControl = new FlatTreeControl<TreeWorkFlatNode>(this.getLevel, this.isExpandable);
 
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener)
-      _treeService.dataChange.subscribe(data => {
+    }
+
+    ngOnInit() {
+      this.treeService.dataChange.subscribe(data => {
         this.dataSource.data = data;
       });
     }
 
-  ngOnInit() {
-  } 
-
     /** Select the category so we can insert the new item. */
     addNewItem(node: TreeWorkFlatNode) {
       const parentNode = this.flatNodeMap.get(node);
-      this._treeService.addDefault(parentNode)
+      this.treeService.addDefault(parentNode)
       this.treeControl.expand(node);
     }
 
     createStage(node: TreeWorkFlatNode, stageName: string) {
       const parentNode = this.getParentNode(node) 
       const nestedNode = this.flatNodeMap.get(node);
-      this._treeService.updateWorkItem(nestedNode!, stageName, parentNode.name);
+      this.treeService.updateWorkItem(nestedNode!, stageName, parentNode.name);
       this.treeControl.expand(node);
     }
     
