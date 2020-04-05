@@ -25,7 +25,10 @@
               <mat-form-field>
                 <mat-label>Prezzo piatto</mat-label>
                 <!-- <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="1"> -->
-                <input matInput (change)="setChanged()" [(ngModel)]="material.price_p" value="1">
+                <input 
+                  matInput 
+                  (change)="setChanged()" 
+                  [(ngModel)]="material.price_p" value="1">
                 <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->
               </mat-form-field>
             </div>
@@ -37,6 +40,7 @@
                 <!-- <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint> -->   
               </mat-form-field>  
             </div>
+            <app-disabled-input [input]="material.spec_weight_text"> </app-disabled-input>
           </div>
         </div>
         </mat-card-content> 

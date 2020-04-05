@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -8,6 +8,7 @@ import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {ExternalWorkFactoryService} from '../../core/services/work-factory.service'
 
+import {Budget} from '../../core/domain/budget'
 import {NumberInput} from '../../core/domain/common'
 
 @Component({
@@ -17,6 +18,7 @@ import {NumberInput} from '../../core/domain/common'
 })
 export class ExternalWorksComponent implements OnInit {
     
+  @Input() budget : Budget
   public treeServiceThermal: WorkTreeService
   public treeServiceSuperficial: WorkTreeService
   public treeServiceExternal: WorkTreeService

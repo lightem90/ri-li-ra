@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import {Budget} from '../../core/domain/budget'
 
 import {TextInput, NumberInput} from '../../core/domain/common'
 
@@ -9,15 +11,16 @@ import {TextInput, NumberInput} from '../../core/domain/common'
 })
 export class PiecePriceComponent implements OnInit {
 
-  chargePercentage = new NumberInput("PercRic", 0)
-  totWeigth = new TextInput("PesoTot", "NonCalc")
-  unitaryPrice = new TextInput("CostoAlPz", "NonCalc")
+  @Input() budget : Budget
 
-  constructor() {
-  }
+  pieceChargePercentage : NumberInput
+  totWeigth : TextInput
+  pieceUnitaryPrice : TextInput
 
-
-  ngOnInit() {
+  ngOnInit() {    
+    this.pieceChargePercentage = this.budget.pieceChargePercentage
+    this.totWeigth = this.budget.totWeigth
+    this.pieceUnitaryPrice = this.budget.pieceUnitaryPrice
   }
 
 }

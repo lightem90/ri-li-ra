@@ -1,6 +1,8 @@
 import {NumberInput, TextInput, DisabledInput} from "./common"
 import {Material} from './material';
+import {Shape} from './piece';
 
+//dominio per l'interfaccia..
 export class Budget {
   constructor(
     public uid: string = "",
@@ -10,8 +12,18 @@ export class Budget {
     public material: Material = null,
     public budget_date : DisabledInput = null,
     public n_pieces = new NumberInput ("n_pieces", 0),
-    public client_name = new TextInput("client_name", ""))
-  {
+    public client_name = new TextInput("client_name", ""),
+    public pieceChargePercentage = new NumberInput("PercRic", 0),
+    public totWeigth = new TextInput("PesoTot", "0"),
+    public pieceUnitaryPrice = new TextInput("CostoAlPz", "0"),    
+    public recap_tot_prz = new NumberInput ("PrezzoAlPz", 0),
+    public recap_tot = new TextInput("TotConf", "NonCalc"),
+    public recap_tot_gain = new TextInput("TotGain", "NonCalc"),
+    public recap_pc_pz = new TextInput("PrezzoCostoAlPz", "NonCalc"),
+    public recap_pce_pz = new TextInput("TotAlPzExtAlPz", "NonCalc"),
+    public selectedShape : Shape = null,
+    public shapeInputs: NumberInput[] = []){
+      
       if (budget_date == null) {
         this.initDate();
       }

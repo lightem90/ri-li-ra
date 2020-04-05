@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-
 import { FileValidator } from 'ngx-material-file-input';
 
 import { Shape } from '../../core/domain/piece'
-import {TextInput, NumberInput} from '../../core/domain/common'
+import { Budget } from '../../core/domain/budget'
+import { TextInput, NumberInput } from '../../core/domain/common'
 
 @Component({
   selector: 'app-piece-selector',
@@ -13,6 +13,7 @@ import {TextInput, NumberInput} from '../../core/domain/common'
 })
 export class PieceSelectorComponent implements OnInit {
 
+  @Input() budget : Budget
   shapes: Shape[]
   selectedShape : Shape = null
   inputs: NumberInput[] = []
@@ -20,15 +21,13 @@ export class PieceSelectorComponent implements OnInit {
   pdfSrc : string
 
   constructor(private _fb: FormBuilder) { 
-
-    this.shapes = Object.values(Shape).filter(x => typeof x === 'string')
-    this.selectedShape = this.shapes[0]
-    this.updateInputs(this.selectedShape)
-    
+    this.shapes = Object.values(Shape).filter(x => typeof x === 'string')  
     this.pieceSelector = this._fb.group({})
   }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.selectedShape = this.shapes[0]
+    this.updateInputs(this.selectedShape)
   }
 
   updateInputs(shape : Shape) {
@@ -92,5 +91,8 @@ export class PieceSelectorComponent implements OnInit {
         console.log("ERROR")
         break;
     }
+
+    this.budget.selectedShape = this.selectedShape
+    this.budget.shapeInputs = this.inputs
   }
 }

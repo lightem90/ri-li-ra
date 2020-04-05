@@ -38,7 +38,7 @@
     <!-- <mat-divider></mat-divider> -->
     <br>
 
-    <app-piece-selector></app-piece-selector>
+    <app-piece-selector [budget]="budget"></app-piece-selector>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Indietro</button>
@@ -63,7 +63,7 @@
     <!-- <mat-divider></mat-divider> -->
     <br>
 
-    <app-piece-price></app-piece-price>
+    <app-piece-price [budget]="budget"></app-piece-price>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Indietro</button>
@@ -83,7 +83,7 @@
 
     <!-- <mat-divider></mat-divider> -->
     <br>
-    <app-internal-works></app-internal-works>
+    <app-internal-works [budget]="budget"></app-internal-works>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Indietro</button>
@@ -103,7 +103,7 @@
 
     <!-- <mat-divider></mat-divider> -->
     <br>
-    <app-external-works></app-external-works>
+    <app-external-works [budget]="budget"></app-external-works>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Indietro</button>
@@ -123,7 +123,7 @@
 
     <!-- <mat-divider></mat-divider> -->
     <br>
-    <app-recap> </app-recap>
+    <app-recap [budget]="budget"> </app-recap>
 
     <mat-action-row>
       <button mat-button color="primary" (click)="nextStep()">Chiudi</button>
