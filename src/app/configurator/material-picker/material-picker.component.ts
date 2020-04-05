@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Material} from '../../core/domain/material'
 import {Budget} from '../../core/domain/budget'
 
-import {TextInput, NumberInput} from '../../core/domain/common'
+import {TextInput, NumberInput, DisabledInput} from '../../core/domain/common'
 
 import {ConfiguratorService} from '../../core/services/configurator.service'
 
@@ -17,12 +17,13 @@ export class MaterialPickerComponent implements OnInit {
   changed : boolean = false;
   materials: Material[] = []
 
-  n_pieces = new NumberInput ("n_pieces", 0)
-  client_name = new TextInput("client_name", "")
+  n_pieces : NumberInput
+  client_name : TextInput
+  budget_date : DisabledInput
 
   @Input() budget : Budget
   
-  constructor(private configuratorService : ConfiguratorService) { 
+  constructor(private configuratorService : ConfiguratorService) {     
   }
 
   saveMaterial() {
@@ -41,7 +42,10 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchMaterials()   
+    this.fetchMaterials()  
+    this.budget_date = this.budget.budget_date 
+    this.n_pieces = this.budget.n_pieces 
+    this.client_name = this.budget.client_name 
   }
 
   fetchMaterials(){

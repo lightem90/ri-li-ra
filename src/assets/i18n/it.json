@@ -74,5 +74,6 @@
   "unitaryPrice" : "Costo unitario (dipende dall'unità di misura selezionata)",
   "totPrice" : "Costo totale",
   "client_name": "Nome del cliente",
-  "n_pieces": "Numero di pezzi da produrre"
+  "n_pieces": "Numero di pezzi da produrre",
+  "date" : "Giorno"
 }

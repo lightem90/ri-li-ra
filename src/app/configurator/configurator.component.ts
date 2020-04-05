@@ -11,10 +11,13 @@ export class ConfiguratorComponent implements OnInit {
 
   step = 0;
   budget : Budget
-  
-  ngOnInit() {
+
+  constructor() {    
     //todo query db
     this.budget = new Budget()
+  }
+  
+  ngOnInit() {
   }
 
 
