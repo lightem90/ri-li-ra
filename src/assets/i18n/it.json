@@ -72,5 +72,7 @@
   "workTypeExtSel" : "Lavorazione externa",
   "udm" : "Unità di misura",
   "unitaryPrice" : "Costo unitario (dipende dall'unità di misura selezionata)",
-  "totPrice" : "Costo totale"
+  "totPrice" : "Costo totale",
+  "client_name": "Nome del cliente",
+  "n_pieces": "Numero di pezzi da produrre"
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Material} from '../../core/domain/material'
 import {Budget} from '../../core/domain/budget'
 
+import {TextInput, NumberInput} from '../../core/domain/common'
+
 import {ConfiguratorService} from '../../core/services/configurator.service'
 
 @Component({
@@ -14,6 +16,9 @@ export class MaterialPickerComponent implements OnInit {
   selectedMaterialId : string;
   changed : boolean = false;
   materials: Material[] = []
+
+  n_pieces = new NumberInput ("n_pieces", 0)
+  client_name = new TextInput("client_name", "")
 
   @Input() budget : Budget
   
