@@ -6,12 +6,13 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanAc
 
 import { Budget } from '../domain/budget'
 import { FirebaseHelper } from './firebase-helper'
+import { BudgetCalculatorService } from './budget-calculator.service'
 
 @Injectable()
 export class ConfiguratorService implements CanActivate {
 
+  calculatorService : BudgetCalculatorService
   currentSession : Budget = null
-  test = false
 
   constructor(
     private firbaseHelper : FirebaseHelper, 
@@ -24,25 +25,27 @@ export class ConfiguratorService implements CanActivate {
   }
   
   //needed to display configurator only if session has started, otherwise I'll show the button to start
-  canActivate(route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (this.isSessionActive())
-      {
-        return true;
-      }
-
-      this.router.navigate(['/'])
-      return false;
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot)
+      : Observable<boolean> | Promise<boolean> | boolean {
+    if (this.isSessionActive())
+    {
+      return true;
     }
+
+    this.router.navigate(['/'])
+    return false;
+  }
 
   startNewSession() {
     //firebase
-    this.test = true
+    this.currentSession = new Budget()
+    this.calculatorService = new BudgetCalculatorService(this.currentSession)
   }
 
   isSessionActive(){
-    return this.test
-    //return this.currentSession !== null
+    return this.currentSession !== null
   }
 
   getDefaultMaterials(){
