@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  Input,
+  Output, 
+  EventEmitter } from '@angular/core';
 
 import {TextInput} from '../../core/domain/common'
 
@@ -9,11 +14,16 @@ import {TextInput} from '../../core/domain/common'
 })
 export class StringInputComponent implements OnInit {
 
+  @Output("inputChanged") changed = new EventEmitter()
   @Input() input : TextInput
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  signalChanged() {
+    this.changed.emit()
   }
 
 }

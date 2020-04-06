@@ -24,6 +24,7 @@
   "LarghezzaLastra" : "Larghezza della lastra",
   "PercRic" : "Percentuale di ricarico sul prezzo",
   "PesoTot" : "Peso totale (Kg)",
+  "PesoTotPerPz" : "Peso del pezzo (Kg)",  
   "CostoAlPz" : "Costo della materia prima al pezzo",
   "NonCalc" : "Impossibile calcolare",
   "UploadDraw" : "Carica disegno tecnico",

@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  Input,
+  Output, 
+  EventEmitter  } from '@angular/core';
 
 import {NumberInput} from '../../core/domain/common'
 
@@ -9,11 +14,16 @@ import {NumberInput} from '../../core/domain/common'
 })
 export class NumberInputComponent implements OnInit {
 
+  @Output("inputChanged") changed = new EventEmitter()
   @Input() input : NumberInput
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  signalChanged(event) {
+    this.changed.emit()
   }
 
 }

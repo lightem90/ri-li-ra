@@ -52,4 +52,8 @@ export class ConfiguratorService implements CanActivate {
     return this.firbaseHelper.getDefaultMaterials();
   }
 
+  recalcWeight() {
+    this.calculatorService.recalcWeight()
+  }
+
 }

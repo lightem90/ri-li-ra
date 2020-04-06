@@ -17,10 +17,14 @@
     <div>
       <app-number-input 
         *ngFor="let input of inputs"
+        (inputChanged)="recalcWeight()"
         [input]="input">
       </app-number-input>
     </div>
     </form>
+    <div> 
+      <app-disabled-input [input]="totWPerPiece"> </app-disabled-input>
+    </div>
     <app-pdf-uploader> </app-pdf-uploader>
   </div>
 </div>

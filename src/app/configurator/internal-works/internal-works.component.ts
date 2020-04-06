@@ -7,7 +7,8 @@ import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {WorkFactoryService} from '../../core/services/work-factory.service'
 
-import {Budget} from '../../core/domain/budget'
+import { ConfiguratorService } from '../../core/services/configurator.service'
+
 import {NumberInput} from '../../core/domain/common'
 
 @Component({
@@ -17,15 +18,15 @@ import {NumberInput} from '../../core/domain/common'
 })
 export class InternalWorksComponent implements OnInit {
 
-    @Input() budget : Budget
-
     //stati per il combo
     workTypes: WorkType[]
     selectedWorkType : WorkType = null
     
     public treeService: WorkTreeService
 
-    constructor(private _workFactory : WorkFactoryService) {  
+    constructor(
+      private _workFactory : WorkFactoryService,
+      private _configuratorService : ConfiguratorService) {  
 
       this.treeService = new WorkTreeService(_workFactory)
 

@@ -14,6 +14,7 @@ export class Budget {
     public n_pieces = new NumberInput ("n_pieces", 0),
     public client_name = new TextInput("client_name", ""),
     public pieceChargePercentage = new NumberInput("PercRic", 0),
+    public totWeigthPerPiece = new TextInput("PesoTotPerPz", "0"),
     public totWeigth = new TextInput("PesoTot", "0"),
     public pieceUnitaryPrice = new TextInput("CostoAlPz", "0"),    
     public recap_tot_prz = new NumberInput ("PrezzoAlPz", 0),

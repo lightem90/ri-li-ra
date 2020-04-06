@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import {Budget} from '../../core/domain/budget'
 
+import { ConfiguratorService } from '../../core/services/configurator.service'
 import {TextInput, NumberInput} from '../../core/domain/common'
 
 @Component({
@@ -11,16 +12,18 @@ import {TextInput, NumberInput} from '../../core/domain/common'
 })
 export class PiecePriceComponent implements OnInit {
 
-  @Input() budget : Budget
+  constructor(private _configuratorService : ConfiguratorService) {
+
+  }
 
   pieceChargePercentage : NumberInput
   totWeigth : TextInput
   pieceUnitaryPrice : TextInput
 
   ngOnInit() {    
-    this.pieceChargePercentage = this.budget.pieceChargePercentage
-    this.totWeigth = this.budget.totWeigth
-    this.pieceUnitaryPrice = this.budget.pieceUnitaryPrice
+    this.pieceChargePercentage = this._configuratorService.currentSession.pieceChargePercentage
+    this.totWeigth = this._configuratorService.currentSession.totWeigth
+    this.pieceUnitaryPrice = this._configuratorService.currentSession.pieceUnitaryPrice
   }
 
 }

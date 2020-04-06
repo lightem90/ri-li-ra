@@ -2,7 +2,8 @@
 <mat-form-field>
   <mat-label>{{input.label | translate}}</mat-label>
   <input 
-    [(ngModel)]="input.value"    
+    [(ngModel)]="input.value"
+    (change)="signalChanged($event)"    
     [ngModelOptions]="{standalone: true}"
     type="number" matInput>
 </mat-form-field>

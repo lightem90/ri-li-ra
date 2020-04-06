@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Material} from '../../core/domain/material'
-import {Budget} from '../../core/domain/budget'
 
 import {TextInput, NumberInput, DisabledInput} from '../../core/domain/common'
 
@@ -20,10 +19,8 @@ export class MaterialPickerComponent implements OnInit {
   n_pieces : NumberInput
   client_name : TextInput
   budget_date : DisabledInput
-
-  @Input() budget : Budget
   
-  constructor(private configuratorService : ConfiguratorService) {     
+  constructor(private _configuratorService : ConfiguratorService) {     
   }
 
   saveMaterial() {
@@ -43,13 +40,13 @@ export class MaterialPickerComponent implements OnInit {
 
   ngOnInit() {
     this.fetchMaterials()  
-    this.budget_date = this.budget.budget_date 
-    this.n_pieces = this.budget.n_pieces 
-    this.client_name = this.budget.client_name 
+    this.budget_date = this._configuratorService.currentSession.budget_date 
+    this.n_pieces = this._configuratorService.currentSession.n_pieces 
+    this.client_name = this._configuratorService.currentSession.client_name 
   }
 
   fetchMaterials(){
-    this.configuratorService
+    this._configuratorService
       .getDefaultMaterials()
       .then(res => {
         if (res)
@@ -57,7 +54,7 @@ export class MaterialPickerComponent implements OnInit {
           this.materials = res
           this.selectedMaterialId = this.materials[0].uid
           this.materials.forEach(mat => {            
-            this.configuratorService
+            this._configuratorService
               .getAssetUrl(mat.img_url)
               .subscribe(res => {
                 if (res) {
@@ -75,7 +72,7 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   getMaterialUrl(material: Material){
-    return this.configuratorService.getAssetUrl(material.img_url)
+    return this._configuratorService.getAssetUrl(material.img_url)
   }
 
   udapteSelectedMaterial(material: any){    
@@ -83,7 +80,7 @@ export class MaterialPickerComponent implements OnInit {
 
     //questo funziona solo perchè ad oggi i materiali hanno un uid che comincia da 1, se cambierà bisogna prendere l'indice del material nell'array
 
-    this.budget.material = this.materials[+this.selectedMaterialId-1]
+    this._configuratorService.currentSession.material = this.materials[+this.selectedMaterialId-1]
   }
 
 

@@ -8,7 +8,8 @@ import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {ExternalWorkFactoryService} from '../../core/services/work-factory.service'
 
-import {Budget} from '../../core/domain/budget'
+import { ConfiguratorService } from '../../core/services/configurator.service'
+
 import {NumberInput} from '../../core/domain/common'
 
 @Component({
@@ -18,7 +19,6 @@ import {NumberInput} from '../../core/domain/common'
 })
 export class ExternalWorksComponent implements OnInit {
     
-  @Input() budget : Budget
   public treeServiceThermal: WorkTreeService
   public treeServiceSuperficial: WorkTreeService
   public treeServiceExternal: WorkTreeService
@@ -35,7 +35,9 @@ export class ExternalWorksComponent implements OnInit {
   workExtTypes: ExternalWorkType[]
   selectedExtWorkType : ExternalWorkType = null
 
-  constructor(private _factory : ExternalWorkFactoryService) { 
+  constructor(
+    private _factory : ExternalWorkFactoryService,
+    private _configuratorService : ConfiguratorService) { 
       this.treeServiceThermal = new WorkTreeService(_factory) 
       this.treeServiceSuperficial = new WorkTreeService(_factory) 
       this.treeServiceExternal = new WorkTreeService(_factory)

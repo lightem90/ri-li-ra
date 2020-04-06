@@ -9,9 +9,3 @@ export enum Shape {
   SheetR
 }
 
-export class Piece
-{
-  constructor(public uid: string = ""){
-
-  }
-}
