@@ -33,10 +33,10 @@ export class NumberInput implements DisabledInput{
 export class TreeWorkNode {
 
   constructor(public calculator: Function = null) {
-  }
+   }
 
   recalculate() {
-    console.log("recalc request")
+    console.log("recalc request for: " + this.name)
     if (this.calculator){
       this.calculator.call([this.inputs, this.textInputs, this.outputs])
       console.log("recalc done")

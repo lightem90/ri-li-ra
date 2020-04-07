@@ -3,7 +3,8 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 
-import { TreeWorkNode, WorkType } from '../domain/works'
+import { WorkType } from '../domain/works'
+import { TreeWorkNode } from '../domain/common'
 import { IWorkFactoryService } from './work-factory.service'
 
 @Injectable()
@@ -16,8 +17,9 @@ export class WorkTreeService{
   constructor(private _workFactory : IWorkFactoryService) { }
 
   addDefault(parent: TreeWorkNode) {
-        if (parent.children) {
-      parent.children.push(new TreeWorkNode()); //senza name, in modo che parta la gestione del nuovo stage
+    if (parent.children) {
+      const t = new TreeWorkNode()
+      parent.children.push(t); //senza name, in modo che parta la gestione del nuovo stage
       this.dataChange.next(this.data);
     }
   }
@@ -40,6 +42,7 @@ export class WorkTreeService{
     node.children = stage.children
     node.inputs = stage.inputs
     node.outputs = stage.outputs
+    node.calculator = stage.calculator   
     this.dataChange.next(this.data)
   }
 
