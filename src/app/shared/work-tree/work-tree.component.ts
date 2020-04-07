@@ -68,10 +68,15 @@ export class WorkTreeComponent implements OnInit {
     }
 
     /** Select the category so we can insert the new item. */
-    addNewItem(node: TreeWorkFlatNode) {
+    addNewItem(node : TreeWorkFlatNode) {
       const parentNode = this.flatNodeMap.get(node);
       this.treeService.addDefault(parentNode)
       this.treeControl.expand(node);
+    }
+
+    racalcNode(node : TreeWorkFlatNode) {
+      const parentNode = this.flatNodeMap.get(node);
+      parentNode.recalculate()
     }
 
     createStage(node: TreeWorkFlatNode, stageName: string) {

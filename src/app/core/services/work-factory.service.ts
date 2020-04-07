@@ -133,7 +133,6 @@ export class WorkFactoryService implements IWorkFactoryService {
   _createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
   {
     const result = this._createWorkWithoutInputs(wType)
-    //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
 
     const inputs = [
       this._createSingleInput('wTPiaz', 0),
@@ -143,11 +142,12 @@ export class WorkFactoryService implements IWorkFactoryService {
       this._createSingleInput('wMinutes', 0) 
       ]
     
+    //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
+    
     if(addToolChangePhase) {
       inputs.push(this._createToolChangeStage())
     }
     
-    //Nodo vuoto per visualizzare subito l'input per la nuova fase
     inputs.push(new TreeWorkNode())
 
     result.children = inputs

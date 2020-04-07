@@ -32,6 +32,16 @@ export class NumberInput implements DisabledInput{
 //Nodo che rappresenta un parametro della lavorazione (t. piazzamento etc..)
 export class TreeWorkNode {
 
+  constructor(private _calculator: Function = null) {
+    
+  }
+
+  recalculate() {
+    if (this._calculator){
+      this._calculator.call([this.inputs, this.textInputs, this.outputs])
+    }
+  }
+
   public name : string = ""
   public editable : boolean
   public inputs : NumberInput []= []
