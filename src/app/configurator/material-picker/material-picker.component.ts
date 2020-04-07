@@ -65,7 +65,7 @@ export class MaterialPickerComponent implements OnInit {
             })
           })     
         } else {
-          console.log('error fetching materials')
+          console.log('Error fetching materials')
         }
       });
       this.changed = false;

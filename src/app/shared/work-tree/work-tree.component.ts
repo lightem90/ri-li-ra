@@ -35,7 +35,7 @@ export class WorkTreeComponent implements OnInit {
       const existingNode = this.nestedNodeMap.get(node);
       const flatNode = existingNode && existingNode.name === node.name
           ? existingNode
-          : new TreeWorkFlatNode();
+          : new TreeWorkFlatNode(node.calculator);
       flatNode.name = node.name;
       flatNode.level = level;
       flatNode.expandable = !!node.children;
@@ -43,7 +43,8 @@ export class WorkTreeComponent implements OnInit {
       flatNode.textInputs = node.textInputs
       flatNode.outputs = node.outputs
       flatNode.isSingleNode = node.isSingleNode
-      flatNode.canAddLevelFlag = node.isSingleNode.canAddLevel
+      flatNode.canAddLevelFlag = node.canAddLevel
+      flatNode.hiddenInputs = node.hiddenInputs
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
       return flatNode;
@@ -81,6 +82,7 @@ export class WorkTreeComponent implements OnInit {
 
     createStage(node: TreeWorkFlatNode, stageName: string) {
       const parentNode = this.getParentNode(node) 
+      const parentNodeFlat = this.flatNodeMap.get(parentNode)
       const nestedNode = this.flatNodeMap.get(node);
       this.treeService.updateWorkItem(nestedNode!, stageName, parentNode.name);
       this.treeControl.expand(node);

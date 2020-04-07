@@ -143,7 +143,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       ]
     
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
-    
+
     if(addToolChangePhase) {
       inputs.push(this._createToolChangeStage())
     }
@@ -159,11 +159,9 @@ export class WorkFactoryService implements IWorkFactoryService {
     stageName: string,
     optOutputs: DisabledInput[] = [],
     optInputs: NumberInput[] = [],
-    addDefault = true) {      //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
+    addDefault = true,
+    calc : Function = null) {      //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
     
-    console.log(wType)
-    console.log(stageName)
-
     var sMin = new TextInput('sMinutes', "0")
     var sPrice = new TextInput('sPrice', "0")
     
@@ -174,12 +172,12 @@ export class WorkFactoryService implements IWorkFactoryService {
     const inputs = optInputs.slice()
     if (addDefault)
     {
-      inputs.push(new NumberInput('nPiece'))
+      inputs.push(new NumberInput('nPiece', 1))
       inputs.push(new NumberInput('nStep'))
       inputs.push(new NumberInput('mVel'))
       inputs.push(new NumberInput('mMm'))
     }
-    var result = new TreeWorkNode()
+    var result = new TreeWorkNode(calc)
     result.children = inputs.map(i => this._createSingleInputFrom(i))
     result.outputs = outputs
     result.inputs = inputs
@@ -278,14 +276,14 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.Taglio:
       {
         const optValues = [
-          new NumberInput('nPiece'),
+          new NumberInput('nPiece', 1),
           new NumberInput('t_area'),
           new NumberInput('t_resa')]
 
         const optOutput = [
           new TextInput('taglioSec', '0')
         ]
-        return this._internalCreateStageForWork(wType, stageName, optOutput, optValues, false)
+        return this._internalCreateStageForWork(wType, stageName, optOutput, optValues, false, calculateStageTaglio)
         break;
       }
       case WorkType.Tornitura:
@@ -304,6 +302,21 @@ export class WorkFactoryService implements IWorkFactoryService {
       default:
         console.log('Cannot create stage for: ' + wType)
         return null
+    }
+
+    //outputs ha optional, minuti, prezzo
+    function calculateStageTaglio(inputs: NumberInput[], textInputs : TextInput[], outputs : DisabledInput){
+      console.log("recalc taglio")
+      const resa = inputs[2].value
+      const area = inputs[1].value
+      const pezzi = inputs[0].value
+      //non posso dividere per 0..
+      if (pezzi > 0) {
+        var minuti = area / resa
+        var secondi = minuti * 60
+        outputs[1].text = minuti.toString()
+        outputs[0].text = secondi.toString()
+      }
     }
 
   }

@@ -32,16 +32,19 @@ export class NumberInput implements DisabledInput{
 //Nodo che rappresenta un parametro della lavorazione (t. piazzamento etc..)
 export class TreeWorkNode {
 
-  constructor(private _calculator: Function = null) {
-    
+  constructor(public calculator: Function = null) {
   }
 
   recalculate() {
-    if (this._calculator){
-      this._calculator.call([this.inputs, this.textInputs, this.outputs])
+    console.log("recalc request")
+    if (this.calculator){
+      this.calculator.call([this.inputs, this.textInputs, this.outputs])
+      console.log("recalc done")
     }
   }
 
+  //inputs della lavorazione "padre" degli stage, servono per avere il prezzo disponibile
+  public hiddenInputs : NumberInput []= []
   public name : string = ""
   public editable : boolean
   public inputs : NumberInput []= []
@@ -54,6 +57,8 @@ export class TreeWorkNode {
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
   
+  constructor(public calculator: Function = null) { }
+
   public name : string = ""
   level: number = 0
   expandable: boolean
@@ -62,6 +67,7 @@ export class TreeWorkFlatNode {
   public outputs : DisabledInput[] = []
   public isSingleNode : boolean = false
   public canAddLevelFlag : boolean = true
+  public hiddenInputs : NumberInput []= []
 
   public canAddLevel() : boolean {
       return this.canAddLevelFlag && this.level === 0
