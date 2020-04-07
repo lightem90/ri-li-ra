@@ -37,8 +37,9 @@ export class TreeWorkNode {
 
   recalculate() {
     console.log("recalc request for: " + this.name)
+    console.log("Inputs: " +this.inputs + " text In: " + this.textInputs + " out: " +this.outputs)
     if (this.calculator){
-      this.calculator.call([this.inputs, this.textInputs, this.outputs])
+      this.calculator(this.inputs, this.textInputs, this.outputs)
       console.log("recalc done")
     }
   }

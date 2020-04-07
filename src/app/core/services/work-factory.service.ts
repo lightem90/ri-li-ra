@@ -306,7 +306,7 @@ export class WorkFactoryService implements IWorkFactoryService {
 
     //outputs ha optional, minuti, prezzo
     function calculateStageTaglio(inputs: NumberInput[], textInputs : TextInput[], outputs : DisabledInput){
-      console.log("recalc taglio")
+      console.log(inputs, textInputs, outputs)
       const resa = inputs[2].value
       const area = inputs[1].value
       const pezzi = inputs[0].value

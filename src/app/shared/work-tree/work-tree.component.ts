@@ -6,7 +6,7 @@ import {WorkType} from '../../core/domain/works'
 
 import {WorkTreeService} from '../../core/services/work-tree.service'
 
-import {NumberInput, TreeWorkFlatNode, TreeWorkFlaNode, IWorkTreeService} from '../../core/domain/common'
+import {NumberInput, TreeWorkFlatNode, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService} from '../../core/domain/common'
 
 @Component({
   selector: 'app-work-tree',
@@ -76,8 +76,9 @@ export class WorkTreeComponent implements OnInit {
     }
 
     racalcNode(node : TreeWorkFlatNode) {
-      const parentNode = this.flatNodeMap.get(node);
-      parentNode.recalculate()
+      const parentNode = this.getParentNode(node)
+      const parentRealNode = this.flatNodeMap.get(parentNode)
+      parentRealNode.recalculate()
     }
 
     createStage(node: TreeWorkFlatNode, stageName: string) {
