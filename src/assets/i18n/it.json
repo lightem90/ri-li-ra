@@ -77,5 +77,6 @@
   "client_name": "Nome del cliente",
   "n_pieces": "Numero di pezzi da produrre",
   "date" : "Giorno",
-  "spec_weight" : "Peso specifico"
+  "spec_weight" : "Peso specifico",
+  "TotGainPerc" : "Guadagno percentuale totale"
 }

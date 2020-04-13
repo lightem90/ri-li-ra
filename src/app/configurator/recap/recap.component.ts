@@ -11,6 +11,7 @@ import { ConfiguratorService } from '../../core/services/configurator.service'
 export class RecapComponent implements OnInit {
 
   tot_prz : NumberInput
+  tot_gain_perc : NumberInput
   tot : TextInput
   tot_gain : TextInput
   pc_pz : TextInput
@@ -22,6 +23,7 @@ export class RecapComponent implements OnInit {
 
   ngOnInit() {
     this.tot_prz = this._configuratorService.currentSession.recap_tot_prz
+    this.tot_gain_perc = this._configuratorService.currentSession.recap_tot_gain_perc
     this.tot = this._configuratorService.currentSession.recap_tot
     this.tot_gain = this._configuratorService.currentSession.recap_tot_gain
     this.pc_pz = this._configuratorService.currentSession.recap_pc_pz

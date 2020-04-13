@@ -18,6 +18,7 @@ export class Budget {
     public totWeigth = new TextInput("PesoTot", "0"),
     public pieceUnitaryPrice = new TextInput("CostoAlPz", "0"),    
     public recap_tot_prz = new NumberInput ("PrezzoAlPz", 0),
+    public recap_tot_gain_perc = new NumberInput ("TotGainPerc", 0),
     public recap_tot = new TextInput("TotConf", "NonCalc"),
     public recap_tot_gain = new TextInput("TotGain", "NonCalc"),
     public recap_pc_pz = new TextInput("PrezzoCostoAlPz", "NonCalc"),
