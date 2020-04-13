@@ -48,4 +48,28 @@ export class WorkTreeService{
     this.dataChange.next(this.data)
   }
 
+  deleteNode(node: TreeWorkNode, parentNode: TreeWorkNode) {
+    if (parentNode) {
+      //se sono uno "stage"
+      const index = parentNode.children.indexOf(node);
+      if (index !== -1) {
+        parentNode.children.splice(index, 1);
+        this.dataChange.next(this.data);
+        return true
+      }
+      return false
+    } else {
+      //se sono una lavorazione
+      const index = this.data.indexOf(node)
+      if (index !== -1) {
+        this.data.splice(index, 1);
+        this.dataChange.next(this.data);
+        return true
+      }
+      return false
+    }
+
+    return false
+  }
+
 }

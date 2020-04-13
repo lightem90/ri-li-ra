@@ -108,4 +108,14 @@ export class WorkTreeComponent implements OnInit {
     return null;
   }
 
+  deleteNode(nodeFlat: TreeWorkFlatNode) {
+    const node = this.flatNodeMap.get(nodeFlat)
+    const parentFlatNode = this.getParentNode(nodeFlat)
+    const parentNode = this.flatNodeMap.get(parentFlatNode)
+    if (this.treeService.deleteNode(node, parentNode)) {
+      this.flatNodeMap.delete(nodeFlat)
+      this.nestedNodeMap.delete(node)
+    }
+  }
+
 }

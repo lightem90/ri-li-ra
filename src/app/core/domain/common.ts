@@ -80,4 +80,5 @@ export interface IWorkTreeService {
   dataChange : BehaviorSubject<TreeWorkNode[]>
   addDefault(parent: TreeWorkNode)
   updateWorkItem(node: TreeWorkNode, stageName: string, workName: string)
+  deleteNode(node: TreeWorkNode, parentNode: TreeWorkNode)
 }
