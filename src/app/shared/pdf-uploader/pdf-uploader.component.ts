@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { FileValidator } from 'ngx-material-file-input';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 import {  PDFDocumentProxy} from 'pdfjs-dist';
+
+import {Budget} from '../../core/domain/budget'
 
 @Component({
   selector: 'app-pdf-uploader',
@@ -11,6 +13,9 @@ import {  PDFDocumentProxy} from 'pdfjs-dist';
   styleUrls: ['./pdf-uploader.component.css']
 })
 export class PdfUploaderComponent implements OnInit {
+
+  @Input() budget : Budget
+  @Input() showButton : boolean
 
   //25 mb farlo diventare un @Input() se serve
   maxSize : number = 26214400;
@@ -33,6 +38,7 @@ export class PdfUploaderComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.budget.pdfSubject.subscribe(newSource => this.pdfSrc = newSource)
   }
 
   zoomIn() {
@@ -93,7 +99,7 @@ export class PdfUploaderComponent implements OnInit {
 
   _handleReaderLoaded(e) {
     var reader = e.target;
-    this.pdfSrc = reader.result;
+    this.budget.setPdfSource(reader.result)
   }
 
 }

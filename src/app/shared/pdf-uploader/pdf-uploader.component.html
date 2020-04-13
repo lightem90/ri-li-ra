@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="pdfManager">
-    <mat-form-field>
-    <ngx-mat-file-input 
+    <mat-form-field *ngIf="showButton">
+    <ngx-mat-file-input
         appearance="fill"
         formControlName="drawPdfFile" 
         placeholder="{{ 'UploadDraw' | translate }}"

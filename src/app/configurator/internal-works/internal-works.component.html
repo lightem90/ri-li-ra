@@ -1,4 +1,10 @@
-<div>  
+<div>
+  <div>
+    <app-pdf-uploader
+    [showButton]="false"
+    [budget]="_configuratorService.currentSession">
+    </app-pdf-uploader>  
+  </div>
   <app-work-tree
    [treeService]="treeService"> 
   </app-work-tree>

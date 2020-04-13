@@ -2,8 +2,15 @@ import {NumberInput, TextInput, DisabledInput} from "./common"
 import {Material} from './material';
 import {Shape} from './piece';
 
+import {BehaviorSubject} from 'rxjs';
+
 //dominio per l'interfaccia..
 export class Budget {
+
+  public pdfSubject = new BehaviorSubject<string>("");  
+
+  public get pdfData(): string { return this.pdfSubject.value; }
+
   constructor(
     public uid: string = "",
     public customer: string = "",
@@ -25,12 +32,16 @@ export class Budget {
     public recap_pce_pz = new TextInput("TotAlPzExtAlPz", "NonCalc"),
     public selectedShape : Shape = null,
     public shapeInputs: NumberInput[] = []){
-      
+
+
       if (budget_date == null) {
         this.initDate();
       }
   }
 
+  public setPdfSource(pdfSrc : string) {
+    this.pdfSubject.next(pdfSrc)
+  }
 
   private initDate() {
 
