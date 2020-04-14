@@ -9,7 +9,8 @@ import { ContactsComponent } from './static/contacts/contacts.component';
 import { FaqComponent } from './static/faq/faq.component';
 import { ConfiguratorComponent } from './configurator/configurator.component';
 import { HomeConfiguratorComponent } from './home-configurator/home-configurator.component';
-import { AppComponent } from './app.component';
+import { UserLandingComponent } from './user-landing/user-landing.component'
+import { AppComponent } from './app.component'
 
 import { ConfiguratorService } from './core/services/configurator.service'
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent},
   { path: 'contacts', component: ContactsComponent},
   { path: 'faq', component: FaqComponent},
+  { path: 'user', component: UserLandingComponent},  
   { path: 'configurator', 
     canActivate: [ConfiguratorService],
     component: ConfiguratorComponent},

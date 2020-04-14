@@ -48,8 +48,7 @@ import { StringInputComponent } from './shared/string-input/string-input.compone
 import { DisabledInputComponent } from './shared/disabled-input/disabled-input.component';
 import { PdfUploaderComponent } from './shared/pdf-uploader/pdf-uploader.component';
 import { WorkTreeComponent } from './shared/work-tree/work-tree.component';
-
-
+import { UserLandingComponent } from './user-landing/user-landing.component';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
@@ -100,7 +99,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     InternalWorksComponent,
     ExternalWorksComponent,
     RecapComponent,
-    WorkTreeComponent],
+    WorkTreeComponent,
+    UserLandingComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, ExternalWorkFactoryService, AccountService]
 })

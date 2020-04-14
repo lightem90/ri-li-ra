@@ -33,13 +33,12 @@ export class FirebaseHelper
   }
 
   login(email: string, password: string) {
-    this.auth.auth
+    return this.auth.auth
       .signInWithEmailAndPassword(email, password)
-      .then(ok => console.log("ok" + ok), ko => console.log(ko))
   }
 
   register(email: string, password: string) {
-    this.auth.auth
+    return this.auth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(r => {
         this._addDataForUser(r.user.uid, {
@@ -49,7 +48,6 @@ export class FirebaseHelper
         FirebaseConstant.entityTableNames.user,  
         FirebaseConstant.relationTableNames.userRole)
       })
-      .then(ok => console.log("ok" + ok), ko => console.log(ko))
   }
   
 

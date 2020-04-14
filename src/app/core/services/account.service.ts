@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 
 import {FirebaseHelper} from './firebase-helper'
@@ -9,7 +11,9 @@ export class AccountService {
   token: string;
   private currentUser = null;
 
-  constructor(private _helper : FirebaseHelper) { 
+  constructor(
+    private _helper : FirebaseHelper,
+    private _router : Router) { 
 
     this._helper.authChanged.subscribe(user => {
       if (user){
@@ -23,11 +27,19 @@ export class AccountService {
   }
 
   login(email: string, password: string) {
-    this._helper.login(email, password)
+    this._helper
+      .login(email, password)
+      .then(ok => {
+        this._router.navigate['user']
+      })
   }
 
   register(email: string, password: string) {
-    this._helper.register(email, password)
+    this._helper
+      .register(email, password)      
+      .then(ok => {
+        this._router.navigate['l']
+      })
   }
 
 }
