@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
+import {AccountService} from '../../core/services/account.service'
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,6 +11,9 @@ import {ErrorStateMatcher} from '@angular/material/core';
 })
 export class LoginComponent
 {
+  constructor(private _service : AccountService) {
+
+  }
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -20,6 +25,12 @@ export class LoginComponent
   ]);
 
   matcher = new LoginErrorStateMatcher();
+
+  login() {
+    this._service.login(
+      this.emailFormControl.value, 
+      this.pswFormControl.value)
+  }
 }
 
 /** Error when invalid control is dirty, touched, or submitted. */

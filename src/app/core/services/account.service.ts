@@ -14,7 +14,10 @@ export class AccountService {
     this._helper.authChanged.subscribe(user => {
       if (user){
         this.currentUser = user
-        user.getIdToken().then(res => this.token = res)
+        user.getIdToken()
+          .then(res => {
+            this.token = res
+          })
       }
     })
   }

@@ -33,7 +33,9 @@ export class FirebaseHelper
   }
 
   login(email: string, password: string) {
-    this.auth.auth.signInWithEmailAndPassword(email, password)
+    this.auth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(ok => console.log("ok" + ok), ko => console.log(ko))
   }
 
   register(email: string, password: string) {
@@ -47,7 +49,7 @@ export class FirebaseHelper
         FirebaseConstant.entityTableNames.user,  
         FirebaseConstant.relationTableNames.userRole)
       })
-      .then(ok => console.log(ok), ko => console.log(ko))
+      .then(ok => console.log("ok" + ok), ko => console.log(ko))
   }
   
 
