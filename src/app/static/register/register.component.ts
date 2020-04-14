@@ -37,7 +37,9 @@ export class RegisterComponent {
   }
 
   register() {
-    //todo firebase
+    this._service.register(
+      this.registerForm.get('emailFormControl').value, 
+      this.registerForm.get('pswFormControl').value)
   }
 }
 

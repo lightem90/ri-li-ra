@@ -7,7 +7,8 @@ import { AngularFireStorage } from 'angularfire2/storage';
 
 import firebase from 'firebase';
 
-import {Material} from '../domain/material'
+import { Material } from '../domain/material'
+import { FirebaseConstant } from './firebase-constant'
 
 @Injectable()
 export class FirebaseHelper
@@ -16,7 +17,7 @@ export class FirebaseHelper
   private firebaseRefs : firebase.database.Reference[]
 
   authChanged : Observable<firebase.User> = this._authChangedSubject
-  
+
   constructor(
     private auth: AngularFireAuth,
     private database: AngularFireDatabase,
@@ -36,7 +37,17 @@ export class FirebaseHelper
   }
 
   register(email: string, password: string) {
-    this.auth.auth.createUserWithEmailAndPassword(email, password)
+    this.auth.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(r => {
+        this._addDataForUser(r.user.uid, {
+          email : email,
+          password : password
+        },
+        FirebaseConstant.entityTableNames.user,  
+        FirebaseConstant.relationTableNames.userRole)
+      })
+      .then(ok => console.log(ok), ko => console.log(ko))
   }
   
 
