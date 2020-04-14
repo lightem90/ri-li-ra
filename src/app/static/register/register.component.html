@@ -1,0 +1,47 @@
+<form [formGroup]="registerForm" class="login-form" (ngSubmit)="register()">
+  <mat-form-field>
+    <mat-label>{{'loginEmail' | translate}}</mat-label>
+    <input matInput 
+      type="email"
+      formControlName="emailFormControl" 
+      [errorStateMatcher]="matcher"
+      placeholder="{{ 'emailLoginPlaceholder' | translate }}">
+    <mat-hint>{{'emailLoginHint' | translate}}</mat-hint>
+    <mat-error *ngIf="registerForm.controls.emailFormControl.hasError('email') && !registerForm.controls.emailFormControl.hasError('required')">
+      {{'emailLoginError' | translate}}
+    </mat-error>
+    <mat-error *ngIf="registerForm.controls.emailFormControl.hasError('required')">
+      {{'emailLoginRequired' | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{'loginPsw' | translate}}</mat-label>
+    <input matInput 
+      type="password"
+      formControlName="pswFormControl" 
+      [errorStateMatcher]="matcher"
+      placeholder="{{ 'pswLoginPlaceholder' | translate }}">
+    <mat-hint>{{'pswLoginHint' | translate}}</mat-hint>
+    <mat-error *ngIf="registerForm.controls.pswFormControl.hasError('required')">
+      {{'pswLoginRequired' | translate}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{'loginPswRecheck' | translate}}</mat-label>
+    <input matInput 
+      type="password"
+      formControlName="pswCheckFormControl" 
+      [errorStateMatcher]="matcher"
+      placeholder="{{ 'pswLoginPlaceholder' | translate }}">
+    <mat-hint>{{'pswLoginHint' | translate}}</mat-hint>
+    <mat-error *ngIf="registerForm.controls.pswCheckFormControl.hasError('email') && !registerForm.controls.pswCheckFormControl.hasError('required')">
+      {{'emailLoginErrorNotMatch' | translate}}
+    </mat-error>
+    <mat-error *ngIf="registerForm.controls.pswCheckFormControl.hasError('required')">
+      {{'pswLoginRequired' | translate}}
+    </mat-error>
+  </mat-form-field>  
+  <button type="submit" mat-flat-button color="primary">{{'registra' | translate}}</button>
+</form>

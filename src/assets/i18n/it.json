@@ -78,5 +78,18 @@
   "n_pieces": "Numero di pezzi da produrre",
   "date" : "Giorno",
   "spec_weight" : "Peso specifico",
-  "TotGainPerc" : "Guadagno percentuale totale"
+  "TotGainPerc" : "Guadagno percentuale totale",
+  "loginEmail" : "Email",
+  "emailLoginPlaceholder" : "Es: Mario.Rossi@gmail.com",
+  "emailLoginHint": "Inserisci una email valida",
+  "emailLoginError": "Email non valida",
+  "emailLoginRequired": "Email obbligatoria",
+  "loginPsw" : "Password",
+  "pswLoginPlaceholder" : "",
+  "pswLoginHint": "Inserire una password a piacere",
+  "pswLoginRequired": "Password obbligatoria",
+  "emailLoginErrorNotMatch" : "La password inserita non combacia",
+  "loginPswRecheck" : "Reinserisci la password",
+  "login" : "Entra",
+  "registra" : "Registrati"
 }
