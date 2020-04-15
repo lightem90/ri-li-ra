@@ -35,16 +35,21 @@ export class WorkTreeService{
     this.dataChange.next(this.data)
   }
 
-  //TODO: creare uno stage come TreeWorkNode, a seconda del tipo del parentNode (ogni lav ha stages differenti)
-  updateWorkItem(node: TreeWorkNode, stageName: string, workName: string) {
+  updateWorkItem(node: TreeWorkNode, parentNode: TreeWorkNode, stageName: string, workName: string) {
     const stage = this._workFactory.createStageForWork(workName, stageName)
     node.name = stage.name;
     node.children = stage.children
-    node.hiddenInputs = stage.hiddenInputs
     node.inputs = stage.inputs
     node.textInputs = stage.textInputs
     node.outputs = stage.outputs
-    node.calculator = stage.calculator   
+    node.calculator = stage.calculator
+    
+    if (parentNode)
+    {
+      console.log(parentNode)
+      node.hourlyCost = parentNode.hourlyCost
+    }
+
     this.dataChange.next(this.data)
   }
 

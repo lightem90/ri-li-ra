@@ -36,23 +36,23 @@ export class TreeWorkNode {
    }
 
   recalculate() {
-    console.log("recalc request for: " + this.name)
-    console.log("Inputs: " +this.inputs + " text In: " + this.textInputs + " out: " +this.outputs)
     if (this.calculator){
-      this.calculator(this.inputs, this.textInputs, this.outputs)
-      console.log("recalc done")
+      this.calculator(this)
     }
   }
 
   //inputs della lavorazione "padre" degli stage, servono per avere il prezzo disponibile
-  public hiddenInputs : NumberInput []= []
+  public hourlyCost : NumberInput = null
   public name : string = ""
   public editable : boolean
   public inputs : NumberInput []= []
   public textInputs : TextInput[] = []
   public outputs : DisabledInput[]= []
+  public totTime : NumberInput = null
   public children : TreeWorkNode[]= []
   public isSingleNode : boolean = false
+  public isStage : boolean = false
+  public isWork : boolean = false
   public canAddLevel : boolean = true
 }
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
@@ -66,9 +66,11 @@ export class TreeWorkFlatNode {
   public inputs : NumberInput[] = []
   public textInputs : TextInput[] = []
   public outputs : DisabledInput[] = []
+  public totPrice : DisabledInput = null
+  public totTime : DisabledInput = null
   public isSingleNode : boolean = false
   public canAddLevelFlag : boolean = true
-  public hiddenInputs : NumberInput []= []
+  public hourlyCost : NumberInput = null
 
   public canAddLevel() : boolean {
       return this.canAddLevelFlag && this.level === 0

@@ -108,6 +108,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.name = WorkType[wType]
     result.outputs = [totMinIn, pricePerPiece]
     result.editable = true
+    result.isWork = true
     return result
   }
 
@@ -115,18 +116,22 @@ export class WorkFactoryService implements IWorkFactoryService {
  
     const result = this._createWorkWithoutInputs(wType)
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
-    const inputs = [
+    const childrens = [
       this._createSingleInput('wTPiaz', 0),
-      this._createSingleInput('wPriceH', 0),
-      this._createSingleInput('wMinutes', 0),
-      ]
+      this._createSingleInput('wPriceH', 0),  //il prezzo totale va "gr"
+    ]
+
+    var sMin = new NumberInput('wMinutes', 0)
+    //per i calcoli
+    result.hourlyCost = childrens[1].inputs[0]
+    result.totTime = sMin
 
     if(addToolChangePhase) {
-      inputs.push(this._createToolChangeStage())
+      childrens.push(this._createToolChangeStage())
     }
     //Nodo vuoto per visualizzare subito l'input per la nuova fase
-    inputs.push(new TreeWorkNode())
-    result.children = inputs
+    childrens.push(new TreeWorkNode())
+    result.children = childrens
     return result;
   }
 
@@ -138,8 +143,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       this._createSingleInput('wTPiaz', 0),
       this._createSingleInput('wTProg', 0),
       this._createSingleInput('wTAtt', 0),
-      this._createSingleInput('wPriceH', 0),
-      this._createSingleInput('wMinutes', 0) 
+      this._createSingleInput('wPriceH', 0)
       ]
     
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
@@ -160,7 +164,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     optOutputs: DisabledInput[] = [],
     optInputs: NumberInput[] = [],
     addDefault = true,
-    calc : Function = null) {      //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
+    calc : Function = null) {      
     
     var sMin = new TextInput('sMinutes', "0")
     var sPrice = new TextInput('sPrice', "0")
@@ -170,6 +174,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     outputs.push(sPrice)
 
     const inputs = optInputs.slice()
+    //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
     if (addDefault)
     {
       inputs.push(new NumberInput('nPiece', 1))
@@ -182,6 +187,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.outputs = outputs
     result.inputs = inputs
     result.name = stageName
+    result.isStage = true
     return result
   }
 
@@ -202,7 +208,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.children = inputs.map(i => this._createSingleInputFrom(i))
     result.outputs = outputs
     result.inputs = inputs
-
+    result.isStage = true
     return  result
   }
 
@@ -305,17 +311,17 @@ export class WorkFactoryService implements IWorkFactoryService {
     }
 
     //outputs ha optional, minuti, prezzo
-    function calculateStageTaglio(inputs: NumberInput[], textInputs : TextInput[], outputs : DisabledInput){
-      console.log(inputs, textInputs, outputs)
-      const resa = inputs[2].value
-      const area = inputs[1].value
-      const pezzi = inputs[0].value
+    function calculateStageTaglio(treeWorkNode : TreeWorkNode){
+      const resa = treeWorkNode.inputs[2].value
+      const area = treeWorkNode.inputs[1].value
+      const pezzi = treeWorkNode.inputs[0].value
       //non posso dividere per 0..
-      if (pezzi > 0) {
+      if (pezzi > 0 && resa > 0) {
         var minuti = area / resa
         var secondi = minuti * 60
-        outputs[1].text = minuti.toString()
-        outputs[0].text = secondi.toString()
+        treeWorkNode.outputs[1].text = minuti.toString()
+        treeWorkNode.outputs[0].text = secondi.toString()
+        treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
       }
     }
 
