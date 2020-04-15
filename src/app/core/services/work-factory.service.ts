@@ -100,7 +100,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     return result
   }  
 
-  _createSimpleWork(wType : WorkType, addToolChangePhase: boolean  = false) {
+  _createSimpleWork(wType : WorkType, optChildrens : TreeWorkNode[] = [], addToolChangePhase: boolean  = false) {
  
     var pricePerPiece = new TextInput('pricePerPiece', "0")
     var result = new TreeWorkNode()
@@ -118,6 +118,10 @@ export class WorkFactoryService implements IWorkFactoryService {
       this._createSingleInput('wTPiaz', 0),
     ]
 
+    for(let child of optChildrens) {
+      childrens.push(child)
+    }
+
     if(addToolChangePhase) {
       childrens.push(this._createToolChangeStage())
     }
@@ -129,10 +133,12 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
   {
-    const result = this._createSimpleWork(wType)
+    const childrens = [
+      this._createSingleInput('wTProg', 0),
+      this._createSingleInput('wTAtt', 0)
+    ]
 
-    result.children.push(this._createSingleInput('wTProg', 0))
-    result.children.push(this._createSingleInput('wTAtt', 0))
+    const result = this._createSimpleWork(wType, childrens, addToolChangePhase)
 
     return result;
   }
