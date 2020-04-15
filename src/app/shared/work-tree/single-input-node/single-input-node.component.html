@@ -1,0 +1,12 @@
+<div>
+  <app-number-input
+    (inputChanged)="recalc()"
+    *ngIf="node.inputs.length === 1"
+    [input]="node.inputs[0]">
+  </app-number-input>       
+  <app-string-input 
+    (inputChanged)="recalc()"
+    *ngIf="node.textInputs.length === 1"
+    [input]="node.textInputs[0]">
+  </app-string-input>      
+</div>

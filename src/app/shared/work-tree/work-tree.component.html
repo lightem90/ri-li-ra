@@ -1,6 +1,6 @@
 <div>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <!-- Nodo dell'albero di default -->
+      <!-- Nodo dell'albero non espanso -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
       <!-- Il button serve come spacer, in tutti i mat-tree-node (esempio della doc.) -->
         <button mat-icon-button disabled></button>
@@ -22,18 +22,10 @@
 
       <!-- Nodo per visualizzare un unico parametro di input -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasOneInput" matTreeNodePadding>
-        <div>
-          <app-number-input
-            (inputChanged)="racalcNode(node)"
-            *ngIf="node.inputs.length === 1"
-            [input]="node.inputs[0]">
-          </app-number-input>       
-          <app-string-input 
-            (inputChanged)="racalcNode(node)"
-            *ngIf="node.textInputs.length === 1"
-            [input]="node.textInputs[0]">
-          </app-string-input>      
-        </div>
+        <app-single-input-node
+          [node]="node"
+          (recalcRequested)="recalcNode($event)"> 
+        </app-single-input-node>
       </mat-tree-node>
 
       <!-- Nodo normale -->
