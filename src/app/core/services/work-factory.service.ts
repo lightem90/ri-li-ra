@@ -100,31 +100,23 @@ export class WorkFactoryService implements IWorkFactoryService {
     return result
   }  
 
-  _createWorkWithoutInputs(wType : WorkType)
-  {    
-    var totMinIn = new TextInput('wMinutes', "0")
+  _createSimpleWork(wType : WorkType, addToolChangePhase: boolean  = false) {
+ 
     var pricePerPiece = new TextInput('pricePerPiece', "0")
     var result = new TreeWorkNode()
     result.name = WorkType[wType]
-    result.outputs = [totMinIn, pricePerPiece]
+    result.outputs = [pricePerPiece]
     result.editable = true
     result.isWork = true
-    return result
-  }
-
-  _createSimpleWork(wType : WorkType, addToolChangePhase: boolean  = false) {
- 
-    const result = this._createWorkWithoutInputs(wType)
+    result.totTime = new NumberInput('wMinutes', 0)
+    
+    var totMinIn = new TextInput('wMinutes', "0")
+    result.totTimeReadOnly = totMinIn
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
     const childrens = [
-      this._createSingleInput('wTPiaz', 0),
       this._createSingleInput('wPriceH', 0),  //il prezzo totale va "gr"
+      this._createSingleInput('wTPiaz', 0),
     ]
-
-    var sMin = new NumberInput('wMinutes', 0)
-    //per i calcoli
-    result.hourlyCost = childrens[1].inputs[0]
-    result.totTime = sMin
 
     if(addToolChangePhase) {
       childrens.push(this._createToolChangeStage())
@@ -137,24 +129,11 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
   {
-    const result = this._createWorkWithoutInputs(wType)
+    const result = this._createSimpleWork(wType)
 
-    const inputs = [
-      this._createSingleInput('wTPiaz', 0),
-      this._createSingleInput('wTProg', 0),
-      this._createSingleInput('wTAtt', 0),
-      this._createSingleInput('wPriceH', 0)
-      ]
-    
-    //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
+    result.children.push(this._createSingleInput('wTProg', 0))
+    result.children.push(this._createSingleInput('wTAtt', 0))
 
-    if(addToolChangePhase) {
-      inputs.push(this._createToolChangeStage())
-    }
-    
-    inputs.push(new TreeWorkNode())
-
-    result.children = inputs
     return result;
   }
 

@@ -1,14 +1,5 @@
 <div>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <!-- Nodo dell'albero non espanso -->
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-      <!-- Il button serve come spacer, in tutti i mat-tree-node (esempio della doc.) -->
-        <button mat-icon-button disabled></button>
-        <app-disabled-input 
-          *ngFor="let out of node.outputs"
-          [input]="out">
-        </app-disabled-input>
-      </mat-tree-node>
 
       <!-- Nodo dell'albero che si crea quandi si preme +, necessario inserire nome per creare nuovo stage -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
