@@ -80,7 +80,8 @@ export class PieceSelectorComponent implements OnInit {
   quadrangularInputs = [
           new NumberInput("Lunghezza", 0), 
           new NumberInput("Larghezza",  0), 
-          new NumberInput("Spessore",  0)]
+          new NumberInput("Spessore",  0),
+          new NumberInput("LamaTaglio", 5)]
 
   cylinderInputs = [
           new NumberInput("Diametro",  0), 
@@ -90,24 +91,28 @@ export class PieceSelectorComponent implements OnInit {
   cylinderTubeInputs = [
           new NumberInput("DiametroEsterno",  0), 
           new NumberInput("DiametroInterno",  0), 
-          new NumberInput("Lunghezza",  0)]
+          new NumberInput("Lunghezza",  0), 
+          new NumberInput("Presa",  0)]
 
   quadrangularTube = [
           new NumberInput("BaseEsterna",  0), 
           new NumberInput("AltezzaEsterna",  0), 
           new NumberInput("BaseInterna",  0),
           new NumberInput("AltezzaInterna",  0), 
-          new NumberInput("Lunghezza",  0)]
+          new NumberInput("Lunghezza",  0),
+          new NumberInput("LamaTaglio", 5)]
 
   exagonal = [
           new NumberInput("LunghezzaLato",  0), 
-          new NumberInput("Lunghezza",  0)]
+          new NumberInput("Lunghezza",  0),
+          new NumberInput("LamaTaglio", 5)]
 
   lAngular = [
           new NumberInput("Base",  0), 
           new NumberInput("Altezza",  0), 
           new NumberInput("Spessore",  0),
-          new NumberInput("Lunghezza",  0)]
+          new NumberInput("Lunghezza",  0),
+          new NumberInput("LamaTaglio", 5)]
 
   sheetInputs = [
           new NumberInput("Lunghezza",  0), 
