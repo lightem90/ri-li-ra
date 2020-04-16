@@ -48,13 +48,14 @@ export class TreeWorkNode {
   public inputs : NumberInput []= []
   public textInputs : TextInput[] = []
   public outputs : DisabledInput[]= []
-  public totTime : NumberInput = null
+  public totTime : NumberInput = new NumberInput("wMinutes", 0)
   public totTimeReadOnly : DisabledInput = null
   public children : TreeWorkNode[]= []
   public isSingleNode : boolean = false
   public isStage : boolean = false
   public isWork : boolean = false
   public canAddLevel : boolean = true
+  public workTimeEnabled : boolean = true
 }
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
@@ -72,10 +73,6 @@ export class TreeWorkFlatNode {
   public isSingleNode : boolean = false
   public canAddLevelFlag : boolean = true
   public hourlyCost : NumberInput = null
-
-  public canAddLevel() : boolean {
-      return this.canAddLevelFlag && this.level === 0
-  }
 }
 
 

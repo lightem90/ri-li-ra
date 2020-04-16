@@ -44,37 +44,40 @@ export class WorkTreeService{
     node.outputs = stage.outputs
     node.calculator = stage.calculator
     
-    if (parentNode)
-    {
-      console.log(parentNode)
+    if (parentNode){
+      parentNode.workTimeEnabled = false
       node.hourlyCost = parentNode.hourlyCost
+      this._workFactory.fixChildrens(parentNode)
     }
 
     this.dataChange.next(this.data)
   }
 
   deleteNode(node: TreeWorkNode, parentNode: TreeWorkNode) {
+    let changed = false
     if (parentNode) {
       //se sono uno "stage"
-      const index = parentNode.children.indexOf(node);
+      const index = parentNode.children.indexOf(node)
       if (index !== -1) {
-        parentNode.children.splice(index, 1);
-        this.dataChange.next(this.data);
-        return true
+        parentNode.children.splice(index, 1)
+        this.dataChange.next(this.data)
+        parentNode.workTimeEnabled = parentNode.children
+          .filter(function(c) {return !c.isSingleNode})
+          .length == 0
+        changed = true
       }
-      return false
+      
     } else {
       //se sono una lavorazione
       const index = this.data.indexOf(node)
       if (index !== -1) {
         this.data.splice(index, 1);
         this.dataChange.next(this.data);
-        return true
+        changed = true
       }
-      return false
     }
 
-    return false
+    return changed
   }
 
 }

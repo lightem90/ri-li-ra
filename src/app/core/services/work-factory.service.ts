@@ -20,6 +20,7 @@ export interface IWorkFactoryService
 {
   createWork(wTypeString : string) : TreeWorkNode
   createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode
+  fixChildrens(node : TreeWorkNode)
 }
 
 @Injectable()
@@ -77,12 +78,24 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     result.children = [new TreeWorkNode()]
     return result
   }
+
+  fixChildrens(node : TreeWorkNode) {
+
+  }
 }
 
 
 @Injectable()
 export class WorkFactoryService implements IWorkFactoryService {
 
+  _createFromInput(input : NumberInput) {    
+    var result = new TreeWorkNode();
+    result.inputs = [input]
+    result.name = input.label
+    result.isSingleNode = true
+    return result
+  }
+  
   _createSingleInput(name: string, value: number) {
     var result = new TreeWorkNode();
     var sIn = new NumberInput(name, value)
@@ -108,7 +121,6 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.outputs = [pricePerPiece]
     result.editable = true
     result.isWork = true
-    result.totTime = new NumberInput('wMinutes', 0)
     
     var totMinIn = new TextInput('wMinutes', "0")
     result.totTimeReadOnly = totMinIn
@@ -195,6 +207,14 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.inputs = inputs
     result.isStage = true
     return  result
+  }
+  
+  fixChildrens(node : TreeWorkNode) {
+    if (node.workTimeEnabled) {
+      //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
+      var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
+      node.children = [priceChildrenInput, this._createFromInput(node.totTime)]
+    }
   }
 
 
@@ -308,7 +328,9 @@ export class WorkFactoryService implements IWorkFactoryService {
         treeWorkNode.outputs[0].text = secondi.toString()
         treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
       }
+      
     }
+    
 
   }
 

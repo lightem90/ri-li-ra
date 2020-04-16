@@ -32,9 +32,13 @@
             *ngFor="let out of node.outputs"
             [input]="out">
           </app-disabled-input>
+          <app-number-input 
+            *ngIf="node.workTimeEnabled && node.isWork"
+            [input]="node.totalEditableTime">
+          </app-number-input>
         </div>
         <button 
-          *ngIf="node.canAddLevel()"
+          *ngIf="canAddLevel"
           mat-icon-button 
           (click)="addNewItem(node)">
           <mat-icon>add</mat-icon>

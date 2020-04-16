@@ -138,7 +138,7 @@ export class BudgetCalculatorService {
     let areaFresa = this._pi * 4 * (diamFresa*diamFresa)
     let numPezzi = Math.floor((b25*c25)/(areaPezzoTondo+areaFresa))
     console.log("Numero di pezzi nesting: " + numPezzi)
-    
+
     //volume della lastra
     return (b25*c25*d25)
   }
