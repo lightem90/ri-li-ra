@@ -91,5 +91,8 @@
   "emailLoginErrorNotMatch" : "La password inserita non combacia",
   "loginPswRecheck" : "Reinserisci la password",
   "login" : "Entra",
-  "registra" : "Registrati"
+  "registra" : "Registrati",
+  "LamaTaglio" : "Spessore della lama di taglio",
+  "SpessoreLastra" : "Spessore della lastra",
+  "DiametroFresa" : "Diametro "
 }
