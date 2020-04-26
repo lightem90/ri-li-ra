@@ -75,10 +75,17 @@ export class WorkTreeComponent implements OnInit {
       this.treeControl.expand(node);
     }
 
+    //i singoli input richiamano recalculate che triggera il ricalcolo fino alla lavorazione (caso peggiore)
     recalcNode(node : TreeWorkFlatNode) {
       const parentNode = this.getParentNode(node)
       const parentRealNode = this.flatNodeMap.get(parentNode)
       parentRealNode.recalculate()
+
+      const work = this.getParentNode(parentNode)
+      if (work !== null) {
+        const workNode = this.flatNodeMap.get(work)
+        workNode.recalculate()
+      }
     }
 
     createStage(node: TreeWorkFlatNode, stageName: string) {

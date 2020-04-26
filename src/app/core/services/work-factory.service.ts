@@ -122,7 +122,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   _createSimpleWork(wType : WorkType, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
  
     var pricePerPiece = new TextInput('pricePerPiece', "0")
-    var result = new TreeWorkNode()
+    var result = new TreeWorkNode(this.calculateWork)
     result.name = WorkType[wType]
     result.outputs = [pricePerPiece]
     result.editable = true
@@ -236,14 +236,18 @@ export class WorkFactoryService implements IWorkFactoryService {
   fixChildrens(node : TreeWorkNode) {
     console.log(node.workTimeEnabled ? "solo tempo" : "tutti param")
     var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
+    var emptyStages = node.children.filter(c => c.isStage && c.name === "")
     if (node.workTimeEnabled) {
       //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
       node.children = [priceChildrenInput, this._createFromInput(node.totTime)]
+      for(let stage of emptyStages) {
+        node.children.push(stage)
+      }
     }
   }
 
   //devo rimuovere dai figli il prezzo totale e ripristinare gli input coi tempi
-  //e ovviamente le fa
+  //e ovviamente le fasi
   restoreChildrens(node : TreeWorkNode) {
     let stages = node.children.filter(c => c.isStage)
 
@@ -377,10 +381,18 @@ export class WorkFactoryService implements IWorkFactoryService {
         treeWorkNode.outputs[0].text = secondi.toString()
         if (treeWorkNode.hourlyCost)
         {
+          console.log("AAAA")
           treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
         }
       }
       
+    }
+
+    function calculateWork(treeWorkNode : TreeWorkNode) {
+      //se non ci sono stage validi si comporta come una lavorazione esterna
+      if (treeWorkNode.workTimeEnabled) {
+
+      }
     }
 
     //outputs ha optional, minuti, prezzo
