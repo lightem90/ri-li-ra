@@ -52,7 +52,6 @@ export class MaterialPickerComponent implements OnInit {
         if (res)
         {
           this.materials = res
-          this.selectedMaterialId = this.materials[0].uid
           this.materials.forEach(mat => {            
             this._configuratorService
               .getAssetUrl(mat.img_url)

@@ -158,10 +158,10 @@ export class WorkFactoryService implements IWorkFactoryService {
   _internalCreateStageForWork(
     wType : WorkType, 
     stageName: string,
+    calc : Function,
     optOutputs: DisabledInput[] = [],
     optInputs: NumberInput[] = [],
-    addDefault = true,
-    calc : Function = null) {      
+    addDefault = true) {      
     
     var sMin = new TextInput('sMinutes', "0")
     var sPrice = new TextInput('sPrice', "0")
@@ -271,7 +271,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.Sbavatura:
       case WorkType.Stozzatura:
       {
-        return this._internalCreateStageForWork(wType, stageName)
+        return this._internalCreateStageForWork(wType, stageName, calculateStandardStage)
         break;
       }
       case WorkType.ControlloQualita:
@@ -281,7 +281,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           new NumberInput('p_z'),
           new NumberInput('v_z')
         ]
-        return this._internalCreateStageForWork(wType, stageName, [], optValues)
+        return this._internalCreateStageForWork(wType, stageName,calculateCQualita, [], optValues)
         break;
       }
       case WorkType.Taglio:
@@ -294,7 +294,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         const optOutput = [
           new TextInput('taglioSec', '0')
         ]
-        return this._internalCreateStageForWork(wType, stageName, optOutput, optValues, false, calculateStageTaglio)
+        return this._internalCreateStageForWork(wType, stageName, calculateStageTaglio, optOutput, optValues, false)
         break;
       }
       case WorkType.Tornitura:
@@ -307,7 +307,20 @@ export class WorkFactoryService implements IWorkFactoryService {
           new TextInput('tornMMin', '0')
         ]
           
-        return this._internalCreateStageForWork(wType, stageName, optOutput, optValues)
+        var tornitura = this._internalCreateStageForWork(wType, stageName,  calculateTornituraStage, optOutput, optValues)
+
+        var velIn = tornitura.inputs.find(i => i.label == "mVel")
+        var velC = tornitura.children.find(c => c.name == "mVel")
+        var i = tornitura.inputs.indexOf(velIn)
+        var c = tornitura.children.indexOf(velC)
+        if (i !== -1 && c !== -1) {
+          tornitura.inputs.splice(i, 1)
+          tornitura.children.splice(c, 1)
+        } else {
+          console.log("error, cannot form Tornitura stage properly")
+        }
+
+        return tornitura
         break;
       }
       default:
@@ -326,12 +339,74 @@ export class WorkFactoryService implements IWorkFactoryService {
         var secondi = minuti * 60
         treeWorkNode.outputs[1].text = minuti.toString()
         treeWorkNode.outputs[0].text = secondi.toString()
-        treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+        if (treeWorkNode.hourlyCost)
+        {
+          treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+        }
       }
       
     }
-    
 
+    //outputs ha optional, minuti, prezzo
+    function calculateCQualita(treeWorkNode : TreeWorkNode){
+      const distanzaZ = treeWorkNode.inputs[0].value
+      const passateZ = treeWorkNode.inputs[1].value
+      const velocitaZ = treeWorkNode.inputs[2].value
+      const pezzi = treeWorkNode.inputs[3].value
+      const passate = treeWorkNode.inputs[4].value
+      const velocita = treeWorkNode.inputs[5].value
+      const distanza = treeWorkNode.inputs[6].value
+      //non posso dividere per 0..
+      if (pezzi > 0 && velocitaZ > 0 && velocita) {
+        var j13 = 
+          ((distanzaZ * passateZ) / velocitaZ)/60 + 
+          ((distanza * passate) / velocita)/60
+        var k45 = j13 * pezzi
+        treeWorkNode.outputs[0].text = k45.toString()
+        if (treeWorkNode.hourlyCost)
+        {
+          treeWorkNode.outputs[1].text = (k45 * treeWorkNode.hourlyCost.value).toString()
+        }
+      }      
+    }
+
+    function calculateStandardStage(treeWorkNode : TreeWorkNode) {
+      const pezzi = treeWorkNode.inputs[0].value
+      const passate = treeWorkNode.inputs[1].value
+      const velocita = treeWorkNode.inputs[2].value
+      const distanza = treeWorkNode.inputs[3].value
+      //non posso dividere per 0..
+      if (pezzi > 0 && velocita) {
+        var minuti = ((distanza * passate) / velocita)/60
+        treeWorkNode.outputs[0].text = minuti.toString()
+        if (treeWorkNode.hourlyCost)
+        {
+          treeWorkNode.outputs[1].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+        }
+      }
+    }
+
+    function calculateTornituraStage(treeWorkNode : TreeWorkNode) {
+      
+      const giriM = treeWorkNode.inputs[0].value
+      const velMG = treeWorkNode.inputs[1].value
+      const pezzi = treeWorkNode.inputs[2].value
+      const passate = treeWorkNode.inputs[3].value
+      const distanza = treeWorkNode.inputs[4].value
+
+      var velocita = (velMG * giriM)
+      treeWorkNode.outputs[0].text = velocita.toString()
+      //non posso dividere per 0..
+      if (pezzi > 0 && velocita > 0) {
+        var minuti = (distanza * passate * velocita)
+        treeWorkNode.outputs[1].text = minuti.toString()
+        if (treeWorkNode.hourlyCost)
+        {
+          treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+        }
+      }
+
+    }
   }
-
 }
+
