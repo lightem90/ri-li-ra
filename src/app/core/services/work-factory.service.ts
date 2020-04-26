@@ -21,6 +21,8 @@ export interface IWorkFactoryService
   createWork(wTypeString : string) : TreeWorkNode
   createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode
   fixChildrens(node : TreeWorkNode)
+  restoreChildrens(node : TreeWorkNode)
+  createDefaultChildrenNode() : TreeWorkNode
 }
 
 @Injectable()
@@ -82,6 +84,15 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
   fixChildrens(node : TreeWorkNode) {
 
   }
+
+  restoreChildrens(node : TreeWorkNode) {
+
+  }
+
+  //mai chiamato, non ci sono stage, in questa modalitò ci sono solo elementi di primo livello
+  createDefaultChildrenNode() {
+    return new TreeWorkNode()
+  }
 }
 
 
@@ -97,12 +108,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   }
   
   _createSingleInput(name: string, value: number) {
-    var result = new TreeWorkNode();
-    var sIn = new NumberInput(name, value)
-    result.inputs = [sIn]
-    result.name = name
-    result.isSingleNode = true
-    return result
+    return new NumberInput(name, value)
   }
 
   _createSingleInputFrom(nInput : NumberInput) {
@@ -113,7 +119,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     return result
   }  
 
-  _createSimpleWork(wType : WorkType, optChildrens : TreeWorkNode[] = [], addToolChangePhase: boolean  = false) {
+  _createSimpleWork(wType : WorkType, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
  
     var pricePerPiece = new TextInput('pricePerPiece', "0")
     var result = new TreeWorkNode()
@@ -123,21 +129,33 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.isWork = true
     
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
-    const childrens = [
+    const inputs = [
       this._createSingleInput('wPriceH', 0),  //il prezzo totale va "gr"
       this._createSingleInput('wTPiaz', 0),
     ]
 
-    for(let child of optChildrens) {
-      childrens.push(child)
+    for(let child of optInputs) {
+      inputs.push(child)
     }
 
+    const stages = []
+
     if(addToolChangePhase) {
-      childrens.push(this._createToolChangeStage())
+      stages.push(this._createToolChangeStage())
     }
     //Nodo vuoto per visualizzare subito l'input per la nuova fase
-    childrens.push(new TreeWorkNode())
-    result.children = childrens
+    const emptyStage = new TreeWorkNode()
+    emptyStage.isStage = true
+    stages.push()
+    const singleInputs = inputs.map(i => this._createSingleInputFrom(i))
+    //aggiungo anche gli input singoli alla lista dei "children", a fianco alle ExternalWorkFactoryService(verificare se non si possa fare diversamente...)
+    for(let sIn of singleInputs) {
+      stages.push(sIn)
+    }
+
+    result.children = stages
+    result.inputs = inputs
+    console.log(result.inputs)
     return result;
   }
 
@@ -151,6 +169,14 @@ export class WorkFactoryService implements IWorkFactoryService {
     const result = this._createSimpleWork(wType, childrens, addToolChangePhase)
 
     return result;
+  }
+
+  //i figli sono sempre degli stage
+  createDefaultChildrenNode() : TreeWorkNode {
+    //senza name, in modo che parta la gestione del nuovo stage
+    const emptyStage = new TreeWorkNode()
+    emptyStage.isStage = true
+    return emptyStage
   }
 
   _internalCreateStageForWork(
@@ -209,10 +235,21 @@ export class WorkFactoryService implements IWorkFactoryService {
   
   fixChildrens(node : TreeWorkNode) {
     console.log(node.workTimeEnabled ? "solo tempo" : "tutti param")
+    var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
     if (node.workTimeEnabled) {
       //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
-      var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
       node.children = [priceChildrenInput, this._createFromInput(node.totTime)]
+    }
+  }
+
+  //devo rimuovere dai figli il prezzo totale e ripristinare gli input coi tempi
+  //e ovviamente le fa
+  restoreChildrens(node : TreeWorkNode) {
+    let stages = node.children.filter(c => c.isStage)
+
+    node.children = node.inputs.map(i => this._createSingleInputFrom(i))
+    for(let stage of stages) {
+      node.children.push(stage)
     }
   }
 

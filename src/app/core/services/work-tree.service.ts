@@ -18,8 +18,8 @@ export class WorkTreeService{
 
   addDefault(parent: TreeWorkNode) {
     if (parent.children) {
-      const t = new TreeWorkNode()
-      parent.children.push(t); //senza name, in modo che parta la gestione del nuovo stage
+      const t = this._workFactory.createDefaultChildrenNode()
+      parent.children.push(t); 
       this.dataChange.next(this.data);
     }
   }
@@ -30,12 +30,16 @@ export class WorkTreeService{
   }
 
   addWork(wType : string) {
-    const workNode = this._workFactory.createWork(wType)
+    const workNode = this._workFactory.createWork(wType)    
+    this._workFactory.fixChildrens(workNode)
     this.data.push(workNode)
     this.dataChange.next(this.data)
   }
 
   updateWorkItem(node: TreeWorkNode, parentNode: TreeWorkNode, stageName: string, workName: string) {
+
+    let initialStagesPresent = parentNode.children.some(c => c.isStage && c.name !== "");
+
     const stage = this._workFactory.createStageForWork(workName, stageName)
     node.name = stage.name;
     node.children = stage.children
@@ -45,9 +49,12 @@ export class WorkTreeService{
     node.calculator = stage.calculator
     
     if (parentNode){
-      parentNode.workTimeEnabled = false
       node.hourlyCost = parentNode.hourlyCost
-      this._workFactory.fixChildrens(parentNode)
+      //devo far apparire i valori dei vari tempi e rimuovere il tempo "totale", se necesario. Se c'erano già degli stages non devo cambiare nulla, i tempi sono giò visibili
+      if (!initialStagesPresent)
+      {
+        this._workFactory.restoreChildrens(parentNode)
+      }
     }
 
     this.dataChange.next(this.data)
@@ -60,10 +67,8 @@ export class WorkTreeService{
       const index = parentNode.children.indexOf(node)
       if (index !== -1) {
         parentNode.children.splice(index, 1)
+        this._workFactory.fixChildrens(parentNode)
         this.dataChange.next(this.data)
-        parentNode.workTimeEnabled = parentNode.children
-          .filter(function(c) {return !c.isSingleNode})
-          .length == 0
         changed = true
       }
       

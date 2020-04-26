@@ -55,7 +55,11 @@ export class TreeWorkNode {
   public isStage : boolean = false
   public isWork : boolean = false
   public canAddLevel : boolean = true
-  public workTimeEnabled : boolean = true
+
+  //l'input del tempo di lavorazione è visualizzabile solo se non ci sono stage
+  workTimeEnabled() {
+    return !this.children.some(c => c.isStage && c.name !== "")
+  }
 }
 //nodo che rappresenta una lavorazione o uno stage "chiuso" nell'alber
 export class TreeWorkFlatNode {
