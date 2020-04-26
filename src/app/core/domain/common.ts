@@ -49,7 +49,7 @@ export class TreeWorkNode {
   public textInputs : TextInput[] = []
   public outputs : DisabledInput[]= []
   public totTime : NumberInput = new NumberInput("wMinutes", 0)
-  public totTimeReadOnly : DisabledInput = null
+  public totTimeReadOnly : DisabledInput = new TextInput('wMinutes', "0")
   public children : TreeWorkNode[]= []
   public isSingleNode : boolean = false
   public isStage : boolean = false

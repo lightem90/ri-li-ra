@@ -122,8 +122,6 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.editable = true
     result.isWork = true
     
-    var totMinIn = new TextInput('wMinutes', "0")
-    result.totTimeReadOnly = totMinIn
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
     const childrens = [
       this._createSingleInput('wPriceH', 0),  //il prezzo totale va "gr"
@@ -210,6 +208,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   }
   
   fixChildrens(node : TreeWorkNode) {
+    console.log(node.workTimeEnabled ? "solo tempo" : "tutti param")
     if (node.workTimeEnabled) {
       //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
       var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
