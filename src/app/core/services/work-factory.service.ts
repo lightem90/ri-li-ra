@@ -119,12 +119,12 @@ export class WorkFactoryService implements IWorkFactoryService {
     return result
   }  
 
-  _createSimpleWork(wType : WorkType, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
+  _createSimpleWork(wType : WorkType, calculate: Function, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
  
-    var pricePerPiece = new TextInput('pricePerPiece', "0")
-    var result = new TreeWorkNode(this.calculateWork)
+    var totPrice = new TextInput('totPrice', "0")
+    var result = new TreeWorkNode(calculate)
     result.name = WorkType[wType]
-    result.outputs = [pricePerPiece]
+    result.outputs = [totPrice]
     result.editable = true
     result.isWork = true
     
@@ -133,6 +133,8 @@ export class WorkFactoryService implements IWorkFactoryService {
       this._createSingleInput('wPriceH', 0),  //il prezzo totale va "gr"
       this._createSingleInput('wTPiaz', 0),
     ]
+
+    result.hourlyCost = inputs[0]
 
     for(let child of optInputs) {
       inputs.push(child)
@@ -155,18 +157,16 @@ export class WorkFactoryService implements IWorkFactoryService {
 
     result.children = stages
     result.inputs = inputs
-    console.log(result.inputs)
     return result;
   }
 
-  _createComplexWork(wType : WorkType, addToolChangePhase: boolean  = false) 
-  {
+  _createComplexWork(wType : WorkType, calculate: Function, addToolChangePhase: boolean  = false)  {
     const childrens = [
       this._createSingleInput('wTProg', 0),
       this._createSingleInput('wTAtt', 0)
     ]
 
-    const result = this._createSimpleWork(wType, childrens, addToolChangePhase)
+    const result = this._createSimpleWork(wType, calculate, childrens, addToolChangePhase)
 
     return result;
   }
@@ -234,7 +234,6 @@ export class WorkFactoryService implements IWorkFactoryService {
   }
   
   fixChildrens(node : TreeWorkNode) {
-    console.log(node.workTimeEnabled ? "solo tempo" : "tutti param")
     var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
     var emptyStages = node.children.filter(c => c.isStage && c.name === "")
     if (node.workTimeEnabled) {
@@ -269,7 +268,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.RettificaVerticale:
       {
         //lavorazioni con cambio utensile e tempi di attr/piazzamento
-        return this._createComplexWork(wType, true)
+        return this._createComplexWork(wType, calculateWork, true)
         break         
       }
       
@@ -277,7 +276,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.IncisioneLaser:
       {
         //lavorazioni SENZA cambio utensile e tempi di attr/piazzamento
-        return this._createComplexWork(wType)
+        return this._createComplexWork(wType, calculateWork)
         break         
       }
       case WorkType.Sabbiatura:
@@ -286,7 +285,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.Taglio:
       {
         //lavorazioni con solo tempo di piazzamento
-        return this._createSimpleWork(wType)
+        return this._createSimpleWork(wType, calculateWork)
         break;    
       }
       default:
@@ -294,6 +293,26 @@ export class WorkFactoryService implements IWorkFactoryService {
         console.log('Error, work not supported: ' + wType.toString())
         return null
         break
+      }
+    }
+    
+
+    function calculateWork(treeWorkNode : TreeWorkNode) {
+      
+      //se non ci sono stage validi si comporta come una lavorazione esterna
+      var totPriceOutput = treeWorkNode.outputs[0]
+      if (treeWorkNode.workTimeEnabled) {
+        var minuti = treeWorkNode.totTime.value
+        var prezzo = treeWorkNode.hourlyCost.value
+
+        totPriceOutput.text = ((minuti/60)*prezzo).toString()
+      } else {
+        //somma dei dati delle fasi
+        var totPrice = treeWorkNode.children
+          .filter(c => c.isStage && c.name !== "")
+          .reduce((sum, c) => sum + +c.outputs[1].text, 0);
+
+        totPriceOutput.text = (totPrice).toString()
       }
     }
   }
@@ -381,18 +400,9 @@ export class WorkFactoryService implements IWorkFactoryService {
         treeWorkNode.outputs[0].text = secondi.toString()
         if (treeWorkNode.hourlyCost)
         {
-          console.log("AAAA")
           treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
         }
-      }
-      
-    }
-
-    function calculateWork(treeWorkNode : TreeWorkNode) {
-      //se non ci sono stage validi si comporta come una lavorazione esterna
-      if (treeWorkNode.workTimeEnabled) {
-
-      }
+      }      
     }
 
     //outputs ha optional, minuti, prezzo

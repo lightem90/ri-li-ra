@@ -51,8 +51,7 @@ export class WorkTreeService{
     if (parentNode){
       node.hourlyCost = parentNode.hourlyCost
       //devo far apparire i valori dei vari tempi e rimuovere il tempo "totale", se necesario. Se c'erano già degli stages non devo cambiare nulla, i tempi sono giò visibili
-      if (!initialStagesPresent)
-      {
+      if (!initialStagesPresent) {
         this._workFactory.restoreChildrens(parentNode)
       }
     }

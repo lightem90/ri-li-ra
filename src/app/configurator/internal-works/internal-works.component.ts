@@ -41,4 +41,8 @@ export class InternalWorksComponent implements OnInit {
       this.treeService.addWork(this.selectedWorkType.toString())
     }
 
+    updateBudget() {
+      console.log("Recalculate internal works")
+    }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -16,6 +16,7 @@ import {NumberInput, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService} from '../
 export class WorkTreeComponent implements OnInit {  
 
     @Input() treeService: IWorkTreeService
+    @Output() recalculated = new EventEmitter();
 
     //stati per l'albero (far diventare tutto un componente!)
     getLevel = (node: TreeWorkFlatNode) => node.level;
@@ -80,12 +81,13 @@ export class WorkTreeComponent implements OnInit {
       const parentNode = this.getParentNode(node)
       const parentRealNode = this.flatNodeMap.get(parentNode)
       parentRealNode.recalculate()
-
       const work = this.getParentNode(parentNode)
       if (work !== null) {
         const workNode = this.flatNodeMap.get(work)
         workNode.recalculate()
       }
+
+      this.recalculated.emit()
     }
 
     createStage(node: TreeWorkFlatNode, stageName: string) {

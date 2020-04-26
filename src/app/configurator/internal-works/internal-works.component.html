@@ -6,7 +6,8 @@
     </app-pdf-uploader>  
   </div>
   <app-work-tree
-   [treeService]="treeService"> 
+   [treeService]="treeService"
+   (recalculated)="updateBudget()"> 
   </app-work-tree>
   <br>
   <div>
