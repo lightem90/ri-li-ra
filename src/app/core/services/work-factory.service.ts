@@ -301,18 +301,23 @@ export class WorkFactoryService implements IWorkFactoryService {
       
       //se non ci sono stage validi si comporta come una lavorazione esterna
       var totPriceOutput = treeWorkNode.outputs[0]
-      if (treeWorkNode.workTimeEnabled) {
+      if (treeWorkNode.workTimeEnabled()) {
         var minuti = treeWorkNode.totTime.value
         var prezzo = treeWorkNode.hourlyCost.value
 
         totPriceOutput.text = ((minuti/60)*prezzo).toString()
       } else {
         //somma dei dati delle fasi
-        var totPrice = treeWorkNode.children
+        var totStagesPrice = treeWorkNode.children
           .filter(c => c.isStage && c.name !== "")
-          .reduce((sum, c) => sum + +c.outputs[1].text, 0);
+          .reduce((sum, c) => sum + (+c.outputs[1].text), 0);
 
-        totPriceOutput.text = (totPrice).toString()
+        var totToolingTimes = treeWorkNode.children
+          .filter(c => c.isSingleNode && c.name !== "wPriceH")
+          .reduce((sum, c) => sum + 
+            (treeWorkNode.hourlyCost.value)*(c.inputs[0].value/ 60), 0)
+
+        totPriceOutput.text = (totStagesPrice + totToolingTimes).toString()
       }
     }
   }
@@ -400,7 +405,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         treeWorkNode.outputs[0].text = secondi.toString()
         if (treeWorkNode.hourlyCost)
         {
-          treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+          treeWorkNode.outputs[2].text = (minuti/60 * treeWorkNode.hourlyCost.value).toString()
         }
       }      
     }
