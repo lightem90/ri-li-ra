@@ -42,7 +42,6 @@ export class InternalWorksComponent implements OnInit {
     }
 
     updateBudget() {
-      console.log("Recalculate internal works")
     }
 
 }

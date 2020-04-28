@@ -305,7 +305,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         var minuti = treeWorkNode.totTime.value
         var prezzo = treeWorkNode.hourlyCost.value
 
-        totPriceOutput.text = ((minuti/60)*prezzo).toString()
+        totPriceOutput.text = ((minuti/60)*prezzo).toFixed(2)
       } else {
         //somma dei dati delle fasi
         var totStagesPrice = treeWorkNode.children
@@ -317,7 +317,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           .reduce((sum, c) => sum + 
             (treeWorkNode.hourlyCost.value)*(c.inputs[0].value/ 60), 0)
 
-        totPriceOutput.text = (totStagesPrice + totToolingTimes).toString()
+        totPriceOutput.text = (totStagesPrice + totToolingTimes).toFixed(2)
       }
     }
   }
@@ -401,11 +401,11 @@ export class WorkFactoryService implements IWorkFactoryService {
       if (pezzi > 0 && resa > 0) {
         var minuti = area / resa
         var secondi = minuti * 60
-        treeWorkNode.outputs[1].text = minuti.toString()
-        treeWorkNode.outputs[0].text = secondi.toString()
+        treeWorkNode.outputs[1].text = minuti.toFixed(2)
+        treeWorkNode.outputs[0].text = secondi.toFixed(2)
         if (treeWorkNode.hourlyCost)
         {
-          treeWorkNode.outputs[2].text = (minuti/60 * treeWorkNode.hourlyCost.value).toString()
+          treeWorkNode.outputs[2].text = (minuti/60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }      
     }
@@ -425,10 +425,10 @@ export class WorkFactoryService implements IWorkFactoryService {
           ((distanzaZ * passateZ) / velocitaZ)/60 + 
           ((distanza * passate) / velocita)/60
         var k45 = j13 * pezzi
-        treeWorkNode.outputs[0].text = k45.toString()
+        treeWorkNode.outputs[0].text = k45.toFixed(2)
         if (treeWorkNode.hourlyCost)
         {
-          treeWorkNode.outputs[1].text = (k45 * treeWorkNode.hourlyCost.value).toString()
+          treeWorkNode.outputs[1].text = (k45 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }      
     }
@@ -441,10 +441,10 @@ export class WorkFactoryService implements IWorkFactoryService {
       //non posso dividere per 0..
       if (pezzi > 0 && velocita) {
         var minuti = ((distanza * passate) / velocita)/60
-        treeWorkNode.outputs[0].text = minuti.toString()
+        treeWorkNode.outputs[0].text = minuti.toFixed(2)
         if (treeWorkNode.hourlyCost)
         {
-          treeWorkNode.outputs[1].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+          treeWorkNode.outputs[1].text = (minuti * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
     }
@@ -458,14 +458,14 @@ export class WorkFactoryService implements IWorkFactoryService {
       const distanza = treeWorkNode.inputs[4].value
 
       var velocita = (velMG * giriM)
-      treeWorkNode.outputs[0].text = velocita.toString()
+      treeWorkNode.outputs[0].text = velocita.toFixed(2)
       //non posso dividere per 0..
       if (pezzi > 0 && velocita > 0) {
         var minuti = (distanza * passate * velocita)
-        treeWorkNode.outputs[1].text = minuti.toString()
+        treeWorkNode.outputs[1].text = minuti.toFixed(2)
         if (treeWorkNode.hourlyCost)
         {
-          treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toString()
+          treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
 
