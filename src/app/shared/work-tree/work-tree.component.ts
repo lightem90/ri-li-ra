@@ -42,7 +42,6 @@ export class WorkTreeComponent implements OnInit {
       flatNode.level = level;
       flatNode.expandable = !!node.children;
       flatNode.inputs = node.inputs
-      flatNode.textInputs = node.textInputs
       flatNode.outputs = node.outputs
       flatNode.isSingleNode = node.isSingleNode
       flatNode.canAddLevelFlag = node.canAddLevel

@@ -44,7 +44,6 @@ export class WorkTreeService{
     node.name = stage.name;
     node.children = stage.children
     node.inputs = stage.inputs
-    node.textInputs = stage.textInputs
     node.outputs = stage.outputs
     node.calculator = stage.calculator
     

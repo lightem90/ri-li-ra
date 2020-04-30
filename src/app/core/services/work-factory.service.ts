@@ -28,6 +28,15 @@ export interface IWorkFactoryService
 @Injectable()
 export class ExternalWorkFactoryService implements IWorkFactoryService {
 
+
+  _createSingleInputFrom(nInput : NumberInput) {
+    var result = new TreeWorkNode();
+    result.inputs = [nInput]
+    result.name = nInput.label
+    result.isSingleNode = true
+    return result
+  }  
+
   _createSingleInput(name: string, value: number) {
     var result = new TreeWorkNode();
     var sIn = new NumberInput(name, value)
@@ -37,32 +46,33 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     return result
   }
 
-  _createSingleTextInput(name: string, value: string) {
-    var result = new TreeWorkNode();
-    var sIn = new TextInput(name, value)
-    result.textInputs = [sIn]
-    result.name = name
-    result.isSingleNode = true
-    return result
-  }
-
   _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
-    const result = new TreeWorkNode()
+    const result = new TreeWorkNode(calculateExtWork)
     //servono per gli if di interfaccia
-    result.textInputs.push(new TextInput('udm', 'Kg'))
+    result.inputs.push(new NumberInput('qty', 0))
     result.inputs.push(new NumberInput('unitaryPrice', 0))
     result.inputs.push(new NumberInput('PercRic', 0))
     result.outputs = [
       new TextInput('totPrice', "0")
     ]
-    result.children = [
-      this._createSingleInput('unitaryPrice', 0),
-      this._createSingleInput('PercRic', 0),
-      this._createSingleTextInput('udm', 'Kg')
-    ]
+    result.children = result.inputs.map(i => this._createSingleInputFrom(i))
     result.name = wTypeString
     result.canAddLevel = false
     return result
+
+    
+
+    function calculateExtWork(treeWorkNode : TreeWorkNode) {
+        
+        //se non ci sono stage validi si comporta come una lavorazione esterna
+        var totPriceOutput = treeWorkNode.outputs[0]
+
+        var quantita = result.inputs[0].value
+        var pUnitario = result.inputs[1].value
+        var ricarico = result.inputs[2].value
+
+        totPriceOutput.text = ((quantita * pUnitario) * (100+ricarico)/100).toFixed(2)
+    }
   }
   //si possono specificare per ogni lavorazione estrna unità di misura e prezzo unitario
   //gli enum sono solo "da fuori" a me interessa solo il tipo

@@ -46,7 +46,6 @@ export class TreeWorkNode {
   public name : string = ""
   public editable : boolean
   public inputs : NumberInput []= []
-  public textInputs : TextInput[] = []
   public outputs : DisabledInput[]= []
   public totTime : NumberInput = new NumberInput("wMinutes", 0)
   public totTimeReadOnly : DisabledInput = new TextInput('wMinutes', "0")
@@ -70,7 +69,6 @@ export class TreeWorkFlatNode {
   level: number = 0
   expandable: boolean
   public inputs : NumberInput[] = []
-  public textInputs : TextInput[] = []
   public outputs : DisabledInput[] = []
   public totPrice : DisabledInput = null
   public totTime : DisabledInput = null
