@@ -25,4 +25,9 @@
       {{'addWork' | translate}}
     </button>
   </div>
+  <br>
+  <div>    
+    <app-number-input [input]="_configuratorService.currentSession.charge_lav_int"> </app-number-input> 
+    <app-disabled-input [input]="_configuratorService.currentSession.tot_lav_int"> </app-disabled-input> 
+  </div>
 </div>

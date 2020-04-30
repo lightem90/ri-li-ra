@@ -4,6 +4,20 @@ import {Shape} from './piece';
 
 import {BehaviorSubject} from 'rxjs';
 
+//todo
+export class BudgetRecap {
+
+  constructor(
+    public recap_tot_prz = new NumberInput ("PrezzoAlPz", 0),
+    public recap_tot_gain_perc = new NumberInput ("TotGainPerc", 0),
+    public recap_tot = new TextInput("TotConf", "NonCalc"),
+    public recap_tot_gain = new TextInput("TotGain", "NonCalc"),
+    public recap_pc_pz = new TextInput("PrezzoCostoAlPz", "NonCalc"),
+    public recap_pce_pz = new TextInput("TotAlPzExtAlPz", "NonCalc")) {
+
+    }
+}
+
 //dominio per l'interfaccia..
 export class Budget {
 
@@ -26,10 +40,13 @@ export class Budget {
     public pieceUnitaryPrice = new TextInput("CostoAlPz", "0"),    
     public recap_tot_prz = new NumberInput ("PrezzoAlPz", 0),
     public recap_tot_gain_perc = new NumberInput ("TotGainPerc", 0),
-    public recap_tot = new TextInput("TotConf", "NonCalc"),
-    public recap_tot_gain = new TextInput("TotGain", "NonCalc"),
-    public recap_pc_pz = new TextInput("PrezzoCostoAlPz", "NonCalc"),
-    public recap_pce_pz = new TextInput("TotAlPzExtAlPz", "NonCalc"),
+    public recap_tot = new TextInput("TotConf", "0"),
+    public recap_tot_gain = new TextInput("TotGain", "0"),
+    public recap_pc_pz = new TextInput("PrezzoCostoAlPz", "0"),
+    public recap_pce_pz = new TextInput("TotAlPzExtAlPz", "0"),
+    public tot_lav_int = new TextInput ("tot_lav_int", "0"),
+    public tot_lav_ext = new TextInput ("tot_lav_ext", "0"),
+    public charge_lav_int = new NumberInput("charge_lav_int", 0),
     public selectedShape : Shape = null,
     public shapeInputs: NumberInput[] = []){
 

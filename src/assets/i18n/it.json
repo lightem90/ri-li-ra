@@ -95,5 +95,8 @@
   "LamaTaglio" : "Spessore della lama di taglio",
   "SpessoreLastra" : "Spessore della lastra",
   "DiametroFresa" : "Diametro fresa",
-  "qty" : "Quantità"
+  "qty" : "Quantità",
+  "tot_lav_int" : "Totale lavorazioni interne",
+  "charge_lav_int" : "Ricarico % lavorazioni interne",
+  "tot_lav_ext" : "Totale lavorazioni esterne"
 }
