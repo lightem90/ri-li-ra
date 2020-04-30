@@ -19,8 +19,10 @@ export class WorkTreeService{
   addDefault(parent: TreeWorkNode) {
     if (parent.children) {
       const t = this._workFactory.createDefaultChildrenNode()
-      parent.children.push(t); 
-      this.dataChange.next(this.data);
+      if (t) {
+        parent.children.push(t); 
+        this.dataChange.next(this.data);
+      }      
     }
   }
 

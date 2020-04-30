@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {WorkType, TreeWorkNode, TreeWorkFlatNode} from '../../core/domain/works'
+import {WorkType} from '../../core/domain/works'
 import {ThermalWorkType, SuperficialWorkType, ExternalWorkType} from '../../core/domain/external-works'
 import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
@@ -10,7 +10,7 @@ import {ExternalWorkFactoryService} from '../../core/services/work-factory.servi
 
 import { ConfiguratorService } from '../../core/services/configurator.service'
 
-import {NumberInput} from '../../core/domain/common'
+import {NumberInput, DisabledInput} from '../../core/domain/common'
 
 @Component({
   selector: 'app-external-works',
@@ -22,6 +22,10 @@ export class ExternalWorksComponent implements OnInit {
   public treeServiceThermal: WorkTreeService
   public treeServiceSuperficial: WorkTreeService
   public treeServiceExternal: WorkTreeService
+
+  sumThreeOne = 0
+  sumThreeTwo = 0
+  sumThreeThree = 0
   
   //stati per il combo
   workThermTypes: ThermalWorkType[]
@@ -34,6 +38,8 @@ export class ExternalWorksComponent implements OnInit {
   //stati per il combo
   workExtTypes: ExternalWorkType[]
   selectedExtWorkType : ExternalWorkType = null
+
+  tot_lav_ext : DisabledInput
 
   constructor(
     private _factory : ExternalWorkFactoryService,
@@ -51,7 +57,9 @@ export class ExternalWorksComponent implements OnInit {
     }
 
 
-    ngOnInit() {}
+    ngOnInit() {
+      this.tot_lav_ext = this._configuratorService.currentSession.tot_lav_ext
+    }
 
     addThermWork() {
       this.treeServiceThermal.addWork(this.selectedWorkThermalType.toString())
@@ -63,6 +71,24 @@ export class ExternalWorksComponent implements OnInit {
 
     addExtWork() {
       this.treeServiceExternal.addWork(this.selectedExtWorkType.toString())
+    }
+
+    updateTreeOne(sumOfWorks : number) {
+      console.log("ext comp sum: " + sumOfWorks)
+      this.sumThreeOne = sumOfWorks
+      this.recalcAll()
+    }
+    updateTreeTwo(sumOfWorks : number) {
+      this.sumThreeTwo = sumOfWorks
+      this.recalcAll()
+    }
+    updateTreeThree(sumOfWorks : number) {
+      this.sumThreeThree = sumOfWorks
+      this.recalcAll()
+    }
+
+    recalcAll() {
+      this.tot_lav_ext.text = (this.sumThreeOne + this.sumThreeTwo + this.sumThreeThree).toFixed(2)
     }
 
 }

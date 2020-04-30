@@ -34,6 +34,7 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     result.inputs = [nInput]
     result.name = nInput.label
     result.isSingleNode = true
+    result.canAddLevel = false
     return result
   }  
 
@@ -43,6 +44,7 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     result.inputs = [sIn]
     result.name = name
     result.isSingleNode = true
+    result.canAddLevel = false
     return result
   }
 
@@ -58,6 +60,7 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     result.children = result.inputs.map(i => this._createSingleInputFrom(i))
     result.name = wTypeString
     result.canAddLevel = false
+    result.isWork = true
     return result
 
     
@@ -84,13 +87,6 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     return this._createExternalWorkNode(stageName)
   }
 
-  createHeaderNode(title : string) {
-    var result = new TreeWorkNode()
-    result.name = title
-    result.children = [new TreeWorkNode()]
-    return result
-  }
-
   fixChildrens(node : TreeWorkNode) {
 
   }
@@ -101,7 +97,7 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
 
   //mai chiamato, non ci sono stage, in questa modalitò ci sono solo elementi di primo livello
   createDefaultChildrenNode() {
-    return new TreeWorkNode()
+    return null
   }
 }
 
@@ -114,6 +110,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.inputs = [input]
     result.name = input.label
     result.isSingleNode = true
+    result.canAddLevel = false
     return result
   }
   
@@ -126,6 +123,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.inputs = [nInput]
     result.name = nInput.label
     result.isSingleNode = true
+    result.canAddLevel = false
     return result
   }  
 
@@ -165,6 +163,7 @@ export class WorkFactoryService implements IWorkFactoryService {
       stages.push(sIn)
     }
 
+    result.canAddLevel = true
     result.children = stages
     result.inputs = inputs
     return result;

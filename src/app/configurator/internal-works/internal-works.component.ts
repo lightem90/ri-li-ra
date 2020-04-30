@@ -37,13 +37,14 @@ export class InternalWorksComponent implements OnInit {
     }
 
 
-    ngOnInit() {}
-
-    addWork() {
-      this.treeService.addWork(this.selectedWorkType.toString())
+    ngOnInit() {
       this.charge = this._configuratorService.currentSession.charge_lav_int;
       this.tot_lav_int = this._configuratorService.currentSession.tot_lav_int;
       this.tot_lav_int_charge = this._configuratorService.currentSession.tot_lav_int_charge;
+    }
+
+    addWork() {
+      this.treeService.addWork(this.selectedWorkType.toString())
     }
 
     updateBudget(sumOfWorks : number) {

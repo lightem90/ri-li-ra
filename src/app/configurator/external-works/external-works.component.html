@@ -1,7 +1,8 @@
 <div>
   <div>  
     <app-work-tree
-    [treeService]="treeServiceThermal"> 
+    [treeService]="treeServiceThermal"
+    (recalculated)="updateTreeOne($event)"> 
     </app-work-tree>
     <br>
     <div>
@@ -22,7 +23,8 @@
   </div>
   <div>  
     <app-work-tree
-    [treeService]="treeServiceSuperficial"> 
+    [treeService]="treeServiceSuperficial"
+    (recalculated)="updateTreeTwo($event)"> 
     </app-work-tree>
     <br>
     <div>
@@ -43,7 +45,8 @@
   </div>
   <div>  
     <app-work-tree
-    [treeService]="treeServiceExternal"> 
+    [treeService]="treeServiceExternal"
+    (recalculated)="updateTreeThree($event)"> 
     </app-work-tree>
     <br>
     <div>
@@ -64,6 +67,6 @@
   </div>
   <br>
   <div>    
-    <app-disabled-input [input]="_configuratorService.currentSession.tot_lav_ext"> </app-disabled-input> 
+    <app-disabled-input [input]="tot_lav_ext"> </app-disabled-input> 
   </div>
 </div>

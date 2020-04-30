@@ -25,7 +25,7 @@ export class WorkTreeComponent implements OnInit {
     hasChild = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.name === '';
     hasOneInput = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.isSingleNode;
-    canAddLevel = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.canAddLevelFlag && _nodeData.level === 0
+    canAddLevel = (_: number, _nodeData: TreeWorkFlatNode) => _nodeData.canAddLevelFlag
     
     flatNodeMap = new Map<TreeWorkFlatNode, TreeWorkNode>();
     nestedNodeMap = new Map<TreeWorkNode, TreeWorkFlatNode>();    
@@ -45,6 +45,7 @@ export class WorkTreeComponent implements OnInit {
       flatNode.outputs = node.outputs
       flatNode.isSingleNode = node.isSingleNode
       flatNode.canAddLevelFlag = node.canAddLevel
+      /console.log("Can add level: " + flatNode.canAddLevelFlag + " for node: " + node.name)
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
       return flatNode;
@@ -88,7 +89,7 @@ export class WorkTreeComponent implements OnInit {
 
       //calcola il totale come somma dei vari totali
       var totWorks = this.dataSource.data
-        .filter(n => n.isWork)
+        //.filter(n => n.isWork) non è necessario, gli elementi di 1 livello sono sempre lavorazioni
         .reduce((sum, n) => sum + (+n.outputs[0].text), 0)
 
       this.recalculated.emit(totWorks)
