@@ -2,14 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {WorkType, TreeWorkNode, TreeWorkFlatNode} from '../../core/domain/works'
+import {WorkType} from '../../core/domain/works'
 import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {WorkFactoryService} from '../../core/services/work-factory.service'
 
 import { ConfiguratorService } from '../../core/services/configurator.service'
 
-import {NumberInput} from '../../core/domain/common'
+import {NumberInput, DisabledInput} from '../../core/domain/common'
 
 @Component({
   selector: 'app-internal-works',
@@ -21,7 +21,9 @@ export class InternalWorksComponent implements OnInit {
     //stati per il combo
     workTypes: WorkType[]
     selectedWorkType : WorkType = null
-    
+    charge : NumberInput
+    tot_lav_int : DisabledInput
+    tot_lav_int_charge : DisabledInput
     public treeService: WorkTreeService
 
     constructor(
@@ -39,9 +41,19 @@ export class InternalWorksComponent implements OnInit {
 
     addWork() {
       this.treeService.addWork(this.selectedWorkType.toString())
+      this.charge = this._configuratorService.currentSession.charge_lav_int;
+      this.tot_lav_int = this._configuratorService.currentSession.tot_lav_int;
+      this.tot_lav_int_charge = this._configuratorService.currentSession.tot_lav_int_charge;
     }
 
-    updateBudget() {
+    updateBudget(sumOfWorks : number) {
+      this.tot_lav_int.text = sumOfWorks.toFixed(2)
+      this.tot_lav_int_charge.text = (sumOfWorks * (100+this.charge.value)/100).toFixed(2)
+    }
+
+    recalculate() {
+      var sumNoCharge = +this.tot_lav_int.text
+      this.tot_lav_int_charge.text = (sumNoCharge * (100+this.charge.value)/100).toFixed(2)
     }
 
 }

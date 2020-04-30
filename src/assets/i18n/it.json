@@ -98,5 +98,6 @@
   "qty" : "Quantità",
   "tot_lav_int" : "Totale lavorazioni interne",
   "charge_lav_int" : "Ricarico % lavorazioni interne",
+  "tot_lav_int_charge" : "Totale lavorazioni con ricarico",
   "tot_lav_ext" : "Totale lavorazioni esterne"
 }

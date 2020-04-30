@@ -7,7 +7,7 @@
   </div>
   <app-work-tree
    [treeService]="treeService"
-   (recalculated)="updateBudget()"> 
+   (recalculated)="updateBudget($event)"> 
   </app-work-tree>
   <br>
   <div>
@@ -27,7 +27,7 @@
   </div>
   <br>
   <div>    
-    <app-number-input [input]="_configuratorService.currentSession.charge_lav_int"> </app-number-input> 
-    <app-disabled-input [input]="_configuratorService.currentSession.tot_lav_int"> </app-disabled-input> 
+    <app-number-input (inputChanged)="recalculate()" [input]="charge"> </app-number-input> 
+    <app-disabled-input [input]="tot_lav_int"> </app-disabled-input> 
   </div>
 </div>

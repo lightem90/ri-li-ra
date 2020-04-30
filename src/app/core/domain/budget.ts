@@ -45,6 +45,7 @@ export class Budget {
     public recap_pc_pz = new TextInput("PrezzoCostoAlPz", "0"),
     public recap_pce_pz = new TextInput("TotAlPzExtAlPz", "0"),
     public tot_lav_int = new TextInput ("tot_lav_int", "0"),
+    public tot_lav_int_charge = new TextInput ("tot_lav_int_charge", "0"),
     public tot_lav_ext = new TextInput ("tot_lav_ext", "0"),
     public charge_lav_int = new NumberInput("charge_lav_int", 0),
     public selectedShape : Shape = null,

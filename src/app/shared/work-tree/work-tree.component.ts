@@ -16,7 +16,7 @@ import {NumberInput, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService} from '../
 export class WorkTreeComponent implements OnInit {  
 
     @Input() treeService: IWorkTreeService
-    @Output() recalculated = new EventEmitter();
+    @Output() recalculated = new EventEmitter<number>();
 
     //stati per l'albero (far diventare tutto un componente!)
     getLevel = (node: TreeWorkFlatNode) => node.level;
@@ -86,7 +86,12 @@ export class WorkTreeComponent implements OnInit {
         workNode.recalculate()
       }
 
-      this.recalculated.emit()
+      //calcola il totale come somma dei vari totali
+      var totWorks = this.dataSource.data
+        .filter(n => n.isWork)
+        .reduce((sum, n) => sum + (+n.outputs[0].text), 0)
+
+      this.recalculated.emit(totWorks)
     }
 
     createStage(node: TreeWorkFlatNode, stageName: string) {
