@@ -25,7 +25,7 @@
   "PercRic" : "Percentuale di ricarico sul prezzo",
   "PesoTot" : "Peso totale (Kg)",
   "PesoTotPerPz" : "Peso del pezzo (Kg)",  
-  "CostoAlPz" : "Costo della materia prima al pezzo",
+  "CostoAlPz" : "Prezzo della materia prima al pezzo",
   "NonCalc" : "Impossibile calcolare",
   "UploadDraw" : "Carica disegno tecnico",
   "ShowPDF" : "Mostra pdf",
@@ -99,5 +99,6 @@
   "tot_lav_int" : "Totale lavorazioni interne",
   "charge_lav_int" : "Ricarico % lavorazioni interne",
   "tot_lav_int_charge" : "Totale lavorazioni con ricarico",
-  "tot_lav_ext" : "Totale lavorazioni esterne"
+  "tot_lav_ext" : "Totale lavorazioni esterne",
+  "CostoTotaleMateriaPrima" : "Prezzo totale materiale"
 }

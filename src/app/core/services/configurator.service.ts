@@ -57,21 +57,39 @@ export class ConfiguratorService implements CanActivate {
 
   recalcWeight() {
     this.calculatorService.recalcWeight()
+    this.recalcMaterialPrice()
   }
 
   selectMaterial(materialSelected : Material) {    
     this.currentSession.material = materialSelected
+    this.recalcWeight()
   }
 
   //è cambiato il numero di pezzi da preventivare, aggiornare i campi che servono
-  totalPiecesChanged() {
-
+  totalMaterialPriceChanged() {
+    this.recalcMaterialPrice()
   }
 
   updateShape(selectedShape: Shape, shapeInputs: NumberInput[]) {
     this.currentSession.selectedShape = selectedShape
     this.currentSession.shapeInputs = shapeInputs
     this.recalcWeight()
+  }
+
+  private recalcMaterialPrice(){
+    if (this.currentSession.material === null) return;
+
+    var numberOfPieces = this.currentSession.n_pieces.value
+    var pieceUnitaryWeight = +this.currentSession.totWeigthPerPiece.text
+    var unitaryPrice = this.currentSession.material.price_p * pieceUnitaryWeight
+
+    var chargeOnPiece = this.currentSession.pieceChargePercentage.value
+    var prezzoUnitarioConRicarico = unitaryPrice * (100+chargeOnPiece)/100
+
+    this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
+    this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
+    this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)
+    
   }
 
 }

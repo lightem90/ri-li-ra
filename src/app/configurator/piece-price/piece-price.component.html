@@ -1,12 +1,17 @@
 
-  <form>   
+  <div>   
+    <app-disabled-input
+      [input]="totWeigth">
+    </app-disabled-input>
     <app-number-input
-    [input]="pieceChargePercentage">
+      (inputChanged)="chargeForPieceChanged()"
+      [input]="pieceChargePercentage">
     </app-number-input>
     <app-disabled-input
-    [input]="totWeigth">
+      [input]="pieceUnitaryPrice">
     </app-disabled-input>
     <app-disabled-input
-    [input]="pieceUnitaryPrice">
+      [input]="tot_material_price">
     </app-disabled-input>
-  </form>
+    
+  </div>

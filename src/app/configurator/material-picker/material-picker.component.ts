@@ -29,10 +29,7 @@ export class MaterialPickerComponent implements OnInit {
 
   setChanged() {
     this.changed = true
-  }
-
-  priceChanged() {
-    return this.changed
+    this._configuratorService.totalMaterialPriceChanged();
   }
 
   ngOnInit() {
@@ -80,6 +77,6 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   totalPiecesChanged() {
-    this._configuratorService.totalPiecesChanged();
+    this._configuratorService.totalMaterialPriceChanged();
   }
 }

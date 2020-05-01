@@ -50,7 +50,7 @@
     </mat-card>
   </div>
   <!-- Non ho idea di come far visualizzare correttamente l'icona DENTRO al bottone -->
-  <button mat-icon-button *ngIf="priceChanged()" (click)="saveMaterial()">
+  <button mat-icon-button *ngIf="changed" (click)="saveMaterial()">
     <mat-label>Salva modifiche ai materiali</mat-label>    
     <mat-icon>mode_save</mat-icon>
   </button>
