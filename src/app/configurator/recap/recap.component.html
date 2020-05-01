@@ -1,8 +1,11 @@
 <div> 
   <app-number-input [input]="tot_prz"> </app-number-input>
-  <app-number-input [input]="tot_gain_perc"> </app-number-input>
-  <app-disabled-input [input]="pce_pz"> </app-disabled-input>
+  <app-number-input 
+    (inputChanged)="forceGain()" 
+    [input]="tot_gain_perc"> 
+  </app-number-input>
   <app-disabled-input [input]="pc_pz"> </app-disabled-input>
+  <app-disabled-input [input]="pce_pz"> </app-disabled-input>
   <app-disabled-input [input]="tot"> </app-disabled-input>
   <app-disabled-input [input]="tot_gain"> </app-disabled-input>
 <div>

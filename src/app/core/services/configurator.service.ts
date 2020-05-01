@@ -56,6 +56,7 @@ export class ConfiguratorService implements CanActivate {
   }
 
   recalcWeight() {
+    //lascia al servizio gli if sul calcolo del peso a seconda del volume
     this.calculatorService.recalcWeight()
     this.recalcMaterialPrice()
   }
@@ -77,7 +78,12 @@ export class ConfiguratorService implements CanActivate {
   }
 
   private recalcMaterialPrice(){
-    if (this.currentSession.material === null) return;
+
+    //calcolo tutto anche senza materiale (i default sono 0)
+    if (this.currentSession.material === null) {
+      this.calculateBudget()
+      return;
+    }
 
     var numberOfPieces = this.currentSession.n_pieces.value
     var pieceUnitaryWeight = +this.currentSession.totWeigthPerPiece.text
@@ -88,8 +94,46 @@ export class ConfiguratorService implements CanActivate {
 
     this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
     this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
-    this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)
-    
+    this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)   
+
+    this.calculateBudget()
   }
+
+  //pubblico per ora, solo per le lavorazioni
+  calculateBudget() {
+    //valori solo in visualizzazione, il totale del preventivo è inserito dall'utente
+    var prezzoMaterialAlPezzo = +this.currentSession.pieceUnitaryPrice.value
+    var prezzoLavIntAlPezzo  = +this.currentSession.tot_lav_int_charge.value
+    var prezzoLavExtAlPezzo  = +this.currentSession.tot_lav_ext.value
+
+    this.currentSession.recap_pc_pz.text = (prezzoMaterialAlPezzo + prezzoLavIntAlPezzo + prezzoLavExtAlPezzo).toFixed(2)
+
+    this.currentSession.recap_pce_pz.text = (prezzoMaterialAlPezzo + prezzoLavExtAlPezzo).toFixed(2)
+
+    this.updateBudgetResult()
+  }
+
+  updateBudgetResult() {
+
+    var pieceCount = this.currentSession.n_pieces.value
+    var przComunicato = this.currentSession.recap_tot_prz.value
+    var forceGain = this.currentSession.recap_tot_gain_perc.value
+
+    var ricavo = przComunicato * pieceCount
+    //calcolo il guadagno come differenza tra prezzo comunicato totale e costi totali
+    if (forceGain === 0)
+    {
+      var costi = pieceCount * +this.currentSession.recap_pc_pz.text
+      this.currentSession.recap_tot.text = (ricavo).toFixed(2)
+      this.currentSession.recap_tot_gain.text = (ricavo-costi).toFixed(2)
+    } else {
+      //il guadagno è inserito in percentuale dall'utente
+      var gain = (ricavo * forceGain / 100)
+
+      this.currentSession.recap_tot.text = (ricavo+gain).toFixed(2)
+      this.currentSession.recap_tot_gain.text = (gain).toFixed(2)
+    }
+  }
+
 
 }

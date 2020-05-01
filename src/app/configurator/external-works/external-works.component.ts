@@ -89,6 +89,7 @@ export class ExternalWorksComponent implements OnInit {
 
     recalcAll() {
       this.tot_lav_ext.text = (this.sumThreeOne + this.sumThreeTwo + this.sumThreeThree).toFixed(2)
+      this._configuratorService.calculateBudget()
     }
 
 }

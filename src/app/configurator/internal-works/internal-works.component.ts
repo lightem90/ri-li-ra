@@ -55,6 +55,7 @@ export class InternalWorksComponent implements OnInit {
     recalculate() {
       var sumNoCharge = +this.tot_lav_int.text
       this.tot_lav_int_charge.text = (sumNoCharge * (100+this.charge.value)/100).toFixed(2)
+      this._configuratorService.calculateBudget()
     }
 
 }

@@ -30,4 +30,8 @@ export class RecapComponent implements OnInit {
     this.pce_pz = this._configuratorService.currentSession.recap_pce_pz
   }
 
+  forceGain() {
+    this._configuratorService.updateBudgetResult()
+  }
+
 }
