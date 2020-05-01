@@ -7,6 +7,9 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanAc
 import { Budget } from '../domain/budget'
 import { FirebaseHelper } from './firebase-helper'
 import { BudgetCalculatorService } from './budget-calculator.service'
+import { Material } from '../domain/material';
+import { NumberInput } from '../domain/common';
+import { Shape } from '../../core/domain/piece'
 
 @Injectable()
 export class ConfiguratorService implements CanActivate {
@@ -54,6 +57,21 @@ export class ConfiguratorService implements CanActivate {
 
   recalcWeight() {
     this.calculatorService.recalcWeight()
+  }
+
+  selectMaterial(materialSelected : Material) {    
+    this.currentSession.material = materialSelected
+  }
+
+  //è cambiato il numero di pezzi da preventivare, aggiornare i campi che servono
+  totalPiecesChanged() {
+
+  }
+
+  updateShape(selectedShape: Shape, shapeInputs: NumberInput[]) {
+    this.currentSession.selectedShape = selectedShape
+    this.currentSession.shapeInputs = shapeInputs
+    this.recalcWeight()
   }
 
 }

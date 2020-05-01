@@ -45,7 +45,6 @@ export class BudgetCalculatorService {
       }  
       const weightPerPiece = shapeResult * selectedMaterialSpecWeight / 1000000
       this._budget.totWeigthPerPiece.text = weightPerPiece.toString()
-      console.log("Calculate: " + weightPerPiece)
       return true
     } 
     return false

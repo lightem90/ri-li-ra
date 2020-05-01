@@ -24,10 +24,7 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   saveMaterial() {
-    //todo update su db
-    //parse string to int!
-    // var x = "32";
-    // var y = +x;
+    
   }
 
   setChanged() {
@@ -75,14 +72,14 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   udapteSelectedMaterial(material: any){
-        
     this.selectedMaterialId = material
-
     var selMatIndex = this.materials.findIndex(m => m.uid === material)
     if (selMatIndex !== -1) {
-      this._configuratorService.currentSession.material = this.materials[selMatIndex]
+      this._configuratorService.selectMaterial(this.materials[selMatIndex])
     }
   }
 
-
+  totalPiecesChanged() {
+    this._configuratorService.totalPiecesChanged();
+  }
 }

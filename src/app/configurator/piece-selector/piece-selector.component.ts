@@ -66,9 +66,7 @@ export class PieceSelectorComponent implements OnInit {
         break;
     }
 
-    this._configuratorService.currentSession.selectedShape = this.selectedShape
-    this._configuratorService.currentSession.shapeInputs = this.inputs
-    this.recalcWeight()
+    this._configuratorService.updateShape(this.selectedShape, this.inputs)
   }
 
   //l'oggetto di dominio BUDGET è direttamente bindato in interfaccia, quindi basta fare recalc dell'oggetto tramite service (così è più facile da cambiare se si vuole cambiare la logica)
