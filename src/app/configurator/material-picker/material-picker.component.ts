@@ -74,12 +74,14 @@ export class MaterialPickerComponent implements OnInit {
     return this._configuratorService.getAssetUrl(material.img_url)
   }
 
-  udapteSelectedMaterial(material: any){    
+  udapteSelectedMaterial(material: any){
+        
     this.selectedMaterialId = material
 
-    //questo funziona solo perchè ad oggi i materiali hanno un uid che comincia da 1, se cambierà bisogna prendere l'indice del material nell'array
-
-    this._configuratorService.currentSession.material = this.materials[+this.selectedMaterialId-1]
+    var selMatIndex = this.materials.findIndex(m => m.uid === material)
+    if (selMatIndex !== -1) {
+      this._configuratorService.currentSession.material = this.materials[selMatIndex]
+    }
   }
 
 
