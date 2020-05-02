@@ -44,10 +44,14 @@ export class MaterialPickerComponent implements OnInit {
   }
 
   async fetchMaterials(){
+    //se non ci sono dati salvati dall'utente prendo i materiali di default
     this.materials = await this._configuratorService.getMaterials()  
-    if (this.materials.some) {
-      this.changed = false
+
+    if (this.materials.length === 0) {
+      this.materials = await this._configuratorService.getMaterials(true)
     }
+
+    this.changed = false
   }
 
   getMaterialUrl(material: Material){

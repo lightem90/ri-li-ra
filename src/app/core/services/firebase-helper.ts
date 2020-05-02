@@ -28,7 +28,7 @@ export class FirebaseHelper
     // recommended way to get the current user
     auth.auth.onAuthStateChanged(function(user) {
       self._authChangedSubject.next(user)
-      this._currentUser = user
+      self._currentUser = user
       }      
     )
     // Firebase references that are listened to.
@@ -97,12 +97,12 @@ export class FirebaseHelper
     return this.storage.ref(assetPath).getDownloadURL();
   }
 
-  getMaterials(defaultMaterials : boolean = false) {
+  getMaterials(getDefault : boolean = false) {
     let feedPromise : Promise<any> = null
-    //todo 
+    //todo rimuovere
     const user_id = "ciccio"
 
-    if (defaultMaterials === null){
+    if (getDefault === true){
       feedPromise = this._getFeed(FirebaseConstant.entityTableNames.default_materials)
         .then((data) => {
           const entries = data.val() || {}

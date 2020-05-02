@@ -51,8 +51,9 @@ export class ConfiguratorService implements CanActivate {
     return this.currentSession !== null
   }
 
-  getMaterials(){
-    return this.firbaseHelper.getMaterials(false)
+  //lasciamo al chiamante il dovere di chiedere quelli di default o specifici pe
+  getMaterials(getDefault : boolean = false){
+    return this.firbaseHelper.getMaterials(getDefault)
     .then(res => {
         if (res)
         {
