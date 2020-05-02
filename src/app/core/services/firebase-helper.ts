@@ -16,6 +16,7 @@ export class FirebaseHelper
   private _authChangedSubject = new Subject<firebase.User>();
   private firebaseRefs : firebase.database.Reference[]
 
+  _currentUser : firebase.User
   authChanged : Observable<firebase.User> = this._authChangedSubject
 
   constructor(
@@ -26,7 +27,9 @@ export class FirebaseHelper
     let self = this
     // recommended way to get the current user
     auth.auth.onAuthStateChanged(function(user) {
-      self._authChangedSubject.next(user)}      
+      self._authChangedSubject.next(user)
+      this._currentUser = user
+      }      
     )
     // Firebase references that are listened to.
     this.firebaseRefs = [];
@@ -45,8 +48,7 @@ export class FirebaseHelper
           email : email,
           password : password
         },
-        FirebaseConstant.entityTableNames.user,  
-        FirebaseConstant.relationTableNames.userRole)
+        FirebaseConstant.entityTableNames.user)
       })
   }
   
@@ -95,11 +97,24 @@ export class FirebaseHelper
     return this.storage.ref(assetPath).getDownloadURL();
   }
 
-  getDefaultMaterials() {
-    const feedPromise = this._getFeed('default_materials').then((data) => {
-      const entries = data.val() || {}
-      return entries;
-    })
+  getMaterials(defaultMaterials : boolean = false) {
+    let feedPromise : Promise<any> = null
+    //todo 
+    const user_id = "ciccio"
+
+    if (defaultMaterials === null){
+      feedPromise = this._getFeed(FirebaseConstant.entityTableNames.default_materials)
+        .then((data) => {
+          const entries = data.val() || {}
+          return entries;
+      })
+    } else {
+      feedPromise = this._getFeed(FirebaseConstant.entityTableNames.material + '/' + user_id)
+        .then((data) => {
+          const entries = data.val() || {}
+          return entries;
+      })
+    }
 
     return feedPromise.then((res) => {    
       const materialIds = Object.keys(res);
@@ -129,34 +144,28 @@ export class FirebaseHelper
     userId: string,
     dataKey: string, 
     dataToAdd: any, 
-    dataTableName: string,
-    relationTableName: string = "",
-    doubleIndex : boolean = false) {
+    dataTableName: string) {
 
     var updates = {};
-    updates['/' + dataTableName + '/' + dataKey] = dataToAdd;
-    
-    if (relationTableName != "") {
-      if (doubleIndex){
-        updates['/' + relationTableName + '/' + userId + '/' + dataKey] = dataToAdd
-        }
-        else {
-        updates['/' + relationTableName + '/' + userId] = dataToAdd
-      }
-    }
+    updates['/' + dataTableName + '/' + userId + '/' + dataKey] = dataToAdd;
+
     return this.database.database.ref().update(updates);
   }
 
-  //adds into a table a new document and if any a relation table for selected user
+  //adds into a table a new document
   _addDataForUser(
     userId: string, 
     dataToAdd: any, 
-    dataTableName: string,
-    relationTableName: string = "") {
+    dataTableName: string) {
 
-    var newDataKey = this.database.database.ref().child(dataTableName).push().key;
-    dataToAdd.id = newDataKey;
+    var newDataKey = this.database.database
+      .ref()
+      .child(dataTableName + '/' + userId)
+      .push()
+      .key;
 
-    return this._updateDataForUser(userId, newDataKey, dataToAdd, dataTableName, relationTableName)
+    dataToAdd.uid = newDataKey;
+
+    return this._updateDataForUser(userId, newDataKey, dataToAdd, dataTableName)
   }
 }

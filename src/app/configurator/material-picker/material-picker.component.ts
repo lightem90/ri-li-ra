@@ -4,6 +4,8 @@ import {Material} from '../../core/domain/material'
 import {TextInput, NumberInput, DisabledInput} from '../../core/domain/common'
 
 import {ConfiguratorService} from '../../core/services/configurator.service'
+import {AccountManagerService} from '../../core/services/account-manager.service'
+
 
 @Component({
   selector: 'app-material-picker',
@@ -20,11 +22,13 @@ export class MaterialPickerComponent implements OnInit {
   client_name : TextInput
   budget_date : DisabledInput
   
-  constructor(private _configuratorService : ConfiguratorService) {     
+  constructor(
+    private _configuratorService : ConfiguratorService,
+    private _accountManager : AccountManagerService) {     
   }
 
   saveMaterial() {
-    
+    this._accountManager.saveMaterialForCurrentUser(this.materials)
   }
 
   setChanged() {
@@ -39,29 +43,11 @@ export class MaterialPickerComponent implements OnInit {
     this.client_name = this._configuratorService.currentSession.client_name 
   }
 
-  fetchMaterials(){
-    this._configuratorService
-      .getDefaultMaterials()
-      .then(res => {
-        if (res)
-        {
-          this.materials = res
-          this.materials.forEach(mat => {            
-            this._configuratorService
-              .getAssetUrl(mat.img_url)
-              .subscribe(res => {
-                if (res) {
-                  //to display correctly, first time img_url is the address stored into firebase
-                  //second time is the downloadurl for the view
-                  mat.img_url = res
-                }
-            })
-          })     
-        } else {
-          console.log('Error fetching materials')
-        }
-      });
-      this.changed = false;
+  async fetchMaterials(){
+    this.materials = await this._configuratorService.getMaterials()  
+    if (this.materials.some) {
+      this.changed = false
+    }
   }
 
   getMaterialUrl(material: Material){

@@ -5,7 +5,6 @@ import {
   WorkType, 
   ToolChangeStage, 
   Work, 
-  FixedWorkTimes, 
   OptionalStageValue
 } from '../domain/works'
 

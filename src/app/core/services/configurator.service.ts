@@ -51,8 +51,25 @@ export class ConfiguratorService implements CanActivate {
     return this.currentSession !== null
   }
 
-  getDefaultMaterials(){
-    return this.firbaseHelper.getDefaultMaterials();
+  getMaterials(){
+    return this.firbaseHelper.getMaterials(false)
+    .then(res => {
+        if (res)
+        {
+          res.forEach(mat => {            
+            this.getAssetUrl(mat.img_url)
+              .subscribe(res => {
+                if (res && !mat.img_download_url) {                  
+                  mat.img_download_url = res
+                }
+            })
+          })  
+          return res   
+        } else {
+          console.log('Error fetching default materials')
+          return []
+        }
+      }, err => console.log(err))
   }
 
   recalcWeight() {

@@ -17,9 +17,7 @@ export class RecapComponent implements OnInit {
   pc_pz : TextInput
   pce_pz : TextInput
 
-  constructor(private _configuratorService : ConfiguratorService) {
-
-  }
+  constructor(private _configuratorService : ConfiguratorService) {  }
 
   ngOnInit() {
     this.tot_prz = this._configuratorService.currentSession.recap_tot_prz

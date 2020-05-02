@@ -45,7 +45,6 @@ export class WorkTreeComponent implements OnInit {
       flatNode.outputs = node.outputs
       flatNode.isSingleNode = node.isSingleNode
       flatNode.canAddLevelFlag = node.canAddLevel
-      /console.log("Can add level: " + flatNode.canAddLevelFlag + " for node: " + node.name)
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
       return flatNode;

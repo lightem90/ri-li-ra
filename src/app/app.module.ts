@@ -20,6 +20,8 @@ import {WorkFactoryService} from './core/services/work-factory.service'
 import {ExternalWorkFactoryService} from './core/services/work-factory.service'
 import {WorkTreeService} from './core/services/work-tree.service'
 import {AccountService} from './core/services/account.service'
+import {AccountManagerService} from './core/services/account-manager.service'
+
 
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -104,6 +106,6 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     UserLandingComponent,
     SingleInputNodeComponent],
   bootstrap:    [ AppComponent ],
-  providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, ExternalWorkFactoryService, AccountService]
+  providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, ExternalWorkFactoryService, AccountService, AccountManagerService]
 })
 export class AppModule { }

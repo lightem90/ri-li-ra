@@ -6,6 +6,7 @@ export class FirebaseConstant {
     work : "work",
     service : "service",
     material : "material",
+    default_materials: "default_materials"
   }
 
   static relationTableNames = {
