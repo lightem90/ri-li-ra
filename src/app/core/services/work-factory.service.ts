@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {WorkType, WorkConstant} from '../domain/work'
+import {WorkType, WorkConstant, Stage} from '../domain/work'
 import {NumberInput, TextInput, DisabledInput, 
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
@@ -30,7 +30,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   }  
 
   _createSimpleWork(wType : WorkType, calculate: Function, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
- 
+
     var totPrice = new TextInput(WorkConstant.work.tot_price_id, "0")
     var result = new TreeWorkNode(calculate)
     result.name = WorkType[wType]
@@ -40,7 +40,6 @@ export class WorkFactoryService implements IWorkFactoryService {
     
     
     result.totTime = new NumberInput(WorkConstant.work.tot_minutes_id, 0)
-    result.totTimeReadOnly = new TextInput(WorkConstant.work.tot_minutes_id, "0")
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
     const inputs = [
       this._createSingleInput(WorkConstant.work.hourly_price_id, 0),  //il prezzo totale va "gr"
@@ -123,6 +122,11 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.inputs = inputs
     result.name = stageName
     result.isStage = true
+
+    let stage = new Stage()
+    stage.mapFrom(result)
+
+
     return result
   }
 
@@ -230,8 +234,10 @@ export class WorkFactoryService implements IWorkFactoryService {
           .filter(c => c.isSingleNode && c.name !== WorkConstant.work.hourly_price_id)
           .reduce((sum, c) => sum + 
             (treeWorkNode.hourlyCost.value)*(c.inputs[0].value/ 60), 0)
+        const totTime = (totStagesPrice + totToolingTimes)
 
-        totPriceOutput.text = (totStagesPrice + totToolingTimes).toFixed(2)
+        treeWorkNode.totTime.value = totTime
+        totPriceOutput.text = totTime.toFixed(2)
       }
     }
   }

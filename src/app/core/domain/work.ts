@@ -88,8 +88,39 @@ export class Work {
   //inizializza la lavorazione dal TreeWorkNode
   mapFrom(node: TreeWorkNode) {    
     if (node.isWork) {
+      this.name = node.name
+      this.costo_totale = +(node.outputs[0].text)
+      this.tempo_totale = node.totTime.value
 
+      let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
+      if (tmp) {
+        this.costo_orario = tmp.value
+      }
+      
+      tmp = node.inputs.find(i => i.label === WorkConstant.work.placement_time_id)
+      if (tmp) {
+        this.tempo_piazzamento = tmp.value
+      }
+      
+      tmp = node.inputs.find(i => i.label === WorkConstant.work.program_time_id)
+      if (tmp) {
+        this.tempo_programma = tmp.value
+      }
+      
+      tmp = node.inputs.find(i => i.label === WorkConstant.work.tooling_time_id)
+      if (tmp) {
+        this.tempo_attrezzaggio = tmp.value
+      }
+
+      for(let child of node.children.filter(c => c.isStage)){
+        var stage = new Stage()
+        stage.mapFrom(child)
+        this.fasi.push(stage)
+      }
     }
+
+    console.log(this)
+    return this
   }
 }
 
@@ -99,8 +130,8 @@ export class Stage {
   constructor(
     uid : string = "",
     name : string = "",
-    property_bag : {[key: string]: boolean} = {}) {      
-      
+    property_bag : {[key: string]: number}) {
+      this.property_bag = {}     
   }
 
   //inizializza un TreeWorkNode con i dati della lavorazione
@@ -114,7 +145,20 @@ export class Stage {
   //inizializza la lavorazione dal TreeWorkNode
   mapFrom(node: TreeWorkNode) {
     if (node.isStage) {
+      this.name = node.name
 
+      for(let i in WorkConstant.stage) {
+        let propName = WorkConstant.stage[i]
+        let validIn = node.inputs.find(inp => inp.label === propName)
+        if (validIn) {
+          this.property_bag[i] = validIn.value
+        }
+        let validOut = node.outputs.find(out => out.label === propName)
+        if (validOut) {
+          this.property_bag[i] = +(validOut.text)
+        }
+        console.log(propName)
+      }
     }    
   }
 }
