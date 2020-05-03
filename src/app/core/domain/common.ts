@@ -47,8 +47,8 @@ export class TreeWorkNode {
   public editable : boolean
   public inputs : NumberInput []= []
   public outputs : DisabledInput[]= []
-  public totTime : NumberInput = new NumberInput("wMinutes", 0)
-  public totTimeReadOnly : DisabledInput = new TextInput('wMinutes', "0")
+  public totTime : NumberInput = null
+  public totTimeReadOnly : DisabledInput = null
   public children : TreeWorkNode[]= []
   public isSingleNode : boolean = false
   public isStage : boolean = false
@@ -83,4 +83,15 @@ export interface IWorkTreeService {
   addDefault(parent: TreeWorkNode)
   updateWorkItem(node: TreeWorkNode, stageName: string, workName: string)
   deleteNode(node: TreeWorkNode, parentNode: TreeWorkNode)
+}
+
+
+
+export interface IWorkFactoryService 
+{
+  createWork(wTypeString : string) : TreeWorkNode
+  createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode
+  fixChildrens(node : TreeWorkNode)
+  restoreChildrens(node : TreeWorkNode)
+  createDefaultChildrenNode() : TreeWorkNode
 }

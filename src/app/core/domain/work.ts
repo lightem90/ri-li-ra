@@ -1,4 +1,4 @@
-import {NumberInput, TextInput, DisabledInput} from "./common"
+import {NumberInput, TextInput, DisabledInput, TreeWorkNode} from "./common"
 
 export enum WorkType {
   Taglio,
@@ -13,4 +13,22 @@ export enum WorkType {
   Saldatura,
   IncisioneLaser,
   ControlloQualita
+}
+
+//lavorazione salvata su db
+export class Work {
+
+
+  //inizializza un TreeWorkNode con i dati della lavorazione
+  mapTo(node: TreeWorkNode) {
+
+
+
+    return this
+  }
+
+  //inizializza la lavorazione dal TreeWorkNode
+  mapFrom(node: TreeWorkNode) {
+    
+  }
 }

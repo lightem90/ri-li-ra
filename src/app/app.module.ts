@@ -17,7 +17,7 @@ import { AppComponent } from './app.component';
 import {FirebaseHelper} from './core/services/firebase-helper'
 import {ConfiguratorService} from './core/services/configurator.service'
 import {WorkFactoryService} from './core/services/work-factory.service'
-import {ExternalWorkFactoryService} from './core/services/work-factory.service'
+import {ExternalWorkFactoryService} from './core/services/externalwork-factory.service'
 import {WorkTreeService} from './core/services/work-tree.service'
 import {AccountService} from './core/services/account.service'
 import {AccountManagerService} from './core/services/account-manager.service'

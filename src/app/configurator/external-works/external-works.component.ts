@@ -6,7 +6,7 @@ import {WorkType} from '../../core/domain/work'
 import {ThermalWorkType, SuperficialWorkType, ExternalWorkType} from '../../core/domain/external-works'
 import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
-import {ExternalWorkFactoryService} from '../../core/services/work-factory.service'
+import {ExternalWorkFactoryService} from '../../core/services/externalwork-factory.service'
 
 import { ConfiguratorService } from '../../core/services/configurator.service'
 

@@ -1,108 +1,47 @@
 import { Injectable } from '@angular/core';
 
-import {
-  WorkStage, 
-  WorkType, 
-  ToolChangeStage, 
-  Work, 
-  OptionalStageValue
-} from '../domain/work'
+import {WorkType} from '../domain/work'
+import {NumberInput, TextInput, DisabledInput, 
+        TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
-import {
-  TreeWorkNode,
-  TreeWorkFlatNode
-} from "../domain/common"
+export class WorkConstant { 
 
-import {NumberInput, TextInput, DisabledInput} from '../domain/common'
-
-export interface IWorkFactoryService 
-{
-  createWork(wTypeString : string) : TreeWorkNode
-  createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode
-  fixChildrens(node : TreeWorkNode)
-  restoreChildrens(node : TreeWorkNode)
-  createDefaultChildrenNode() : TreeWorkNode
-}
-
-@Injectable()
-export class ExternalWorkFactoryService implements IWorkFactoryService {
-
-
-  _createSingleInputFrom(nInput : NumberInput) {
-    var result = new TreeWorkNode();
-    result.inputs = [nInput]
-    result.name = nInput.label
-    result.isSingleNode = true
-    result.canAddLevel = false
-    return result
-  }  
-
-  _createSingleInput(name: string, value: number) {
-    var result = new TreeWorkNode();
-    var sIn = new NumberInput(name, value)
-    result.inputs = [sIn]
-    result.name = name
-    result.isSingleNode = true
-    result.canAddLevel = false
-    return result
-  }
-
-  _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
-    const result = new TreeWorkNode(calculateExtWork)
-    //servono per gli if di interfaccia
-    result.inputs.push(new NumberInput('qty', 0))
-    result.inputs.push(new NumberInput('unitaryPrice', 0))
-    result.inputs.push(new NumberInput('PercRic', 0))
-    result.outputs = [
-      new TextInput('totPrice', "0")
-    ]
-    result.children = result.inputs.map(i => this._createSingleInputFrom(i))
-    result.name = wTypeString
-    result.canAddLevel = false
-    result.isWork = true
-    return result
-
-    
-
-    function calculateExtWork(treeWorkNode : TreeWorkNode) {
-        
-        //se non ci sono stage validi si comporta come una lavorazione esterna
-        var totPriceOutput = treeWorkNode.outputs[0]
-
-        var quantita = result.inputs[0].value
-        var pUnitario = result.inputs[1].value
-        var ricarico = result.inputs[2].value
-
-        totPriceOutput.text = ((quantita * pUnitario) * (100+ricarico)/100).toFixed(2)
-    }
-  }
-  //si possono specificare per ogni lavorazione estrna unità di misura e prezzo unitario
-  //gli enum sono solo "da fuori" a me interessa solo il tipo
-  createWork(wTypeString : string) {
-    return this._createExternalWorkNode(wTypeString)
-  }
-  
-  createStageForWork(wTypeString : string, stageName: string) : TreeWorkNode{
-    return this._createExternalWorkNode(stageName)
-  }
-
-  fixChildrens(node : TreeWorkNode) {
-
-  }
-
-  restoreChildrens(node : TreeWorkNode) {
-
-  }
-
-  //mai chiamato, non ci sono stage, in questa modalitò ci sono solo elementi di primo livello
-  createDefaultChildrenNode() {
-    return null
+  public static stage = {
+    time_id : 'sMinutes',
+    price_id : 'sPrice',
+    piece_count_id : 'nPiece',
+    step_count_id : 'nStep',
+    vel_id : 'mVel',
+    dist_id : 'mMm',
+    //cambio utensile
+    tc_step_id : 'nStepCmUt',
+    tc_vel_id : 'mVelCmUt',
+    tc_dist_id : 'mMmCmUt',
+    tc_name_id : 'cmUt',
+    //controllo qualità
+    cc_distz_id : 'mm_z',
+    cc_stepz_id : 'p_z',
+    cc_velz_id : 'v_z',
+    //taglio
+    t_area_id : 't_area',
+    t_resa_id : 't_resa',
+    t_vel_id : 'taglioSec',
+    //tornitura
+    tor_giri_min_id : 'tor_giri_min',
+    tor_mm_giro_id : 'tor_mm_giro',
+    tor_vel_min_id : 'tornMMin',
   }
 }
-
 
 @Injectable()
 export class WorkFactoryService implements IWorkFactoryService {
+
+  public static readonly tot_price_id = 'totPrice'
+  public static readonly tot_minutes_id = 'wMinutes'  
+  public static readonly hourly_price_id = 'wPriceH'
+  public static readonly placement_time_id = 'wTPiaz'
+  public static readonly program_time_id = 'wTProg'
+  public static readonly tooling_time_id = 'wTAtt'
 
   _createFromInput(input : NumberInput) {    
     var result = new TreeWorkNode();
@@ -128,17 +67,20 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createSimpleWork(wType : WorkType, calculate: Function, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
  
-    var totPrice = new TextInput('totPrice', "0")
+    var totPrice = new TextInput(WorkFactoryService.tot_price_id, "0")
     var result = new TreeWorkNode(calculate)
     result.name = WorkType[wType]
     result.outputs = [totPrice]
     result.editable = true
     result.isWork = true
     
+    
+    result.totTime = new NumberInput(WorkFactoryService.tot_minutes_id, 0)
+    result.totTimeReadOnly = new TextInput(WorkFactoryService.tot_minutes_id, "0")
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
     const inputs = [
-      this._createSingleInput('wPriceH', 0),  //il prezzo totale va "gr"
-      this._createSingleInput('wTPiaz', 0),
+      this._createSingleInput(WorkFactoryService.hourly_price_id, 0),  //il prezzo totale va "gr"
+      this._createSingleInput(WorkFactoryService.placement_time_id, 0),
     ]
 
     result.hourlyCost = inputs[0]
@@ -170,8 +112,8 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createComplexWork(wType : WorkType, calculate: Function, addToolChangePhase: boolean  = false)  {
     const childrens = [
-      this._createSingleInput('wTProg', 0),
-      this._createSingleInput('wTAtt', 0)
+      this._createSingleInput(WorkFactoryService.program_time_id, 0),
+      this._createSingleInput(WorkFactoryService.tooling_time_id, 0)
     ]
 
     const result = this._createSimpleWork(wType, calculate, childrens, addToolChangePhase)
@@ -195,8 +137,8 @@ export class WorkFactoryService implements IWorkFactoryService {
     optInputs: NumberInput[] = [],
     addDefault = true) {      
     
-    var sMin = new TextInput('sMinutes', "0")
-    var sPrice = new TextInput('sPrice', "0")
+    var sMin = new TextInput(WorkConstant.stage.time_id, "0")
+    var sPrice = new TextInput(WorkConstant.stage.price_id, "0")
     
     const outputs = optOutputs.slice()
     outputs.push(sMin)
@@ -206,10 +148,10 @@ export class WorkFactoryService implements IWorkFactoryService {
     //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
     if (addDefault)
     {
-      inputs.push(new NumberInput('nPiece', 1))
-      inputs.push(new NumberInput('nStep'))
-      inputs.push(new NumberInput('mVel'))
-      inputs.push(new NumberInput('mMm'))
+      inputs.push(new NumberInput(WorkConstant.stage.piece_count_id, 1))
+      inputs.push(new NumberInput(WorkConstant.stage.step_count_id))
+      inputs.push(new NumberInput(WorkConstant.stage.vel_id))
+      inputs.push(new NumberInput(WorkConstant.stage.dist_id))
     }
     var result = new TreeWorkNode(calc)
     result.children = inputs.map(i => this._createSingleInputFrom(i))
@@ -223,17 +165,17 @@ export class WorkFactoryService implements IWorkFactoryService {
   _createToolChangeStage() {
     
     const outputs = [
-      new TextInput('sMinutes', "0"), 
-      new TextInput('sPrice', "0")
+      new TextInput(WorkConstant.stage.time_id, "0"), 
+      new TextInput(WorkConstant.stage.price_id, "0")
       ]
     var result = new TreeWorkNode()
 
     var inputs = []
-    inputs.push(new NumberInput('nStepCmUt'))
-    inputs.push(new NumberInput('mVelCmUt'))
-    inputs.push(new NumberInput('mMmCmUt'))
+    inputs.push(new NumberInput(WorkConstant.stage.tc_step_id))
+    inputs.push(new NumberInput(WorkConstant.stage.tc_vel_id))
+    inputs.push(new NumberInput(WorkConstant.stage.tc_dist_id))
 
-    result.name = 'cmUt'
+    result.name = WorkConstant.stage.tc_name_id
     result.children = inputs.map(i => this._createSingleInputFrom(i))
     result.outputs = outputs
     result.inputs = inputs
@@ -242,7 +184,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   }
   
   fixChildrens(node : TreeWorkNode) {
-    var priceChildrenInput = node.children.find(c => c.name === 'wPriceH')
+    var priceChildrenInput = node.children.find(c => c.name === WorkFactoryService.hourly_price_id)
     var emptyStages = node.children.filter(c => c.isStage && c.name === "")
     if (node.workTimeEnabled) {
       //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
@@ -321,7 +263,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           .reduce((sum, c) => sum + (+c.outputs[1].text), 0);
 
         var totToolingTimes = treeWorkNode.children
-          .filter(c => c.isSingleNode && c.name !== "wPriceH")
+          .filter(c => c.isSingleNode && c.name !== WorkFactoryService.hourly_price_id)
           .reduce((sum, c) => sum + 
             (treeWorkNode.hourlyCost.value)*(c.inputs[0].value/ 60), 0)
 
@@ -349,9 +291,9 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.ControlloQualita:
       {
         const optValues = [
-          new NumberInput('mm_z'),
-          new NumberInput('p_z'),
-          new NumberInput('v_z')
+          new NumberInput(WorkConstant.stage.cc_distz_id),
+          new NumberInput(WorkConstant.stage.cc_stepz_id),
+          new NumberInput(WorkConstant.stage.cc_velz_id)
         ]
         return this._internalCreateStageForWork(wType, stageName,calculateCQualita, [], optValues)
         break;
@@ -359,12 +301,12 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.Taglio:
       {
         const optValues = [
-          new NumberInput('nPiece', 1),
-          new NumberInput('t_area'),
-          new NumberInput('t_resa')]
+          new NumberInput(WorkConstant.stage.step_count_id, 1),
+          new NumberInput(WorkConstant.stage.t_area_id),
+          new NumberInput(WorkConstant.stage.t_resa_id)]
 
         const optOutput = [
-          new TextInput('taglioSec', '0')
+          new TextInput(WorkConstant.stage.t_vel_id, '0')
         ]
         return this._internalCreateStageForWork(wType, stageName, calculateStageTaglio, optOutput, optValues, false)
         break;
@@ -372,24 +314,24 @@ export class WorkFactoryService implements IWorkFactoryService {
       case WorkType.Tornitura:
       {
         const optValues = [
-          new NumberInput('tor_giri_min'),
-          new NumberInput('tor_mm_giro')]
+          new NumberInput(WorkConstant.stage.tor_giri_min_id),
+          new NumberInput(WorkConstant.stage.tor_mm_giro_id)]
 
         const optOutput = [
-          new TextInput('tornMMin', '0')
+          new TextInput(WorkConstant.stage.tor_vel_min_id, '0')
         ]
           
         var tornitura = this._internalCreateStageForWork(wType, stageName,  calculateTornituraStage, optOutput, optValues)
 
-        var velIn = tornitura.inputs.find(i => i.label == "mVel")
-        var velC = tornitura.children.find(c => c.name == "mVel")
+        var velIn = tornitura.inputs.find(i => i.label === WorkConstant.stage.vel_id)
+        var velC = tornitura.children.find(c => c.name === WorkConstant.stage.vel_id)
         var i = tornitura.inputs.indexOf(velIn)
         var c = tornitura.children.indexOf(velC)
         if (i !== -1 && c !== -1) {
           tornitura.inputs.splice(i, 1)
           tornitura.children.splice(c, 1)
         } else {
-          console.log("error, cannot form Tornitura stage properly")
+          console.log("error, cannot form " + tornitura.name + " stage properly")
         }
 
         return tornitura
