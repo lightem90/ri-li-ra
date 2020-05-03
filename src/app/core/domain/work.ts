@@ -148,16 +148,17 @@ export class Stage {
       this.name = node.name
 
       for(let i in WorkConstant.stage) {
-        let propName = WorkConstant.stage[i]
+        const propName = WorkConstant.stage[i]
+
         let validIn = node.inputs.find(inp => inp.label === propName)
         if (validIn) {
           this.property_bag[i] = validIn.value
         }
+
         let validOut = node.outputs.find(out => out.label === propName)
         if (validOut) {
           this.property_bag[i] = +(validOut.text)
         }
-        console.log(propName)
       }
     }    
   }
