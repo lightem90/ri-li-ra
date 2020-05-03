@@ -1,47 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import {WorkType} from '../domain/work'
+import {WorkType, WorkConstant} from '../domain/work'
 import {NumberInput, TextInput, DisabledInput, 
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
-export class WorkConstant { 
-
-  public static stage = {
-    time_id : 'sMinutes',
-    price_id : 'sPrice',
-    piece_count_id : 'nPiece',
-    step_count_id : 'nStep',
-    vel_id : 'mVel',
-    dist_id : 'mMm',
-    //cambio utensile
-    tc_step_id : 'nStepCmUt',
-    tc_vel_id : 'mVelCmUt',
-    tc_dist_id : 'mMmCmUt',
-    tc_name_id : 'cmUt',
-    //controllo qualità
-    cc_distz_id : 'mm_z',
-    cc_stepz_id : 'p_z',
-    cc_velz_id : 'v_z',
-    //taglio
-    t_area_id : 't_area',
-    t_resa_id : 't_resa',
-    t_vel_id : 'taglioSec',
-    //tornitura
-    tor_giri_min_id : 'tor_giri_min',
-    tor_mm_giro_id : 'tor_mm_giro',
-    tor_vel_min_id : 'tornMMin',
-  }
-}
-
 @Injectable()
 export class WorkFactoryService implements IWorkFactoryService {
-
-  public static readonly tot_price_id = 'totPrice'
-  public static readonly tot_minutes_id = 'wMinutes'  
-  public static readonly hourly_price_id = 'wPriceH'
-  public static readonly placement_time_id = 'wTPiaz'
-  public static readonly program_time_id = 'wTProg'
-  public static readonly tooling_time_id = 'wTAtt'
 
   _createFromInput(input : NumberInput) {    
     var result = new TreeWorkNode();
@@ -67,7 +31,7 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createSimpleWork(wType : WorkType, calculate: Function, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
  
-    var totPrice = new TextInput(WorkFactoryService.tot_price_id, "0")
+    var totPrice = new TextInput(WorkConstant.work.tot_price_id, "0")
     var result = new TreeWorkNode(calculate)
     result.name = WorkType[wType]
     result.outputs = [totPrice]
@@ -75,12 +39,12 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.isWork = true
     
     
-    result.totTime = new NumberInput(WorkFactoryService.tot_minutes_id, 0)
-    result.totTimeReadOnly = new TextInput(WorkFactoryService.tot_minutes_id, "0")
+    result.totTime = new NumberInput(WorkConstant.work.tot_minutes_id, 0)
+    result.totTimeReadOnly = new TextInput(WorkConstant.work.tot_minutes_id, "0")
     //di default c'è lo stage placeholder in modo da poter aggiungerne uno subito, ammenochè serva aggiungere anche il cambio utensile, in quel caso saranno due TreeWorkNodes
     const inputs = [
-      this._createSingleInput(WorkFactoryService.hourly_price_id, 0),  //il prezzo totale va "gr"
-      this._createSingleInput(WorkFactoryService.placement_time_id, 0),
+      this._createSingleInput(WorkConstant.work.hourly_price_id, 0),  //il prezzo totale va "gr"
+      this._createSingleInput(WorkConstant.work.placement_time_id, 0),
     ]
 
     result.hourlyCost = inputs[0]
@@ -112,8 +76,8 @@ export class WorkFactoryService implements IWorkFactoryService {
 
   _createComplexWork(wType : WorkType, calculate: Function, addToolChangePhase: boolean  = false)  {
     const childrens = [
-      this._createSingleInput(WorkFactoryService.program_time_id, 0),
-      this._createSingleInput(WorkFactoryService.tooling_time_id, 0)
+      this._createSingleInput(WorkConstant.work.program_time_id, 0),
+      this._createSingleInput(WorkConstant.work.tooling_time_id, 0)
     ]
 
     const result = this._createSimpleWork(wType, calculate, childrens, addToolChangePhase)
@@ -184,7 +148,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   }
   
   fixChildrens(node : TreeWorkNode) {
-    var priceChildrenInput = node.children.find(c => c.name === WorkFactoryService.hourly_price_id)
+    var priceChildrenInput = node.children.find(c => c.name === WorkConstant.work.hourly_price_id)
     var emptyStages = node.children.filter(c => c.isStage && c.name === "")
     if (node.workTimeEnabled) {
       //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
@@ -263,7 +227,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           .reduce((sum, c) => sum + (+c.outputs[1].text), 0);
 
         var totToolingTimes = treeWorkNode.children
-          .filter(c => c.isSingleNode && c.name !== WorkFactoryService.hourly_price_id)
+          .filter(c => c.isSingleNode && c.name !== WorkConstant.work.hourly_price_id)
           .reduce((sum, c) => sum + 
             (treeWorkNode.hourlyCost.value)*(c.inputs[0].value/ 60), 0)
 

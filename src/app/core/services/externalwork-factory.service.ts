@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import {WorkType} from '../domain/work'
+import {WorkType, WorkConstant} from '../domain/work'
 import {NumberInput, TextInput, DisabledInput, 
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
 @Injectable()
 export class ExternalWorkFactoryService implements IWorkFactoryService {
-
-  public static readonly quantity_id = 'qty'
-  public static readonly unitary_price_id = 'unitaryPrice'
-  public static readonly charge_perc_id = 'PercRic'
-  public static readonly tot_price_id = 'totPrice'
 
   _createSingleInputFrom(nInput : NumberInput) {
     var result = new TreeWorkNode();
@@ -34,11 +29,11 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
   _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
     const result = new TreeWorkNode(calculateExtWork)
     //servono per gli if di interfaccia
-    result.inputs.push(new NumberInput(ExternalWorkFactoryService.quantity_id, 0))
-    result.inputs.push(new NumberInput(ExternalWorkFactoryService.unitary_price_id, 0))
-    result.inputs.push(new NumberInput(ExternalWorkFactoryService.charge_perc_id, 0))
+    result.inputs.push(new NumberInput(WorkConstant.ext_work.quantity_id, 0))
+    result.inputs.push(new NumberInput(WorkConstant.ext_work.unitary_price_id, 0))
+    result.inputs.push(new NumberInput(WorkConstant.ext_work.charge_perc_id, 0))
     result.outputs = [
-      new TextInput(ExternalWorkFactoryService.tot_price_id, "0")
+      new TextInput(WorkConstant.ext_work.tot_price_id, "0")
     ]
     result.children = result.inputs.map(i => this._createSingleInputFrom(i))
     result.name = wTypeString
