@@ -3,7 +3,7 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 
-import { WorkType } from '../domain/works'
+import { WorkType } from '../domain/work'
 import { TreeWorkNode } from '../domain/common'
 import { IWorkFactoryService } from './work-factory.service'
 

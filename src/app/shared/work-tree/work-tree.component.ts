@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {WorkType} from '../../core/domain/works'
+import {WorkType} from '../../core/domain/work'
 
 import {WorkTreeService} from '../../core/services/work-tree.service'
 

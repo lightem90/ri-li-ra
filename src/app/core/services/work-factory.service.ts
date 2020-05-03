@@ -6,7 +6,7 @@ import {
   ToolChangeStage, 
   Work, 
   OptionalStageValue
-} from '../domain/works'
+} from '../domain/work'
 
 import {
   TreeWorkNode,
