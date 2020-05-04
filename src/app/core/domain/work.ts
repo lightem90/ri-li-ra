@@ -208,3 +208,60 @@ export class Stage {
     }    
   }
 }
+
+export class ExternalWork {
+  constructor(
+    uid : string = "",
+    name : string = "",
+    quantita : number = 0,
+    costo_unitario : number = 0,
+    ricarico_percentuale : number = 0,
+    costo_totale : number = 0) {   }
+
+  //inizializza la lavorazione dal TreeWorkNode
+  mapFrom(node: TreeWorkNode) {
+
+    this.name = node.name
+
+    let tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.quantity_id)
+    if (tmp){
+      this.quantita = tmp.value
+    }
+    tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.unitary_price_id)
+    if (tmp){
+      this.costo_unitario = tmp.value
+    }
+    tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.charge_perc_id)
+    if (tmp){
+      this.ricarico_percentuale = tmp.value
+    }
+    
+    let otmp = node.outputs.find(i => i.label === WorkConstant.ext_work.tot_price_id)
+    if (otmp){
+      this.costo_totale = +(otmp.text)
+    }
+  }
+  
+  //inizializza un TreeWorkNode con i dati della lavorazione
+  mapTo(node: TreeWorkNode) {
+      node.name = this.name
+
+      let tmpD = node.outputs.find(out => out.label === WorkConstant.ext_work.tot_price_id)
+      if (tmpD) {
+        tmpD.text = this.costo_totale.toFixed(2)
+      }
+      
+      let tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.quantity_id)
+      if (tmp) {
+        this.quantita = tmp.value
+      }
+      tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.unitary_price_id)
+      if (tmp) {
+        this.costo_unitario = tmp.value
+      }
+      tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.charge_perc_id)
+      if (tmp) {
+        this.ricarico_percentuale = tmp.value
+      }
+  }
+}
