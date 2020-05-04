@@ -99,17 +99,15 @@ export class FirebaseHelper
 
   getMaterials(getDefault : boolean = false) {
     let feedPromise : Promise<any> = null
-    //todo rimuovere
-    const user_id = "ciccio"
 
-    if (getDefault === true){
+    if (getDefault === true || this._currentUser === null){
       feedPromise = this._getFeed(FirebaseConstant.entityTableNames.default_materials)
         .then((data) => {
           const entries = data.val() || {}
           return entries;
       })
     } else {
-      feedPromise = this._getFeed(FirebaseConstant.entityTableNames.material + '/' + user_id)
+      feedPromise = this._getFeed(FirebaseConstant.entityTableNames.material + '/' + this._currentUser.uid)
         .then((data) => {
           const entries = data.val() || {}
           return entries;
