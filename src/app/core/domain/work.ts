@@ -73,8 +73,8 @@ export class Work {
     tempo_attrezzaggio : number = 0,
     tempo_piazzamento : number = 0,
     tempo_programma : number = 0,
-    fasi : Stage[] = []) {
-
+    fasi : Stage[] = null) {
+      this.fasi = []
   }
 
   //inizializza un TreeWorkNode con i dati della lavorazione, il tree work node deve essere già stato inizializzato
@@ -83,36 +83,32 @@ export class Work {
 
       node.name = this.name
       node.totTime.value = this.tempo_totale
-
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
       if (tmpD) {
         tmpD.text = this.costo_orario.toFixed(2)
       }
-
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
       if (tmp) {
         tmp.value = this.costo_orario.toFixed(2)
       }
-      
       tmp = node.inputs.find(i => i.label === WorkConstant.work.placement_time_id)
       if (tmp) {
         tmp.value = this.tempo_piazzamento.toFixed(2)
       }
-      
       tmp = node.inputs.find(i => i.label === WorkConstant.work.program_time_id)
       if (tmp) {
         tmp.value = this.tempo_programma.toFixed(2)
       }
-      
       tmp = node.inputs.find(i => i.label === WorkConstant.work.tooling_time_id)
       if (tmp) {
         this.tempo_attrezzaggio = tmp.value
       }
 
-      for (let index = 0; index < node.children.length; index++) {
+      const stages = node.children.filter(c => c.isStage)
+      for (let index = 0; index < stages.length; index++) {                
         let workChild = node.children[index] 
         let stage = this.fasi[index]
-        stage.mapTo(workChild)
+        stage.mapTo(workChild)               
       }    
     }
     return this
@@ -173,8 +169,8 @@ export class Stage {
   //inizializza un TreeWorkNode con i dati della lavorazione
   mapTo(node: TreeWorkNode) {
     if (node.isStage) {
-      node.name = this.name
 
+      node.name = this.name
       for(const prop in this.property_bag) {
 
         let validIn = node.inputs.find(inp => inp.label === WorkConstant.stage[prop])

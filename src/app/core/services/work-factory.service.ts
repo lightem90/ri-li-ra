@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {WorkType, WorkConstant, Stage} from '../domain/work'
+import {WorkType, WorkConstant, Stage, Work} from '../domain/work'
 import {NumberInput, TextInput, DisabledInput, 
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
@@ -212,6 +212,11 @@ export class WorkFactoryService implements IWorkFactoryService {
 
     function calculateWork(treeWorkNode : TreeWorkNode) {
       
+      //cambiando il costo della lavorazione bisogna aggiornare il costo delle singole fasi
+      treeWorkNode.children
+        .filter(c => c.isStage)
+        .forEach(s => s.recalculate())
+
       //se non ci sono stage validi si comporta come una lavorazione esterna
       var totPriceOutput = treeWorkNode.outputs[0]
       if (treeWorkNode.workTimeEnabled()) {
