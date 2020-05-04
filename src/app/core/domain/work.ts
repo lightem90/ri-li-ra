@@ -77,10 +77,43 @@ export class Work {
 
   }
 
-  //inizializza un TreeWorkNode con i dati della lavorazione
+  //inizializza un TreeWorkNode con i dati della lavorazione, il tree work node deve essere già stato inizializzato
   mapTo(node: TreeWorkNode) {
     if (node.isWork) {
 
+      node.name = this.name
+      node.totTime.value = this.tempo_totale
+
+      let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
+      if (tmpD) {
+        tmpD.text = this.costo_orario.toFixed(2)
+      }
+
+      let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
+      if (tmp) {
+        tmp.value = this.costo_orario.toFixed(2)
+      }
+      
+      tmp = node.inputs.find(i => i.label === WorkConstant.work.placement_time_id)
+      if (tmp) {
+        tmp.value = this.tempo_piazzamento.toFixed(2)
+      }
+      
+      tmp = node.inputs.find(i => i.label === WorkConstant.work.program_time_id)
+      if (tmp) {
+        tmp.value = this.tempo_programma.toFixed(2)
+      }
+      
+      tmp = node.inputs.find(i => i.label === WorkConstant.work.tooling_time_id)
+      if (tmp) {
+        this.tempo_attrezzaggio = tmp.value
+      }
+
+      for (let index = 0; index < node.children.length; index++) {
+        let workChild = node.children[index] 
+        let stage = this.fasi[index]
+        stage.mapTo(workChild)
+      }    
     }
     return this
   }
@@ -89,8 +122,12 @@ export class Work {
   mapFrom(node: TreeWorkNode) {    
     if (node.isWork) {
       this.name = node.name
-      this.costo_totale = +(node.outputs[0].text)
       this.tempo_totale = node.totTime.value
+
+      let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
+      if (tmpD) {
+        this.costo_orario = +(tmpD.text)
+      }
 
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
       if (tmp) {
@@ -119,7 +156,6 @@ export class Work {
       }
     }
 
-    console.log(this)
     return this
   }
 }
@@ -137,7 +173,20 @@ export class Stage {
   //inizializza un TreeWorkNode con i dati della lavorazione
   mapTo(node: TreeWorkNode) {
     if (node.isStage) {
+      node.name = this.name
 
+      for(const prop in this.property_bag) {
+
+        let validIn = node.inputs.find(inp => inp.label === WorkConstant.stage[prop])
+        if (validIn) {
+          validIn.value = this.property_bag[prop]
+        }
+
+        let validOut = node.outputs.find(out => out.label === WorkConstant.stage[prop])
+        if (validOut) {
+          validOut.text = (this.property_bag[prop]).toFixed(2)
+        }
+      }
     }
     return this
   }

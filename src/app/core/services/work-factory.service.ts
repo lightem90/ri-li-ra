@@ -122,11 +122,6 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.inputs = inputs
     result.name = stageName
     result.isStage = true
-
-    let stage = new Stage()
-    stage.mapFrom(result)
-
-
     return result
   }
 
