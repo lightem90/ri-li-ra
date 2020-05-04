@@ -30,7 +30,7 @@ export class AccountService {
     this._helper
       .login(email, password)
       .then(ok => {
-        this._router.navigate['user']
+        this._router.navigate(['user'])
       })
   }
 
@@ -38,7 +38,7 @@ export class AccountService {
     this._helper
       .register(email, password)      
       .then(ok => {
-        this._router.navigate['l']
+        this._router.navigate(['login'])
       })
   }
 

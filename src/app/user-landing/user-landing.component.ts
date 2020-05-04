@@ -10,7 +10,7 @@ export class UserLandingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('landed')
+    
   }
 
 }
