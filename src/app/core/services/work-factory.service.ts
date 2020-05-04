@@ -217,27 +217,35 @@ export class WorkFactoryService implements IWorkFactoryService {
         .filter(c => c.isStage)
         .forEach(s => s.recalculate())
 
-      //se non ci sono stage validi si comporta come una lavorazione esterna
+      var prezzoOrario = treeWorkNode.hourlyCost.value
       var totPriceOutput = treeWorkNode.outputs[0]
+
+      //se non ci sono stage validi si comporta come una lavorazione esterna
       if (treeWorkNode.workTimeEnabled()) {
         var minuti = treeWorkNode.totTime.value
-        var prezzo = treeWorkNode.hourlyCost.value
 
-        totPriceOutput.text = ((minuti/60)*prezzo).toFixed(2)
+        totPriceOutput.text = ((minuti/60)*prezzoOrario).toFixed(2)
       } else {
         //somma dei dati delle fasi
         var totStagesPrice = treeWorkNode.children
           .filter(c => c.isStage && c.name !== "")
-          .reduce((sum, c) => sum + (+c.outputs[1].text), 0);
+          .reduce((pn, u) => [ ...pn, ...u.outputs ], []) //tutti gli outputs di tutte le fasi
+          .filter(o => o.label === WorkConstant.stage.price_id) //tutti i prezzi di fase
+          .map(o => +(o.text)) //converto a number e sommo
+          .reduce((sum, c) => sum + c, 0)
 
-        var totToolingTimes = treeWorkNode.children
-          .filter(c => c.isSingleNode && c.name !== WorkConstant.work.hourly_price_id)
-          .reduce((sum, c) => sum + 
-            (treeWorkNode.hourlyCost.value)*(c.inputs[0].value/ 60), 0)
-        const totTime = (totStagesPrice + totToolingTimes)
+        var totToolingPrice = treeWorkNode.children
+          .filter(c => c.isSingleNode 
+            && (c.name === WorkConstant.work.placement_time_id
+            || c.name === WorkConstant.work.program_time_id
+            || c.name === WorkConstant.work.tooling_time_id))
+          .map(c => c.inputs[0].value)
+          .reduce((sum, c) => sum + c*(prezzoOrario/ 60), 0)
 
-        treeWorkNode.totTime.value = totTime
-        totPriceOutput.text = totTime.toFixed(2)
+        const totPrice = (totStagesPrice + totToolingPrice)
+
+        treeWorkNode.totTime.value = totPrice/prezzoOrario * 60
+        totPriceOutput.text = totPrice.toFixed(2)
       }
     }
   }
