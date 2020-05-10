@@ -52,7 +52,7 @@ export class TreeWorkNode {
   public isSingleNode : boolean = false
   public isStage : boolean = false
   public isWork : boolean = false
-  public canAddLevel : boolean = true
+  public canAddLevel : boolean = false
 
   //l'input del tempo di lavorazione è visualizzabile solo se non ci sono stage
   workTimeEnabled() {
@@ -72,7 +72,7 @@ export class TreeWorkFlatNode {
   public totPrice : DisabledInput = null
   public totTime : DisabledInput = null
   public isSingleNode : boolean = false
-  public canAddLevelFlag : boolean = true
+  public canAddLevelFlag : boolean = false
   public hourlyCost : NumberInput = null
 }
 

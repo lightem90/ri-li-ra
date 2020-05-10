@@ -26,7 +26,13 @@
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>        
-        <p> {{node.name | translate}}</p>
+        <p *ngIf="!editAndSave"> {{node.name | translate}}</p>
+        <app-inline-edit 
+          [(ngModel)]="node.name" 
+          [required]="true" 
+          type="text"
+          *ngIf="editAndSave">
+        </app-inline-edit>
         <div >        
           <app-disabled-input 
             *ngFor="let out of node.outputs"
@@ -34,8 +40,8 @@
           </app-disabled-input>
         </div>
         <button 
-          *ngIf="canAddLevel"
           mat-icon-button 
+          *ngIf="node.canAddLevelFlag"
           (click)="addNewItem(node)">
           <mat-icon>add</mat-icon>
         </button>

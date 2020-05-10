@@ -52,6 +52,8 @@ import { PdfUploaderComponent } from './shared/pdf-uploader/pdf-uploader.compone
 import { WorkTreeComponent } from './shared/work-tree/work-tree.component';
 import { SingleInputNodeComponent } from './shared/work-tree/single-input-node/single-input-node.component';
 import { MaterialListComponent } from './shared/material-list/material-list.component';
+import { InlineEditComponent } from './shared/inline-edit/inline-edit.component';
+
 
 import { UserLandingComponent } from './user-landing/user-landing.component';
 
@@ -107,7 +109,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     WorkTreeComponent,
     UserLandingComponent,
     SingleInputNodeComponent,
-    MaterialListComponent],
+    MaterialListComponent,
+    InlineEditComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, ExternalWorkFactoryService, AccountService, AccountManagerService]
 })
