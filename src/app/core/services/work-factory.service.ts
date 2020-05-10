@@ -149,7 +149,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   fixChildrens(node : TreeWorkNode) {
     var priceChildrenInput = node.children.find(c => c.name === WorkConstant.work.hourly_price_id)
     var emptyStages = node.children.filter(c => c.isStage && c.name === "")
-    if (node.workTimeEnabled) {
+    if (node.workTimeEnabled()) {
       //gli unici children sono input, rimuovo visualizzo quindi un unico input per il tempo e per il prezzo
       node.children = [priceChildrenInput, this._createFromInput(node.totTime)]
       for(let stage of emptyStages) {

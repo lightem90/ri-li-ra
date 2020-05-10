@@ -32,10 +32,6 @@
             *ngFor="let out of node.outputs"
             [input]="out">
           </app-disabled-input>
-          <app-number-input 
-            *ngIf="node.workTimeEnabled && node.isWork"
-            [input]="node.totalEditableTime">
-          </app-number-input>
         </div>
         <button 
           *ngIf="canAddLevel"
@@ -50,4 +46,18 @@
         </button>
       </mat-tree-node>
     </mat-tree>
+    <br>
+    <mat-form-field>
+      <mat-label>{{'workTypeSel' | translate}}</mat-label>
+        <mat-select 
+          [(value)]="selectedWorkType">
+          <mat-option *ngFor="let wType of workTypes" 
+          [value]="wType">
+            {{wType | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button mat-raised-button (click)="addWork()" translate>
+      {{'addWork' | translate}}
+    </button>
   </div>

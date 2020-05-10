@@ -27,33 +27,19 @@ export class ExternalWorksComponent implements OnInit {
   sumThreeTwo = 0
   sumThreeThree = 0
   
-  //stati per il combo
-  workThermTypes: ThermalWorkType[]
-  selectedWorkThermalType : ThermalWorkType = null
-
-  //stati per il combo
-  workSupTypes: SuperficialWorkType[]
-  selectedWorkSupType : SuperficialWorkType = null
-
-  //stati per il combo
-  workExtTypes: ExternalWorkType[]
-  selectedExtWorkType : ExternalWorkType = null
+  workThermTypes: string[]
+  workSupTypes: string[]
+  workExtTypes: string[]
 
   tot_lav_ext : DisabledInput
 
   constructor(
-    private _factory : ExternalWorkFactoryService,
+    private _workFactory : ExternalWorkFactoryService,
     private _configuratorService : ConfiguratorService) { 
-      this.treeServiceThermal = new WorkTreeService(_factory) 
-      this.treeServiceSuperficial = new WorkTreeService(_factory) 
-      this.treeServiceExternal = new WorkTreeService(_factory)
 
       this.workThermTypes = Object.values(ThermalWorkType).filter(x => typeof x === 'string')
-      this.selectedWorkThermalType = this.workThermTypes[0]
       this.workSupTypes = Object.values(SuperficialWorkType).filter(x => typeof x === 'string')
-      this.selectedWorkSupType = this.workSupTypes[0]
       this.workExtTypes = Object.values(ExternalWorkType).filter(x => typeof x === 'string')
-      this.selectedExtWorkType = this.workExtTypes[0]
     }
 
 
@@ -61,27 +47,16 @@ export class ExternalWorksComponent implements OnInit {
       this.tot_lav_ext = this._configuratorService.currentSession.tot_lav_ext
     }
 
-    addThermWork() {
-      this.treeServiceThermal.addWork(this.selectedWorkThermalType.toString())
-    }
-
-    addSupWork() {
-      this.treeServiceSuperficial.addWork(this.selectedWorkSupType.toString())
-    }
-
-    addExtWork() {
-      this.treeServiceExternal.addWork(this.selectedExtWorkType.toString())
-    }
-
     updateTreeOne(sumOfWorks : number) {
-      console.log("ext comp sum: " + sumOfWorks)
       this.sumThreeOne = sumOfWorks
       this.recalcAll()
     }
+
     updateTreeTwo(sumOfWorks : number) {
       this.sumThreeTwo = sumOfWorks
       this.recalcAll()
     }
+
     updateTreeThree(sumOfWorks : number) {
       this.sumThreeThree = sumOfWorks
       this.recalcAll()

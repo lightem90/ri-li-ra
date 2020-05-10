@@ -6,25 +6,10 @@
     </app-pdf-uploader>  
   </div>
   <app-work-tree
-   [treeService]="treeService"
-   (recalculated)="updateBudget($event)"> 
-  </app-work-tree>
-  <br>
-  <div>
-    <mat-form-field>
-      <mat-label>{{'workTypeSel' | translate}}</mat-label>
-        <mat-select 
-          [(value)]="selectedWorkType">
-          <mat-option *ngFor="let wType of workTypes" 
-          [value]="wType">
-            {{wType | translate}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    <button mat-raised-button (click)="addWork()" translate>
-      {{'addWork' | translate}}
-    </button>
-  </div>
+    [workTypes]="workTypes"
+    [workFactoryService]="_workFactory"
+    (recalculated)="updateBudget($event)"> 
+  </app-work-tree>  
   <br>
   <div>    
     <app-number-input (inputChanged)="recalculate()" [input]="charge"> </app-number-input> 

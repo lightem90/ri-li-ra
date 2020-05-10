@@ -6,7 +6,7 @@ import {WorkType} from '../../core/domain/work'
 
 import {WorkTreeService} from '../../core/services/work-tree.service'
 
-import {NumberInput, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService} from '../../core/domain/common'
+import {NumberInput, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService, IWorkFactoryService} from '../../core/domain/common'
 
 @Component({
   selector: 'app-work-tree',
@@ -15,8 +15,13 @@ import {NumberInput, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService} from '../
 })
 export class WorkTreeComponent implements OnInit {  
 
-    @Input() treeService: IWorkTreeService
+    @Input() editAndSave : boolean = false
+    @Input() workTypes: string[]
+    @Input() workFactoryService: IWorkFactoryService
     @Output() recalculated = new EventEmitter<number>();
+
+    selectedWorkType : string = null
+    _treeService : WorkTreeService
 
     //stati per l'albero (far diventare tutto un componente!)
     getLevel = (node: TreeWorkFlatNode) => node.level;
@@ -63,7 +68,10 @@ export class WorkTreeComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.treeService.dataChange.subscribe(data => {
+
+      this.selectedWorkType  = this.workTypes[0]
+      this._treeService = new WorkTreeService(this.workFactoryService)
+      this._treeService.dataChange.subscribe(data => {
         this.dataSource.data = data;
       });
     }
@@ -71,7 +79,7 @@ export class WorkTreeComponent implements OnInit {
     /** Select the category so we can insert the new item. */
     addNewItem(node : TreeWorkFlatNode) {
       const parentNode = this.flatNodeMap.get(node);
-      this.treeService.addDefault(parentNode)
+      this._treeService.addDefault(parentNode)
       this.treeControl.expand(node);
     }
 
@@ -98,7 +106,7 @@ export class WorkTreeComponent implements OnInit {
       const parentNode = this.getParentNode(node) 
       const parentNodeFlat = this.flatNodeMap.get(parentNode)
       const nestedNode = this.flatNodeMap.get(node);
-      this.treeService.updateWorkItem(nestedNode!, parentNodeFlat, stageName, parentNode.name);
+      this._treeService.updateWorkItem(nestedNode!, parentNodeFlat, stageName, parentNode.name);
       this.treeControl.expand(node);
     }
     
@@ -125,10 +133,14 @@ export class WorkTreeComponent implements OnInit {
     const node = this.flatNodeMap.get(nodeFlat)
     const parentFlatNode = this.getParentNode(nodeFlat)
     const parentNode = this.flatNodeMap.get(parentFlatNode)
-    if (this.treeService.deleteNode(node, parentNode)) {
+    if (this._treeService.deleteNode(node, parentNode)) {
       this.flatNodeMap.delete(nodeFlat)
       this.nestedNodeMap.delete(node)
     }
   }
+
+    addWork() {
+      this._treeService.addWork(this.selectedWorkType.toString())
+    }
 
 }

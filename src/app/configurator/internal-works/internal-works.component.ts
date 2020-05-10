@@ -18,22 +18,17 @@ import {NumberInput, DisabledInput} from '../../core/domain/common'
 })
 export class InternalWorksComponent implements OnInit {
 
-    //stati per il combo
-    workTypes: WorkType[]
-    selectedWorkType : WorkType = null
     charge : NumberInput
     tot_lav_int : DisabledInput
     tot_lav_int_charge : DisabledInput
-    public treeService: WorkTreeService
+
+    workTypes: string[] = []
 
     constructor(
       private _workFactory : WorkFactoryService,
       private _configuratorService : ConfiguratorService) {  
-
-      this.treeService = new WorkTreeService(_workFactory)
-
+        
       this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
-      this.selectedWorkType = this.workTypes[0]
     }
 
 
@@ -41,10 +36,7 @@ export class InternalWorksComponent implements OnInit {
       this.charge = this._configuratorService.currentSession.charge_lav_int;
       this.tot_lav_int = this._configuratorService.currentSession.tot_lav_int;
       this.tot_lav_int_charge = this._configuratorService.currentSession.tot_lav_int_charge;
-    }
 
-    addWork() {
-      this.treeService.addWork(this.selectedWorkType.toString())
     }
 
     updateBudget(sumOfWorks : number) {
