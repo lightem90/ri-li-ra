@@ -100,5 +100,8 @@
   "charge_lav_int" : "Ricarico % lavorazioni interne per pezzo",
   "tot_lav_int_charge" : "Totale lavorazioni con ricarico",
   "tot_lav_ext" : "Totale lavorazioni esterne al pezzo",
-  "CostoTotaleMateriaPrima" : "Prezzo totale materiale"
+  "CostoTotaleMateriaPrima" : "Prezzo totale materiale",
+  "usermat" : "Materiali dell'utente",
+  "userwork" : "Lavorazioni dell'utente",
+  "userserv" : "Servizi dell'utente"
 }

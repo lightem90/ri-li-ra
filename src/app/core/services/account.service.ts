@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanActivateChild } from '@angular/router';
 
 import {FirebaseHelper} from './firebase-helper'
 
 @Injectable()
-export class AccountService {
+export class AccountService implements CanActivate {
 
   token: string;
   private currentUser = null;
@@ -41,5 +41,12 @@ export class AccountService {
         this._router.navigate(['login'])
       })
   }
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot)
+      : Observable<boolean> | Promise<boolean> | boolean {
+        return this.currentUser !== null;
+    }
 
 }

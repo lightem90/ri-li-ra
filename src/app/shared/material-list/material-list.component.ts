@@ -21,9 +21,7 @@ export class MaterialListComponent implements OnInit {
   changed : boolean = false;
   materials: Material[] = []
   
-  constructor(
-    private _configuratorService : ConfiguratorService,
-    private _accountManager : AccountManagerService) {     
+  constructor(private _accountManager : AccountManagerService) {     
   }
 
   saveMaterial() {
@@ -36,23 +34,22 @@ export class MaterialListComponent implements OnInit {
 
   setChanged() {
     this.changed = true
-    this._configuratorService.totalMaterialPriceChanged();
     this.signalChanged.emit()
   }
 
   async fetchMaterials(){
     //se non ci sono dati salvati dall'utente prendo i materiali di default
-    this.materials = await this._configuratorService.getMaterials()  
+    this.materials = await this._accountManager.getMaterials()  
 
     if (this.materials.length === 0) {
-      this.materials = await this._configuratorService.getMaterials(true)
+      this.materials = await this._accountManager.getMaterials(true)
     }
 
     this.changed = false
   }
 
   getMaterialUrl(material: Material){
-    return this._configuratorService.getAssetUrl(material.img_url)
+    return this._accountManager.getAssetUrl(material.img_url)
   }
 
   udapteSelectedMaterial(material: any){

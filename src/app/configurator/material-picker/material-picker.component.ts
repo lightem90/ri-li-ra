@@ -40,6 +40,10 @@ export class MaterialPickerComponent implements OnInit {
     }
   }
 
+  setChanged() {
+    this._configuratorService.totalMaterialPriceChanged();
+  }
+
   totalPiecesChanged() {
     this._configuratorService.totalMaterialPriceChanged();
   }

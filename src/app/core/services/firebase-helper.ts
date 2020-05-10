@@ -139,31 +139,29 @@ export class FirebaseHelper
   }
 
   _updateDataForUser(
-    userId: string,
     dataKey: string, 
     dataToAdd: any, 
     dataTableName: string) {
 
     var updates = {};
-    updates['/' + dataTableName + '/' + userId + '/' + dataKey] = dataToAdd;
+    updates['/' + dataTableName + '/' + this._currentUser.uid + '/' + dataKey] = dataToAdd;
 
     return this.database.database.ref().update(updates);
   }
 
   //adds into a table a new document
   _addDataForUser(
-    userId: string, 
     dataToAdd: any, 
     dataTableName: string) {
 
     var newDataKey = this.database.database
       .ref()
-      .child(dataTableName + '/' + userId)
+      .child(dataTableName + '/' + this._currentUser.uid)
       .push()
       .key;
 
     dataToAdd.uid = newDataKey;
 
-    return this._updateDataForUser(userId, newDataKey, dataToAdd, dataTableName)
+    return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
   }
 }

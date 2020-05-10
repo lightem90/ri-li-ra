@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanActivateChild } from '@angular/router';
 
 import { Budget } from '../domain/budget'
@@ -20,13 +19,7 @@ export class ConfiguratorService implements CanActivate {
   constructor(
     private firbaseHelper : FirebaseHelper, 
     private router: Router) { }
-
-
-  getAssetUrl(assetUrl : string){
-    //take 1 so i don't need to unsubscribe
-    return this.firbaseHelper.getAssetSrc(assetUrl).pipe(take(1))
-  }
-  
+ 
   //needed to display configurator only if session has started, otherwise I'll show the button to start
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -49,29 +42,7 @@ export class ConfiguratorService implements CanActivate {
 
   isSessionActive(){
     return this.currentSession !== null
-  }
-
-  //lasciamo al chiamante il dovere di chiedere quelli di default o specifici per l'utente
-  getMaterials(getDefault : boolean = false){
-    return this.firbaseHelper.getMaterials(getDefault)
-    .then(res => {
-        if (res)
-        {
-          res.forEach(mat => {            
-            this.getAssetUrl(mat.img_url)
-              .subscribe(res => {
-                if (res && !mat.img_download_url) {                  
-                  mat.img_download_url = res
-                }
-            })
-          })  
-          return res   
-        } else {
-          console.log('Error fetching default materials')
-          return []
-        }
-      }, err => console.log(err))
-  }
+  }  
 
   recalcWeight() {
     //lascia al servizio gli if sul calcolo del peso a seconda del volume
