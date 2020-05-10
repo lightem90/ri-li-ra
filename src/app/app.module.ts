@@ -51,6 +51,8 @@ import { DisabledInputComponent } from './shared/disabled-input/disabled-input.c
 import { PdfUploaderComponent } from './shared/pdf-uploader/pdf-uploader.component';
 import { WorkTreeComponent } from './shared/work-tree/work-tree.component';
 import { SingleInputNodeComponent } from './shared/work-tree/single-input-node/single-input-node.component';
+import { MaterialListComponent } from './shared/material-list/material-list.component';
+
 import { UserLandingComponent } from './user-landing/user-landing.component';
 
 if (!firebase.apps.length) {
@@ -104,7 +106,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     RecapComponent,
     WorkTreeComponent,
     UserLandingComponent,
-    SingleInputNodeComponent],
+    SingleInputNodeComponent,
+    MaterialListComponent],
   bootstrap:    [ AppComponent ],
   providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, ExternalWorkFactoryService, AccountService, AccountManagerService]
 })

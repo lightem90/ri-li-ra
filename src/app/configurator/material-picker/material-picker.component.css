@@ -1,15 +1,1 @@
-img {
-  height: 150px; 
-  width: 150px;
-  object-fit: cover; 
-  object-position: center;
-}
 
- mat-card {
-  display: block;
-  box-sizing: content-box; 
-  background: darkcyan;
-  align-content: center;
-  margin: 5px;
-
-}
