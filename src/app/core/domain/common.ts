@@ -43,6 +43,8 @@ export class TreeWorkNode {
 
   //inputs della lavorazione "padre" degli stage, servono per avere il prezzo disponibile
   public hourlyCost : NumberInput = null
+  //"factory id", mi serve per capire come costruire l'albero della lavorazione
+  public originalWorkName : string = ""
   public name : string = ""
   public editable : boolean
   public inputs : NumberInput []= []
@@ -73,6 +75,7 @@ export class TreeWorkFlatNode {
   public totTime : DisabledInput = null
   public isSingleNode : boolean = false
   public canAddLevelFlag : boolean = false
+  public isWork : boolean = false
   public hourlyCost : NumberInput = null
 }
 

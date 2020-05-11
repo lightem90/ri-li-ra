@@ -8,6 +8,12 @@
   <p>{{'userwork' | translate}}  </p>
 
 
+  <app-work-tree
+    [editAndSave]="true"
+    [workTypes]="workTypes"
+    [workFactoryService]="_workFactory"
+    (saveRequest)="saveWorkForUser($event)">
+  </app-work-tree>  
 
 
   

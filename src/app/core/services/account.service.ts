@@ -29,24 +29,20 @@ export class AccountService implements CanActivate {
   login(email: string, password: string) {
     this._helper
       .login(email, password)
-      .then(ok => {
-        this._router.navigate(['user'])
-      })
+      .then(r => this._router.navigate(['user']))     
   }
 
   register(email: string, password: string) {
     this._helper
-      .register(email, password)      
-      .then(ok => {
-        this._router.navigate(['login'])
-      })
+      .register(email, password)
+      .then(r => this._router.navigate(['login']))   
   }
   
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot)
       : Observable<boolean> | Promise<boolean> | boolean {
-        return this.currentUser !== null;
+        return this.token !== null
     }
 
 }

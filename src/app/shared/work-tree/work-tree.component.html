@@ -28,10 +28,10 @@
         </button>        
         <p *ngIf="!editAndSave"> {{node.name | translate}}</p>
         <app-inline-edit 
+          *ngIf="editAndSave && node.isWork"
           [(ngModel)]="node.name" 
           [required]="true" 
-          type="text"
-          *ngIf="editAndSave">
+          type="text">
         </app-inline-edit>
         <div >        
           <app-disabled-input 
@@ -49,6 +49,12 @@
           mat-icon-button 
           (click)="deleteNode(node)">
           <mat-icon>delete</mat-icon>
+        </button>
+        <button 
+          *ngIf="editAndSave && node.isWork"
+          mat-icon-button 
+          (click)="saveNode(node)">
+          <mat-icon>save</mat-icon>
         </button>
       </mat-tree-node>
     </mat-tree>

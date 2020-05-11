@@ -12,7 +12,7 @@ div.inline-edit {
   cursor: pointer;
   text-align: left;
   padding: .5em 0;
-  color: #444 !important;
+  color: #ccc !important;
   width: auto;
 }
 

@@ -19,6 +19,8 @@ export class WorkTreeComponent implements OnInit {
     @Input() workTypes: string[]
     @Input() workFactoryService: IWorkFactoryService
     @Output() recalculated = new EventEmitter<number>();
+    @Output() saveRequest = new EventEmitter<TreeWorkNode>();
+    
 
     selectedWorkType : string = null
     _treeService : WorkTreeService
@@ -49,6 +51,7 @@ export class WorkTreeComponent implements OnInit {
       flatNode.outputs = node.outputs
       flatNode.isSingleNode = node.isSingleNode
       flatNode.canAddLevelFlag = node.canAddLevel
+      flatNode.isWork = node.isWork
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
       return flatNode;
@@ -107,6 +110,13 @@ export class WorkTreeComponent implements OnInit {
       const nestedNode = this.flatNodeMap.get(node);
       this._treeService.updateWorkItem(nestedNode!, parentNodeFlat, stageName, parentNode.name);
       this.treeControl.expand(node);
+    }
+
+    saveNode(node : TreeWorkFlatNode) {      
+      const workNode = this.flatNodeMap.get(node)
+      if (workNode) {
+        this.saveRequest.emit(workNode)
+      }
     }
     
   getParentNode(node: TreeWorkFlatNode): TreeWorkFlatNode | null {

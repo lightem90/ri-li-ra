@@ -66,6 +66,7 @@ export class Work {
 
   constructor(
     uid : string = "",
+    originalWorkName : string = "",
     name : string = "",
     costo_totale : number = 0,
     costo_orario : number = 0,
@@ -80,7 +81,7 @@ export class Work {
   //inizializza un TreeWorkNode con i dati della lavorazione, il tree work node deve essere già stato inizializzato
   mapTo(node: TreeWorkNode) {
     if (node.isWork) {
-
+      node.originalWorkName = this.originalWorkName
       node.name = this.name
       node.totTime.value = this.tempo_totale
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
@@ -118,6 +119,7 @@ export class Work {
   mapFrom(node: TreeWorkNode) {    
     if (node.isWork) {
       this.name = node.name
+      this.originalWorkName = node.originalWorkName
       this.tempo_totale = node.totTime.value
 
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)

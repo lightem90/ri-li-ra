@@ -33,6 +33,7 @@ export class WorkFactoryService implements IWorkFactoryService {
 
     var totPrice = new TextInput(WorkConstant.work.tot_price_id, "0")
     var result = new TreeWorkNode(calculate)
+    result.originalWorkName = WorkType[wType]
     result.name = WorkType[wType]
     result.outputs = [totPrice]
     result.editable = true

@@ -6,6 +6,7 @@ import { FirebaseConstant } from './firebase-constant'
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanActivateChild } from '@angular/router';
 
 import {Material} from '../domain/material'
+import { Work } from '../domain/work';
 
 @Injectable()
 export class AccountManagerService {
@@ -51,6 +52,12 @@ export class AccountManagerService {
           return []
         }
       }, err => console.log(err))
+  }
+
+  saveWorkForUser(work : Work){
+    return this._firbaseHelper._addDataForUser(
+          work,
+          FirebaseConstant.relationTableNames.userWork)
   }
 
 }
