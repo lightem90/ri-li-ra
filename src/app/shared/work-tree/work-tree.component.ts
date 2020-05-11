@@ -148,8 +148,19 @@ export class WorkTreeComponent implements OnInit {
     }
   }
 
-    addWork() {
-      this._treeService.addWork(this.selectedWorkType.toString())
-    }
+  addWork() {
+    this._treeService.addWork(this.selectedWorkType.toString())
+  }
+
+  canSaveNode(nodeFlat: TreeWorkFlatNode){    
+    return this.showInlineEdit(nodeFlat)
+      && !this.workTypes.some(w => w === nodeFlat.name)
+  }
+
+  showInlineEdit(nodeFlat: TreeWorkFlatNode){    
+    return this.editAndSave 
+      && nodeFlat.isWork 
+  }
+
 
 }

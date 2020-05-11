@@ -26,9 +26,9 @@
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>        
-        <p *ngIf="!editAndSave"> {{node.name | translate}}</p>
+        <p *ngIf="!showInlineEdit(node)"> {{node.name | translate}}</p>
         <app-inline-edit 
-          *ngIf="editAndSave && node.isWork"
+          *ngIf="showInlineEdit(node)"
           [(ngModel)]="node.name" 
           [required]="true" 
           type="text">
@@ -51,7 +51,7 @@
           <mat-icon>delete</mat-icon>
         </button>
         <button 
-          *ngIf="editAndSave && node.isWork"
+          *ngIf="canSaveNode(node)"
           mat-icon-button 
           (click)="saveNode(node)">
           <mat-icon>save</mat-icon>
