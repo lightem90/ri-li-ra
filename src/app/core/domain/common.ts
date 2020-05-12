@@ -96,4 +96,6 @@ export interface IWorkFactoryService
   fixChildrens(node : TreeWorkNode)
   restoreChildrens(node : TreeWorkNode)
   createDefaultChildrenNode() : TreeWorkNode
+  //servirebbe un'interfaccia comune per Work e ExtWork
+  createFromWork(work: any) : TreeWorkNode
 }

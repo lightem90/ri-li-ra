@@ -39,4 +39,5 @@ export class ExternalWork {
     public totalPrice : number = 0) {
     }
 
+  //todo map to/from nodo
 }

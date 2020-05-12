@@ -65,16 +65,16 @@ export class WorkConstant {
 export class Work {
 
   constructor(
-    uid : string = "",
-    originalWorkName : string = "",
-    name : string = "",
-    costo_totale : number = 0,
-    costo_orario : number = 0,
-    tempo_totale : number = 0,
-    tempo_attrezzaggio : number = 0,
-    tempo_piazzamento : number = 0,
-    tempo_programma : number = 0,
-    fasi : Stage[] = null) {
+    public uid : string = "",
+    public originalWorkName : string = "",
+    public name : string = "",
+    public costo_totale : number = 0,
+    public costo_orario : number = 0,
+    public tempo_totale : number = 0,
+    public tempo_attrezzaggio : number = 0,
+    public tempo_piazzamento : number = 0,
+    public tempo_programma : number = 0,
+    public fasi : Stage[] = null) {
       this.fasi = []
   }
 
@@ -162,9 +162,9 @@ export class Work {
 export class Stage {
   
   constructor(
-    uid : string = "",
-    name : string = "",
-    property_bag : {[key: string]: number}) {
+    public uid : string = "",
+    public name : string = "",
+    public property_bag : {[key: string]: number}) {
       this.property_bag = {}     
   }
 
@@ -213,12 +213,12 @@ export class Stage {
 
 export class ExternalWork {
   constructor(
-    uid : string = "",
-    name : string = "",
-    quantita : number = 0,
-    costo_unitario : number = 0,
-    ricarico_percentuale : number = 0,
-    costo_totale : number = 0) {   }
+    public uid : string = "",
+    public name : string = "",
+    public quantita : number = 0,
+    public costo_unitario : number = 0,
+    public ricarico_percentuale : number = 0,
+    public costo_totale : number = 0) {   }
 
   //inizializza la lavorazione dal TreeWorkNode
   mapFrom(node: TreeWorkNode) {

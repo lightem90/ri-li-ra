@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {WorkType, WorkConstant} from '../domain/work'
+import {WorkType, WorkConstant, ExternalWork} from '../domain/work'
 import {NumberInput, TextInput, DisabledInput, 
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
@@ -76,5 +76,17 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
   //mai chiamato, non ci sono stage, in questa modalitò ci sono solo elementi di primo livello
   createDefaultChildrenNode() {
     return null
+  }
+
+  createFromWork(work: any) : TreeWorkNode {
+    const w = work as ExternalWork
+    if (w === null) return null
+
+    //creo la struttura ad albero a seconda della lavorazione
+    var result = this._createExternalWorkNode(w.name)
+
+    //mappo i dati di lavorazione e stages
+    w.mapTo(result)
+    return result
   }
 }
