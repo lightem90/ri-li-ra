@@ -162,5 +162,10 @@ export class WorkTreeComponent implements OnInit {
       && nodeFlat.isWork 
   }
 
+  getTreeNodeName(nodeFlat: TreeWorkFlatNode){
+
+    return this.flatNodeMap.get(nodeFlat).name
+  }
+
 
 }

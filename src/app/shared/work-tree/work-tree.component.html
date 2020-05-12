@@ -20,6 +20,7 @@
       </mat-tree-node>
 
       <!-- Nodo normale -->
+      <!-- so che non si dovrebbe fare: [ngModel]="getTreeNodeName(node)" nasce per il two way binding, "da sotto" non verrà mai cambiato, ma serve aggiornare il name del vero nodo e non del flat -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
         <button mat-icon-button matTreeNodeToggle>
           <mat-icon class="mat-icon-rtl-mirror">
@@ -29,7 +30,7 @@
         <p *ngIf="!showInlineEdit(node)"> {{node.name | translate}}</p>
         <app-inline-edit 
           *ngIf="showInlineEdit(node)"
-          [(ngModel)]="node.name" 
+          [ngModel]="getTreeNodeName(node)" 
           [required]="true" 
           type="text">
         </app-inline-edit>
