@@ -74,12 +74,14 @@ export class ConfiguratorService implements CanActivate {
       return;
     }
 
-    var numberOfPieces = this.currentSession.n_pieces.value
-    var pieceUnitaryWeight = +this.currentSession.totWeigthPerPiece.text
-    var unitaryPrice = this.currentSession.material.price_p * pieceUnitaryWeight
+    const shape = this.currentSession.selectedShape
+    const numberOfPieces = this.currentSession.n_pieces.value
+    const pieceUnitaryWeight = +this.currentSession.totWeigthPerPiece.text
+    const pricePerShape =  this.currentSession.material.prices_for_shape[shape]
+    const unitaryPrice = pricePerShape * pieceUnitaryWeight
 
-    var chargeOnPiece = this.currentSession.pieceChargePercentage.value
-    var prezzoUnitarioConRicarico = unitaryPrice * (100+chargeOnPiece)/100
+    const chargeOnPiece = this.currentSession.pieceChargePercentage.value
+    const prezzoUnitarioConRicarico = unitaryPrice * (100+chargeOnPiece)/100
 
     this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
     this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
