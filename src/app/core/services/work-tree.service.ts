@@ -21,6 +21,7 @@ export class WorkTreeService{
       if (t) {
         parent.children.push(t); 
         this.dataChange.next(this.data);
+        return t
       }      
     }
   }
@@ -28,6 +29,7 @@ export class WorkTreeService{
   addNode(workNode : TreeWorkNode) {
     this.data.push(workNode)
     this.dataChange.next(this.data)
+    return workNode
   }
 
   addWork(wType : string) {
@@ -35,6 +37,7 @@ export class WorkTreeService{
     this._workFactory.fixChildrens(workNode)
     this.data.push(workNode)
     this.dataChange.next(this.data)
+    return workNode
   }
 
   updateWorkItem(node: TreeWorkNode, parentNode: TreeWorkNode, stageName: string, workName: string) {
@@ -57,8 +60,8 @@ export class WorkTreeService{
           this._workFactory.restoreChildrens(parentNode)
         }
       }
-
       this.dataChange.next(this.data)
+      return stage
     }    
   }
 

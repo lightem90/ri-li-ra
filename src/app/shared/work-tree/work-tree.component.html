@@ -30,7 +30,7 @@
         <p *ngIf="!showInlineEdit(node)"> {{node.name | translate}}</p>
         <app-inline-edit 
           *ngIf="showInlineEdit(node)"
-          [ngModel]="getTreeNodeName(node)" 
+          [(ngModel)]="this.flatNodeMap.get(node).name" 
           [required]="true" 
           type="text">
         </app-inline-edit>

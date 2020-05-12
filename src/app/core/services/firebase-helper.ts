@@ -9,6 +9,7 @@ import firebase from 'firebase';
 
 import { Material } from '../domain/material'
 import { FirebaseConstant } from './firebase-constant'
+import { Work } from '../domain/work';
 
 @Injectable()
 export class FirebaseHelper
@@ -44,7 +45,7 @@ export class FirebaseHelper
     return this.auth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(r => {
-        this._addDataForUser(r.user.uid, {
+        this._addDataForUser({
           email : email,
           password : password
         },
@@ -124,6 +125,34 @@ export class FirebaseHelper
 
       return result;
     })
+  }
+
+  getUserWorks() {
+    
+    if (this._currentUser) {
+      let feedPromise : Promise<any> = 
+        this._getFeed(
+          FirebaseConstant.relationTableNames.userWork 
+          + '/' 
+          + this._currentUser.uid)
+        .then((data) => {
+          const entries = data.val() || {}
+          return entries;
+      })
+
+      return feedPromise.then(res => {
+
+        const worksId = Object.keys(res);
+        var result : Work[] = []
+        for (let i = 0; i < worksId.length; i++) {
+          var dbWork = <Work>res[worksId[i]]
+          result.push(dbWork)
+        }
+        return result;
+      })
+    } else {
+      return []
+    }    
   }
 
   /**

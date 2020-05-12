@@ -15,23 +15,14 @@ export class AccountManagerService {
     private _firbaseHelper : FirebaseHelper, 
     private _router: Router) { }
 
-    fectchMaterialsForCurrentUser() {      
-      return this._firbaseHelper.getMaterials()
+  saveMaterialForCurrentUser(materials: Material[]) {
+    for(const mat of materials){      
+      this._firbaseHelper._addDataForUser(
+        mat.map_to_db(),
+        FirebaseConstant.entityTableNames.material
+      )
     }
-
-    saveMaterialForCurrentUser(materials: Material[]) {
-      for(const mat of materials){      
-        this._firbaseHelper._addDataForUser(
-          mat.map_to_db(),
-          FirebaseConstant.entityTableNames.material
-        )
-      }
-    }    
-
-  getAssetUrl(assetUrl : string){
-    //take 1 so i don't need to unsubscribe
-    return this._firbaseHelper.getAssetSrc(assetUrl).pipe(take(1))
-  }
+  }    
   //lasciamo al chiamante il dovere di chiedere quelli di default o specifici per l'utente
   getMaterials(getDefault : boolean = false){
     return this._firbaseHelper.getMaterials(getDefault)
@@ -58,6 +49,15 @@ export class AccountManagerService {
     return this._firbaseHelper._addDataForUser(
           work,
           FirebaseConstant.relationTableNames.userWork)
+  }
+
+  fetchInternalUserWorks() {
+    return this._firbaseHelper.getUserWorks()
+  }
+
+  getAssetUrl(assetUrl : string){
+    //take 1 so i don't need to unsubscribe
+    return this._firbaseHelper.getAssetSrc(assetUrl).pipe(take(1))
   }
 
 }

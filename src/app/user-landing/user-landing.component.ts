@@ -12,12 +12,17 @@ import { WorkFactoryService } from '../core/services/work-factory.service';
 export class UserLandingComponent implements OnInit {
 
   workTypes : string[] = []
+  userWorks : Work[] = []
         
   constructor(
     private _accountService : AccountManagerService,
     private _workFactory : WorkFactoryService) { 
       
     this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
+
+    this._accountService
+      .fetchInternalUserWorks()
+      .then(res => this.userWorks = res)
   }
 
   ngOnInit() {

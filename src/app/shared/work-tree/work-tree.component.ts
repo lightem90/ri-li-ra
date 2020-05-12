@@ -16,7 +16,7 @@ import {NumberInput, TreeWorkFlatNode, TreeWorkNode, IWorkTreeService, IWorkFact
 export class WorkTreeComponent implements OnInit {  
 
     @Input() editAndSave : boolean = false
-    @Input() workTypes: string[]
+    @Input() workTypes: string[] = []
     @Input() workFactoryService: IWorkFactoryService
     @Output() recalculated = new EventEmitter<number>();
     @Output() saveRequest = new EventEmitter<TreeWorkNode>();
@@ -152,19 +152,16 @@ export class WorkTreeComponent implements OnInit {
     this._treeService.addWork(this.selectedWorkType.toString())
   }
 
-  canSaveNode(nodeFlat: TreeWorkFlatNode){    
-    return this.showInlineEdit(nodeFlat)
-      && !this.workTypes.some(w => w === nodeFlat.name)
+  canSaveNode(nodeFlat: TreeWorkFlatNode){   
+    const node = this.flatNodeMap.get(nodeFlat) 
+    const result = this.showInlineEdit(nodeFlat)
+      && !this.workTypes.some(w => w === node.name)
+    return result
   }
 
   showInlineEdit(nodeFlat: TreeWorkFlatNode){    
     return this.editAndSave 
       && nodeFlat.isWork 
-  }
-
-  getTreeNodeName(nodeFlat: TreeWorkFlatNode){
-
-    return this.flatNodeMap.get(nodeFlat).name
   }
 
 
