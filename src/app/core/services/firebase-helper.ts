@@ -127,7 +127,7 @@ export class FirebaseHelper
     })
   }
 
-  getUserWorks() {
+  getUserWorks(){
     
     if (this._currentUser) {
       let feedPromise : Promise<any> = 
@@ -148,10 +148,11 @@ export class FirebaseHelper
           var dbWork = <Work>res[worksId[i]]
           result.push(dbWork)
         }
+        console.log(result)
         return result;
       })
     } else {
-      return []
+      return new Promise<Work[]>((resolve) => resolve([]))
     }    
   }
 
@@ -193,4 +194,6 @@ export class FirebaseHelper
 
     return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
   }
+
+  
 }

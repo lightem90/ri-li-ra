@@ -13,16 +13,19 @@ export class UserLandingComponent implements OnInit {
 
   workTypes : string[] = []
   userWorks : Work[] = []
+  _userWorksLoaded : boolean = false
         
   constructor(
     private _accountService : AccountManagerService,
     private _workFactory : WorkFactoryService) { 
       
     this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
-
     this._accountService
       .fetchInternalUserWorks()
-      .then(res => this.userWorks = res)
+      .then(r => {
+        this.userWorks = r
+        this._userWorksLoaded = true
+      })
   }
 
   ngOnInit() {

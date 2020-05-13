@@ -405,16 +405,18 @@ export class WorkFactoryService implements IWorkFactoryService {
     
     const w = work as Work
     if (w === null) return null
-
+    
     //creo la struttura ad albero a seconda della lavorazione
     var result = this.createWork(w.originalWorkName)
-    for(const s of w.fasi){
-      const nodoFase = this.createStageForWork(w.originalWorkName, s.name)
-      result.children.push(nodoFase)
+    if (w.fasi) {
+      for(const s of w.fasi){
+        const nodoFase = this.createStageForWork(w.originalWorkName, s.name)
+        result.children.push(nodoFase)
+      }
     }
-
+    
     //mappo i dati di lavorazione e stages
-    w.mapTo(result)
+    Work.mapTo(w, result)
     return result
   }
 }

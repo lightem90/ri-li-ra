@@ -17,6 +17,7 @@ export class WorkTreeComponent implements OnInit {
 
     @Input() editAndSave : boolean = false
     @Input() workTypes: string[] = []
+    @Input() userWorks: any[] = []
     @Input() workFactoryService: IWorkFactoryService
     @Output() recalculated = new EventEmitter<number>();
     @Output() saveRequest = new EventEmitter<TreeWorkNode>();
@@ -76,6 +77,14 @@ export class WorkTreeComponent implements OnInit {
       this._treeService.dataChange.subscribe(data => {
         this.dataSource.data = data;
       });
+
+      for(let i = 0; i<this.userWorks.length; i++) {
+        const node = this.workFactoryService.createFromWork(this.userWorks[i])
+        if (node){
+          this._treeService.addNode(node)
+        }
+
+      }
     }
 
     /** Select the category so we can insert the new item. */

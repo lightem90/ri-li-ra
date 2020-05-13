@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {WorkType} from '../../core/domain/work'
-import {ThermalWorkType, SuperficialWorkType, ExternalWorkType} from '../../core/domain/external-works'
+import {ThermalWorkType, SuperficialWorkType, ExternalWorkType, WorkType} from '../../core/domain/work'
 import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {ExternalWorkFactoryService} from '../../core/services/externalwork-factory.service'

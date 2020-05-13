@@ -15,6 +15,31 @@ export enum WorkType {
   ControlloQualita
 }
 
+export enum ThermalWorkType {
+  Cementazione,
+  Carbonitrurazione,
+  Tempra
+}
+
+export enum SuperficialWorkType {
+  Verniciatura,
+  Anodizzazione,
+  AnodizzazioneDura,
+  Micropallinatura,
+  Sabbiatura,
+  Brunitura,
+  CromaturaEstetica,
+  CromaturaSpessore,
+  SuperLattice,
+  Zincatura
+}
+
+export enum ExternalWorkType {
+  Rettifica,
+  Piegatura,
+  TaglioLaser
+}
+
 export class WorkConstant { 
 
   //{ [key: string]: boolean}
@@ -79,44 +104,44 @@ export class Work {
   }
 
   //inizializza un TreeWorkNode con i dati della lavorazione, il tree work node deve essere già stato inizializzato
-  mapTo(node: TreeWorkNode) {
+  static mapTo(w: Work, node: TreeWorkNode) {
     if (node.isWork) {
-      node.originalWorkName = this.originalWorkName
-      node.name = this.name
-      node.totTime.value = this.tempo_totale
+      node.originalWorkName = w.originalWorkName
+      node.name = w.name
+      node.totTime.value = w.tempo_totale
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
       if (tmpD) {
-        tmpD.text = this.costo_orario.toFixed(2)
+        tmpD.text = w.costo_orario.toFixed(2)
       }
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
       if (tmp) {
-        tmp.value = this.costo_orario.toFixed(2)
+        tmp.value = w.costo_orario.toFixed(2)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.placement_time_id)
       if (tmp) {
-        tmp.value = this.tempo_piazzamento.toFixed(2)
+        tmp.value = w.tempo_piazzamento.toFixed(2)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.program_time_id)
       if (tmp) {
-        tmp.value = this.tempo_programma.toFixed(2)
+        tmp.value = w.tempo_programma.toFixed(2)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.tooling_time_id)
       if (tmp) {
-        this.tempo_attrezzaggio = tmp.value
+        w.tempo_attrezzaggio = tmp.value
       }
 
       const stages = node.children.filter(c => c.isStage)
       for (let index = 0; index < stages.length; index++) {                
         let workChild = node.children[index] 
-        let stage = this.fasi[index]
+        let stage = w.fasi[index]
         stage.mapTo(workChild)               
       }    
     }
-    return this
+    return w
   }
 
   //inizializza la lavorazione dal TreeWorkNode
-  mapFrom(node: TreeWorkNode) {    
+  public mapFrom(node: TreeWorkNode) {    
     if (node.isWork) {
       this.name = node.name
       this.originalWorkName = node.originalWorkName
@@ -169,7 +194,7 @@ export class Stage {
   }
 
   //inizializza un TreeWorkNode con i dati della lavorazione
-  mapTo(node: TreeWorkNode) {
+  public mapTo(node: TreeWorkNode) {
     if (node.isStage) {
 
       node.name = this.name
@@ -221,7 +246,7 @@ export class ExternalWork {
     public costo_totale : number = 0) {   }
 
   //inizializza la lavorazione dal TreeWorkNode
-  mapFrom(node: TreeWorkNode) {
+  public mapFrom(node: TreeWorkNode) {
 
     this.name = node.name
 
@@ -245,25 +270,27 @@ export class ExternalWork {
   }
   
   //inizializza un TreeWorkNode con i dati della lavorazione
-  mapTo(node: TreeWorkNode) {
-      node.name = this.name
+  static mapTo(w: ExternalWork, node: TreeWorkNode) {
+      node.name = w.name
 
       let tmpD = node.outputs.find(out => out.label === WorkConstant.ext_work.tot_price_id)
       if (tmpD) {
-        tmpD.text = this.costo_totale.toFixed(2)
+        tmpD.text = w.costo_totale.toFixed(2)
       }
       
       let tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.quantity_id)
       if (tmp) {
-        this.quantita = tmp.value
+        w.quantita = tmp.value
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.unitary_price_id)
       if (tmp) {
-        this.costo_unitario = tmp.value
+        w.costo_unitario = tmp.value
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.charge_perc_id)
       if (tmp) {
-        this.ricarico_percentuale = tmp.value
+        w.ricarico_percentuale = tmp.value
       }
+
+      return w
   }
 }

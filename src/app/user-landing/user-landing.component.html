@@ -8,7 +8,10 @@
   <p>{{'userwork' | translate}}  </p>
 
 
+  
   <app-work-tree
+    *ngIf="_userWorksLoaded"
+    [userWorks]="userWorks"
     [editAndSave]="true"
     [workTypes]="workTypes"
     [workFactoryService]="_workFactory"
