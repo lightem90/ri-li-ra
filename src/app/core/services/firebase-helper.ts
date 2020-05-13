@@ -148,7 +148,6 @@ export class FirebaseHelper
           var dbWork = res[worksId[i]]
           result.push(dbWork)
         }
-        console.log(result)
         return result;
       })
     } 

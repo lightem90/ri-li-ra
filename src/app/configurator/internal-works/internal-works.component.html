@@ -6,6 +6,8 @@
     </app-pdf-uploader>  
   </div>
   <app-work-tree
+    *ngIf="_userWorksLoaded"
+    [userWorks]="userWorks"
     [workTypes]="workTypes"
     [workFactoryService]="_workFactory"
     (recalculated)="updateBudget($event)"> 

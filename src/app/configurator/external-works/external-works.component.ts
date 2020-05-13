@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
+import { AccountManagerService } from '../../core/services/account-manager.service';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {ThermalWorkType, SuperficialWorkType, ExternalWorkType, WorkType} from '../../core/domain/work'
+import {ThermalWorkType, SuperficialWorkType, ExternalWorkType, WorkType, ExternalWork} from '../../core/domain/work'
 import {IWorkTreeService} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {ExternalWorkFactoryService} from '../../core/services/externalwork-factory.service'
@@ -30,15 +31,26 @@ export class ExternalWorksComponent implements OnInit {
   workSupTypes: string[]
   workExtTypes: string[]
 
+  userExtWorks : ExternalWork[] = []
+  _userExtWorksLoaded : boolean = false
+
   tot_lav_ext : DisabledInput
 
   constructor(
+    private _accountService : AccountManagerService,
     private _workFactory : ExternalWorkFactoryService,
     private _configuratorService : ConfiguratorService) { 
 
       this.workThermTypes = Object.values(ThermalWorkType).filter(x => typeof x === 'string')
       this.workSupTypes = Object.values(SuperficialWorkType).filter(x => typeof x === 'string')
       this.workExtTypes = Object.values(ExternalWorkType).filter(x => typeof x === 'string')
+
+      this._accountService
+        .fetchExternalUserWorks()
+        .then(r => {
+          this.userExtWorks = r
+          this._userExtWorksLoaded = true
+        })
     }
 
 

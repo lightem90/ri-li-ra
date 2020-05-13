@@ -15,8 +15,8 @@ export class UserLandingComponent implements OnInit {
   workTypes : string[] = []
   extWorkTypes : string[] = ["Personalizzato"]
   userWorks : Work[] = []
-  userExtWorks : ExternalWork[] = []
   _userWorksLoaded : boolean = false
+  userExtWorks : ExternalWork[] = []
   _userExtWorksLoaded : boolean = false
         
   constructor(

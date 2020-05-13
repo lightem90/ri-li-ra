@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {WorkType} from '../../core/domain/work'
+import {WorkType, Work} from '../../core/domain/work'
 
 import {WorkTreeService} from '../../core/services/work-tree.service'
 
@@ -170,10 +170,12 @@ export class WorkTreeComponent implements OnInit {
 
   addWork() {
     const selWork = this.selectedWorkType.toString()
-    const i = this.userWorks.find(w => w.name === selWork)
+    const uWork = this.userWorks.find(w => w.name === selWork)
     //se è una lavorazione custom creo il nodo dal relativo metodo
-    if (i !== -1) {      
-      const node = this.workFactoryService.createFromWork(this.userWorks[i])
+    const u = uWork as Work
+    if (u) {
+      console.log("Creating from user work: " + u)      
+      const node = this.workFactoryService.createFromWork(u)
       if (node){
         //crea il nodo dalla lavorazione dell'utente già definita
         this._treeService.addNode(node)
@@ -182,6 +184,7 @@ export class WorkTreeComponent implements OnInit {
         console.log("Impossibile creare la lavorazione: " + selWork)
       }
     }
+    console.log("Creating work: " + selWork)  
     //crea la lavorazione standard
     this._treeService.addWork(selWork)
   }
