@@ -9,7 +9,7 @@ import firebase from 'firebase';
 
 import { Material } from '../domain/material'
 import { FirebaseConstant } from './firebase-constant'
-import { Work } from '../domain/work';
+import { Work, ExternalWork } from '../domain/work';
 
 @Injectable()
 export class FirebaseHelper
@@ -154,6 +154,36 @@ export class FirebaseHelper
     } else {
       return new Promise<Work[]>((resolve) => resolve([]))
     }    
+  }
+
+  getUserServices() {
+
+    if (this._currentUser) {
+      let feedPromise : Promise<any> = 
+        this._getFeed(
+          FirebaseConstant.relationTableNames.userService 
+          + '/' 
+          + this._currentUser.uid)
+        .then((data) => {
+          const entries = data.val() || {}
+          return entries;
+      })
+
+      return feedPromise.then(res => {
+
+        const worksId = Object.keys(res);
+        var result : ExternalWork[] = []
+        for (let i = 0; i < worksId.length; i++) {
+          var dbWork = <ExternalWork>res[worksId[i]]
+          result.push(dbWork)
+        }
+        
+        return result;
+      })
+    } else {
+      return new Promise<ExternalWork[]>((resolve) => resolve([]))
+    }  
+
   }
 
   /**

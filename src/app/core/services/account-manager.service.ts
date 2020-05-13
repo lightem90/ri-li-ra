@@ -6,7 +6,7 @@ import { FirebaseConstant } from './firebase-constant'
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanActivateChild } from '@angular/router';
 
 import {Material} from '../domain/material'
-import { Work } from '../domain/work';
+import { Work, ExternalWork } from '../domain/work';
 
 @Injectable()
 export class AccountManagerService {
@@ -51,8 +51,19 @@ export class AccountManagerService {
           FirebaseConstant.relationTableNames.userWork)
   }
 
+  saveExternalWorkForUser(extWork : ExternalWork) {
+    return this._firbaseHelper._addDataForUser(
+          extWork,
+          FirebaseConstant.relationTableNames.userService)
+
+  }
+
   fetchInternalUserWorks() {
     return this._firbaseHelper.getUserWorks()
+  }
+
+  fetchExternalUserWorks() {
+    return this._firbaseHelper.getUserServices()
   }
 
   getAssetUrl(assetUrl : string){

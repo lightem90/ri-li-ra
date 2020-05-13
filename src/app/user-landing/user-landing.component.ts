@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeWorkNode } from '../core/domain/common';
-import {WorkType, Work} from '../core/domain/work'
+import {WorkType, Work, ExternalWork} from '../core/domain/work'
 import { AccountManagerService } from '../core/services/account-manager.service';
 import { WorkFactoryService } from '../core/services/work-factory.service';
+import { ExternalWorkFactoryService } from '../core/services/externalwork-factory.service';
 
 @Component({
   selector: 'app-user-landing',
@@ -12,12 +13,16 @@ import { WorkFactoryService } from '../core/services/work-factory.service';
 export class UserLandingComponent implements OnInit {
 
   workTypes : string[] = []
+  extWorkTypes : string[] = ["Personalizzato"]
   userWorks : Work[] = []
+  userExtWorks : ExternalWork[] = []
   _userWorksLoaded : boolean = false
+  _userExtWorksLoaded : boolean = false
         
   constructor(
     private _accountService : AccountManagerService,
-    private _workFactory : WorkFactoryService) { 
+    private _workFactory : WorkFactoryService,
+    private _extWorkFactory : ExternalWorkFactoryService) { 
       
     this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
     this._accountService
@@ -25,6 +30,12 @@ export class UserLandingComponent implements OnInit {
       .then(r => {
         this.userWorks = r
         this._userWorksLoaded = true
+      })
+    this._accountService
+      .fetchExternalUserWorks()
+      .then(r => {
+        this.userExtWorks = r
+        this._userExtWorksLoaded = true
       })
   }
 
@@ -37,6 +48,13 @@ export class UserLandingComponent implements OnInit {
     work.mapFrom(workNodeToSave)
 
     this._accountService.saveWorkForUser(work).then(res => console.log(res))
+  }
+
+  saveExtWorkForUser(workNodeToSave: TreeWorkNode){
+    let work = new ExternalWork()
+    work.mapFrom(workNodeToSave)
+
+    this._accountService.saveExternalWorkForUser(work).then(res => console.log(res))
   }
 
 }

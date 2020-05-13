@@ -18,6 +18,15 @@
     (saveRequest)="saveWorkForUser($event)">
   </app-work-tree>  
 
+  <app-work-tree
+    *ngIf="_userExtWorksLoaded"
+    [userWorks]="userExtWorks"
+    [editAndSave]="true"
+    [workTypes]="extWorkTypes"
+    [workFactoryService]="_extWorkFactory"
+    (saveRequest)="saveExtWorkForUser($event)">
+  </app-work-tree>  
+
 
   
   <p>{{'userserv' | translate}}  </p>

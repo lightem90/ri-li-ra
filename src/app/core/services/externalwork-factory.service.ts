@@ -86,7 +86,7 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     var result = this._createExternalWorkNode(w.name)
 
     //mappo i dati di lavorazione e stages
-    w.mapTo(result)
+    ExternalWork.mapTo(w, result)
     return result
   }
 }
