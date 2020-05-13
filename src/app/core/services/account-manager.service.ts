@@ -66,6 +66,16 @@ export class AccountManagerService {
     return this._firbaseHelper.getUserServices()
   }
 
+  deleteUserWork(workId : string) {
+    this._firbaseHelper
+      .deleteEntryForUser(FirebaseConstant.relationTableNames.userWork, workId)
+  }
+
+  deleteUserService(extworkId : string) {
+    this._firbaseHelper
+      .deleteEntryForUser(FirebaseConstant.relationTableNames.userService, extworkId)
+  }
+
   getAssetUrl(assetUrl : string){
     //take 1 so i don't need to unsubscribe
     return this._firbaseHelper.getAssetSrc(assetUrl).pipe(take(1))

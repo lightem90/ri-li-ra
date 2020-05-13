@@ -21,6 +21,7 @@ export class WorkTreeComponent implements OnInit {
     @Input() workFactoryService: IWorkFactoryService
     @Output() recalculated = new EventEmitter<number>();
     @Output() saveRequest = new EventEmitter<TreeWorkNode>();
+    @Output() deleteRequest = new EventEmitter<TreeWorkNode>();
     
 
     selectedWorkType : string = null
@@ -78,12 +79,20 @@ export class WorkTreeComponent implements OnInit {
         this.dataSource.data = data;
       });
 
-      for(let i = 0; i<this.userWorks.length; i++) {
-        const node = this.workFactoryService.createFromWork(this.userWorks[i])
-        if (node){
-          this._treeService.addNode(node)
+      //li aggiungo come nodi all'albero solo se li posso salvare (nella landing utente)
+      if (this.editAndSave) {
+        for(let i = 0; i<this.userWorks.length; i++) {
+          const node = this.workFactoryService.createFromWork(this.userWorks[i])
+          if (node){
+            this._treeService.addNode(node)
+          }
         }
-
+      } else {
+        //nel configuratore invece li aggiungo come possibilità del combobox
+        
+        for(let i = 0; i<this.userWorks.length; i++) { 
+          this.workTypes.push(this.userWorks[i].name)
+        }
       }
     }
 
@@ -154,11 +163,27 @@ export class WorkTreeComponent implements OnInit {
     if (this._treeService.deleteNode(node, parentNode)) {
       this.flatNodeMap.delete(nodeFlat)
       this.nestedNodeMap.delete(node)
+      //evento per la cancellazione dal db (dove serve)
+      this.deleteRequest.emit(node)
     }
   }
 
   addWork() {
-    this._treeService.addWork(this.selectedWorkType.toString())
+    const selWork = this.selectedWorkType.toString()
+    const i = this.userWorks.find(w => w.name === selWork)
+    //se è una lavorazione custom creo il nodo dal relativo metodo
+    if (i !== -1) {      
+      const node = this.workFactoryService.createFromWork(this.userWorks[i])
+      if (node){
+        //crea il nodo dalla lavorazione dell'utente già definita
+        this._treeService.addNode(node)
+        return
+      } else {
+        console.log("Impossibile creare la lavorazione: " + selWork)
+      }
+    }
+    //crea la lavorazione standard
+    this._treeService.addWork(selWork)
   }
 
   canSaveNode(nodeFlat: TreeWorkFlatNode){   

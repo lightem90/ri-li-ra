@@ -57,4 +57,20 @@ export class UserLandingComponent implements OnInit {
     this._accountService.saveExternalWorkForUser(work).then(res => console.log(res))
   }
 
+  removeExtWorkForUser(workNodeToRemove: TreeWorkNode) {
+    const s = this.userExtWorks.find(w => w.name === workNodeToRemove.name)
+    if (s !== null){
+      console.log("deleting: " + s)
+      this._accountService.deleteUserService(s.uid)
+    }
+  }
+
+  removeWorkForUser(workNodeToRemove: TreeWorkNode) {
+    const w = this.userWorks.find(w => w.name === workNodeToRemove.name)
+    if (w !== null){
+      console.log("deleting: " + w)
+       this._accountService.deleteUserWork(w.uid)
+    }
+  }
+
 }

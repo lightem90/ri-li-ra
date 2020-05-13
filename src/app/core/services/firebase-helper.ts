@@ -145,15 +145,15 @@ export class FirebaseHelper
         const worksId = Object.keys(res);
         var result : Work[] = []
         for (let i = 0; i < worksId.length; i++) {
-          var dbWork = <Work>res[worksId[i]]
+          var dbWork = res[worksId[i]]
           result.push(dbWork)
         }
         console.log(result)
         return result;
       })
-    } else {
-      return new Promise<Work[]>((resolve) => resolve([]))
-    }    
+    } 
+    
+    return new Promise<Work[]>(resolve => resolve([]))
   }
 
   getUserServices() {
@@ -174,16 +174,24 @@ export class FirebaseHelper
         const worksId = Object.keys(res);
         var result : ExternalWork[] = []
         for (let i = 0; i < worksId.length; i++) {
-          var dbWork = <ExternalWork>res[worksId[i]]
+          var dbWork = res[worksId[i]]
           result.push(dbWork)
         }
-        
+
         return result;
       })
-    } else {
-      return new Promise<ExternalWork[]>((resolve) => resolve([]))
-    }  
+    } 
+    return new Promise<ExternalWork[]>(resolve => resolve([]))    
+  }
 
+  deleteEntryForUser(tableName : string, entryId : string) {
+    this.database.database
+      .ref(tableName 
+          + '/' 
+          + this._currentUser.uid 
+          + '/'
+          + entryId)
+      .remove()
   }
 
   /**
@@ -223,7 +231,5 @@ export class FirebaseHelper
     dataToAdd.uid = newDataKey;
 
     return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
-  }
-
-  
+  }  
 }

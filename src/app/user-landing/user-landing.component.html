@@ -15,7 +15,8 @@
     [editAndSave]="true"
     [workTypes]="workTypes"
     [workFactoryService]="_workFactory"
-    (saveRequest)="saveWorkForUser($event)">
+    (saveRequest)="saveWorkForUser($event)"
+    (deleteRequest)="removeWorkForUser($event)">
   </app-work-tree>  
 
   <app-work-tree
@@ -24,7 +25,8 @@
     [editAndSave]="true"
     [workTypes]="extWorkTypes"
     [workFactoryService]="_extWorkFactory"
-    (saveRequest)="saveExtWorkForUser($event)">
+    (saveRequest)="saveExtWorkForUser($event)"
+    (deleteRequest)="removeExtWorkForUser($event)">
   </app-work-tree>  
 
 
