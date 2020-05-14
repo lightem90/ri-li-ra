@@ -24,6 +24,15 @@
     <br>
   </div>
   <div>    
+    <app-work-tree
+      *ngIf="_userExtWorksLoaded"
+      [workTypes]="userExtTypes"
+      [workFactoryService]="_workFactory"
+      (recalculated)="updateTreeFour($event)">
+    </app-work-tree>  
+    <br>
+  </div>
+  <div>    
     <app-disabled-input [input]="tot_lav_ext"> </app-disabled-input> 
   </div>
 </div>

@@ -26,11 +26,13 @@ export class ExternalWorksComponent implements OnInit {
   sumThreeOne = 0
   sumThreeTwo = 0
   sumThreeThree = 0
+  sumThreeFour = 0
   
   workThermTypes: string[]
   workSupTypes: string[]
   workExtTypes: string[]
 
+  userExtTypes: string[]
   userExtWorks : ExternalWork[] = []
   _userExtWorksLoaded : boolean = false
 
@@ -49,6 +51,7 @@ export class ExternalWorksComponent implements OnInit {
         .fetchExternalUserWorks()
         .then(r => {
           this.userExtWorks = r
+          this.userExtTypes = r.map(w => w.name)
           this._userExtWorksLoaded = true
         })
     }
@@ -73,8 +76,18 @@ export class ExternalWorksComponent implements OnInit {
       this.recalcAll()
     }
 
+    updateTreeFour(sumOfWorks : number){
+      this.sumThreeFour = sumOfWorks
+      this.recalcAll()
+    }
+
     recalcAll() {
-      this.tot_lav_ext.text = (this.sumThreeOne + this.sumThreeTwo + this.sumThreeThree).toFixed(2)
+      this.tot_lav_ext.text = (this.sumThreeOne 
+        + this.sumThreeTwo 
+        + this.sumThreeThree
+        + this.sumThreeFour)
+          .toFixed(2)
+      
       this._configuratorService.calculateBudget()
     }
 
