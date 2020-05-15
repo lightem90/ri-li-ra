@@ -172,7 +172,7 @@ export class WorkTreeComponent implements OnInit {
     const selWork = this.selectedWorkType.toString()
     const uWork = this.userWorks.find(w => w.name === selWork)
     //se è una lavorazione custom creo il nodo dal relativo metodo
-    const u = uWork as Work
+    const u = uWork as Work    
     if (u) {
       console.log("Creating from user work: " + u)      
       const node = this.workFactoryService.createFromWork(u)

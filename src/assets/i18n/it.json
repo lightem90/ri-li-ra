@@ -44,7 +44,7 @@
   "TotGain" : "Guadagno",
   "PrezzoCostoAlPz" : "Costo totale singolo pezzo",
   "TotAlPzExtAlPz" : "Costo singolo pezzo e lavorazioni esterne",
-  "addWork" : "Aggiungi lavorazione interna",
+  "addWork" : "Aggiungi",
   "workTypeSel": "Lavorazioni disponibili",
   "addStage" : "Nuova fase di lavorazione",
   "wTPiaz" : "Tempo di piazzamento",

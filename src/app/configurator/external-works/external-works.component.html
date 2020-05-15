@@ -26,6 +26,7 @@
   <div>    
     <app-work-tree
       *ngIf="_userExtWorksLoaded"
+      [userWorks]="userExtWorks"
       [workTypes]="userExtTypes"
       [workFactoryService]="_workFactory"
       (recalculated)="updateTreeFour($event)">

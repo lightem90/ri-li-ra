@@ -280,15 +280,15 @@ export class ExternalWork {
       
       let tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.quantity_id)
       if (tmp) {
-        w.quantita = tmp.value
+        tmp.value = w.quantita
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.unitary_price_id)
       if (tmp) {
-        w.costo_unitario = tmp.value
+        tmp.value = w.costo_unitario
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.charge_perc_id)
       if (tmp) {
-        w.ricarico_percentuale = tmp.value
+        tmp.value = w.ricarico_percentuale
       }
 
       return w
