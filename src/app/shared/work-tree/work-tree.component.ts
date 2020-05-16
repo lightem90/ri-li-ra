@@ -22,6 +22,7 @@ export class WorkTreeComponent implements OnInit {
     @Output() recalculated = new EventEmitter<number>();
     @Output() saveRequest = new EventEmitter<TreeWorkNode>();
     @Output() deleteRequest = new EventEmitter<TreeWorkNode>();
+    @Output() dataChanged = new EventEmitter<TreeWorkNode[]>();
     
 
     selectedWorkType : string = null
@@ -77,6 +78,7 @@ export class WorkTreeComponent implements OnInit {
       this._treeService = new WorkTreeService(this.workFactoryService)
       this._treeService.dataChange.subscribe(data => {
         this.dataSource.data = data;
+        this.dataChanged.emit(data)
       });
 
       //li aggiungo come nodi all'albero solo se li posso salvare (nella landing utente)
@@ -173,8 +175,7 @@ export class WorkTreeComponent implements OnInit {
     const uWork = this.userWorks.find(w => w.name === selWork)
     //se è una lavorazione custom creo il nodo dal relativo metodo
     const u = uWork as Work    
-    if (u) {
-      console.log("Creating from user work: " + u)      
+    if (u) {  
       const node = this.workFactoryService.createFromWork(u)
       if (node){
         //crea il nodo dalla lavorazione dell'utente già definita
@@ -184,7 +185,7 @@ export class WorkTreeComponent implements OnInit {
         console.log("Impossibile creare la lavorazione: " + selWork)
       }
     }
-    console.log("Creating work: " + selWork)  
+    
     //crea la lavorazione standard
     this._treeService.addWork(selWork)
   }

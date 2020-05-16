@@ -3,6 +3,7 @@
     <app-work-tree
     [workTypes]="workThermTypes"
     [workFactoryService]="_workFactory"
+    (dataChanged)="updateThermalWorks($event)"
     (recalculated)="updateTreeOne($event)"> 
     </app-work-tree>
     <br>
@@ -11,6 +12,7 @@
     <app-work-tree
     [workTypes]="workSupTypes"
     [workFactoryService]="_workFactory"
+    (dataChanged)="updateSupWorks($event)"
     (recalculated)="updateTreeTwo($event)"> 
     </app-work-tree>
     <br>
@@ -19,6 +21,7 @@
     <app-work-tree
     [workTypes]="workExtTypes"
     [workFactoryService]="_workFactory"
+    (dataChanged)="updateExtWorks($event)"
     (recalculated)="updateTreeThree($event)"> 
     </app-work-tree>
     <br>
@@ -29,6 +32,7 @@
       [userWorks]="userExtWorks"
       [workTypes]="userExtTypes"
       [workFactoryService]="_workFactory"
+      (dataChanged)="updateServWorks($event)"
       (recalculated)="updateTreeFour($event)">
     </app-work-tree>  
     <br>

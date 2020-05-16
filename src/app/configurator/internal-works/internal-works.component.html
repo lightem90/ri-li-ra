@@ -10,6 +10,7 @@
     [userWorks]="userWorks"
     [workTypes]="workTypes"
     [workFactoryService]="_workFactory"
+    (dataChanged)="updateInternalWorks($event)"
     (recalculated)="updateBudget($event)"> 
   </app-work-tree>  
   <br>

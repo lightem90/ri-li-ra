@@ -4,7 +4,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { AccountManagerService } from '../../core/services/account-manager.service';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {ThermalWorkType, SuperficialWorkType, ExternalWorkType, WorkType, ExternalWork} from '../../core/domain/work'
-import {IWorkTreeService} from '../../core/domain/common'
+import {IWorkTreeService, TreeWorkNode} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {ExternalWorkFactoryService} from '../../core/services/externalwork-factory.service'
 
@@ -22,6 +22,11 @@ export class ExternalWorksComponent implements OnInit {
   public treeServiceThermal: WorkTreeService
   public treeServiceSuperficial: WorkTreeService
   public treeServiceExternal: WorkTreeService
+
+  thermalWorks : ExternalWork[] = []
+  extWorks : ExternalWork[] = []
+  supWorks : ExternalWork[] = []
+  customWorks : ExternalWork[] = []
 
   sumThreeOne = 0
   sumThreeTwo = 0
@@ -89,6 +94,35 @@ export class ExternalWorksComponent implements OnInit {
           .toFixed(2)
       
       this._configuratorService.calculateBudget()
+    }
+
+    updateThermalWorks(workNodes : TreeWorkNode[]) {
+      this.thermalWorks = workNodes.map(w => new ExternalWork().mapFrom(w))
+      this.updateExternalWorks()
+    }
+
+    updateSupWorks(workNodes : TreeWorkNode[]) {
+      this.supWorks = workNodes.map(w => new ExternalWork().mapFrom(w))
+      this.updateExternalWorks()
+    }
+
+    updateExtWorks(workNodes : TreeWorkNode[]) {
+      this.extWorks = workNodes.map(w => new ExternalWork().mapFrom(w))
+      this.updateExternalWorks()
+    }
+
+    updateServWorks(workNodes : TreeWorkNode[]) {      
+      this.customWorks = workNodes.map(w => new ExternalWork().mapFrom(w))
+      this.updateExternalWorks()
+    }
+
+    updateExternalWorks() {
+
+      this._configuratorService
+        .setExternalWorks(this.thermalWorks
+          .concat(this.supWorks)
+          .concat(this.extWorks)
+          .concat(this.customWorks))
     }
 
 }

@@ -115,15 +115,15 @@ export class Work {
       }
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
       if (tmp) {
-        tmp.value = w.costo_orario.toFixed(2)
+        tmp.text = w.costo_orario.toFixed(2)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.placement_time_id)
       if (tmp) {
-        tmp.value = w.tempo_piazzamento.toFixed(2)
+        tmp.text = w.tempo_piazzamento.toFixed(2)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.program_time_id)
       if (tmp) {
-        tmp.value = w.tempo_programma.toFixed(2)
+        tmp.text = w.tempo_programma.toFixed(2)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.tooling_time_id)
       if (tmp) {
@@ -141,7 +141,7 @@ export class Work {
   }
 
   //inizializza la lavorazione dal TreeWorkNode
-  public mapFrom(node: TreeWorkNode) {    
+  public mapFrom(node: TreeWorkNode) : Work {    
     if (node.isWork) {
       this.name = node.name
       this.originalWorkName = node.originalWorkName
@@ -189,12 +189,12 @@ export class Stage {
   constructor(
     public uid : string = "",
     public name : string = "",
-    public property_bag : {[key: string]: number}) {
+    public property_bag : {[key: string]: number} = null) {
       this.property_bag = {}     
   }
 
   //inizializza un TreeWorkNode con i dati della lavorazione
-  public mapTo(node: TreeWorkNode) {
+  public mapTo(node: TreeWorkNode) : Stage {
     if (node.isStage) {
 
       node.name = this.name
@@ -215,7 +215,7 @@ export class Stage {
   }
 
   //inizializza la lavorazione dal TreeWorkNode
-  mapFrom(node: TreeWorkNode) {
+  mapFrom(node: TreeWorkNode) : Stage {
     if (node.isStage) {
       this.name = node.name
 
@@ -232,7 +232,9 @@ export class Stage {
           this.property_bag[i] = +(validOut.text)
         }
       }
-    }    
+    }
+
+    return this;    
   }
 }
 
@@ -246,7 +248,7 @@ export class ExternalWork {
     public costo_totale : number = 0) {   }
 
   //inizializza la lavorazione dal TreeWorkNode
-  public mapFrom(node: TreeWorkNode) {
+  public mapFrom(node: TreeWorkNode) : ExternalWork {
 
     this.name = node.name
 
@@ -267,10 +269,12 @@ export class ExternalWork {
     if (otmp){
       this.costo_totale = +(otmp.text)
     }
+
+    return this;
   }
   
   //inizializza un TreeWorkNode con i dati della lavorazione
-  static mapTo(w: ExternalWork, node: TreeWorkNode) {
+  static mapTo(w: ExternalWork, node: TreeWorkNode) : ExternalWork{
       node.name = w.name
 
       let tmpD = node.outputs.find(out => out.label === WorkConstant.ext_work.tot_price_id)

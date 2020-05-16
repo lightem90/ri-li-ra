@@ -3,7 +3,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {WorkType, Work} from '../../core/domain/work'
-import {IWorkTreeService} from '../../core/domain/common'
+import {IWorkTreeService, TreeWorkNode} from '../../core/domain/common'
 import {WorkTreeService} from '../../core/services/work-tree.service'
 import {WorkFactoryService} from '../../core/services/work-factory.service'
 
@@ -57,6 +57,12 @@ export class InternalWorksComponent implements OnInit {
       var sumNoCharge = +this.tot_lav_int.text
       this.tot_lav_int_charge.text = (sumNoCharge * (100+this.charge.value)/100).toFixed(2)
       this._configuratorService.calculateBudget()
+    }
+
+    updateInternalWorks(workNodes: TreeWorkNode[]) {
+      //mettere una mappa se serve
+      this._configuratorService.setInternalWorks(
+        workNodes.map(n => new Work().mapFrom(n)))
     }
 
 }

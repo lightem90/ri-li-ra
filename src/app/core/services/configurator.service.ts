@@ -9,12 +9,16 @@ import { BudgetCalculatorService } from './budget-calculator.service'
 import { Material } from '../domain/material';
 import { NumberInput } from '../domain/common';
 import { Shape } from '../../core/domain/piece'
+import { Work, ExternalWork } from '../domain/work';
 
 @Injectable()
 export class ConfiguratorService implements CanActivate {
 
   calculatorService : BudgetCalculatorService
   currentSession : Budget = null
+
+  internalWorks : Work[] = []
+  externalWorks : ExternalWork[] = []
 
   constructor(
     private firbaseHelper : FirebaseHelper, 
@@ -124,6 +128,14 @@ export class ConfiguratorService implements CanActivate {
       this.currentSession.recap_tot.text = (ricavo+gain).toFixed(2)
       this.currentSession.recap_tot_gain.text = (gain).toFixed(2)
     }
+  }
+
+  setInternalWorks(works: Work[]){
+    this.internalWorks = works
+  }
+
+  setExternalWorks(extWorks: ExternalWork[]){
+    this.externalWorks = extWorks
   }
 
 

@@ -11,7 +11,7 @@ export class WorkTreeService{
 
   dataChange = new BehaviorSubject<TreeWorkNode[]>([]);
 
-  get data(): TreeWorkNode[] { return this.dataChange.value; }
+  public get data(): TreeWorkNode[] { return this.dataChange.value; }
 
   constructor(private _workFactory : IWorkFactoryService) { }
 
