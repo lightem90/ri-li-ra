@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { take } from 'rxjs/operators';
 
 import { FirebaseHelper } from './firebase-helper'
@@ -11,9 +11,52 @@ import { Work, ExternalWork } from '../domain/work';
 @Injectable()
 export class AccountManagerService {
 
+  worksChanged : EventEmitter<Work[]> = new EventEmitter<Work[]>()
+  servicesChanged : EventEmitter<ExternalWork[]> = new EventEmitter<ExternalWork[]>()
+  materialsChanged : EventEmitter<Material[]> = new EventEmitter<Material[]>()
+
+  userWorks : Work[] = []
+  userServices : ExternalWork[] = []
+  userMaterial : Material[] = []
+
   constructor(
     private _firbaseHelper : FirebaseHelper, 
-    private _router: Router) { }
+    private _router: Router) {
+
+    this._subscribeToListChanges(
+      FirebaseConstant.relationTableNames.userWork,
+      this.userWorks,
+      this.worksChanged)
+
+        
+    this._subscribeToListChanges(
+      FirebaseConstant.relationTableNames.userService,
+      this.userServices,
+      this.servicesChanged)
+
+      
+    this._subscribeToListChanges(
+      FirebaseConstant.relationTableNames.userMaterial,
+      this.userMaterial,
+      this.materialsChanged)
+  }
+
+  _subscribeToListChanges(name : string, list, event){
+
+      this._firbaseHelper
+        .subscribeToListChanges(name,
+        (itemAdd) => {
+          list.push(itemAdd)
+          event.emit(list.slice())
+        }, 
+        (itemDel) => {
+          const index = list.findIndex(w => w.uid === itemDel.uid)
+          if (index !== -1) {
+            list = list.splice(index, 1)
+            event.emit(list.slice())
+          }
+      })
+  }
 
   saveMaterialForCurrentUser(materials: Material[]) {
     for(const mat of materials){      
@@ -37,6 +80,7 @@ export class AccountManagerService {
                 }
             })
           })  
+          this.userMaterial = res.slice()
           return res   
         } else {
           console.log('Error fetching default materials')
@@ -81,11 +125,15 @@ export class AccountManagerService {
 
 
   fetchInternalUserWorks() {
-    return this._firbaseHelper.getUserWorks()
+    return this._firbaseHelper
+      .getUserWorks()
+      .then(res => this.userWorks = res.slice())
   }
 
   fetchExternalUserWorks() {
-    return this._firbaseHelper.getUserServices()
+    return this._firbaseHelper
+      .getUserServices()
+      .then(res => this.userServices = res.slice())
   }
 
   deleteUserWork(workId : string) {

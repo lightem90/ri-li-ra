@@ -39,6 +39,11 @@ export class InternalWorksComponent implements OnInit {
         this.userWorks = r
         this._userWorksLoaded = true
       })
+
+      this._accountService.worksChanged.subscribe(works => {
+        this.userWorks = works
+        console.log(work)
+      })
     }
 
 

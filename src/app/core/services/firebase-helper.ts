@@ -156,34 +156,38 @@ export class FirebaseHelper
   }
 
   registerToChange(tableName, uid, callback) {
-    const ref =
-        this.database.database.ref(
-          `/${tableName}
-          /${this._currentUser.uid}
-          /${uid}`);
-    ref.on('value', callback);
-    this.firebaseRefs.push(ref);
+    if (this._currentUser.uid) {
+      const ref =
+          this.database.database.ref(
+            `/${tableName}
+            /${this._currentUser.uid}
+            /${uid}`);
+      ref.on('value', callback);
+      this.firebaseRefs.push(ref);
+    }
   }
 
   subscribeToListChanges(tableName, callbackAdd, callbackDel) {
-    // Load all posts information.
-    let feedRef = this.database.database.ref(
-      `/${tableName}
-       /${this._currentUser.uid}`)       
+    if (this._currentUser) {
+      // Load all posts information.
+      let feedRef = this.database.database.ref(
+        `/${tableName}
+        /${this._currentUser.uid}`)       
 
-    feedRef.on('child_added', (feedData) => { 
-      callbackAdd(feedData.val());
-    })  
+      feedRef.on('child_added', (feedData) => { 
+        callbackAdd(feedData.val());
+      })  
 
-    feedRef.on('child_added', (feedData) => { 
+      feedRef.on('child_removed', (feedData) => { 
 
-      callbackDel(feedData.val());
+        callbackDel(feedData.val());
 
-      this.database.database.ref(
-      `/${tableName}
-       /${this._currentUser.uid}
-       /${feedData.key}`).off();
-    })    
+        this.database.database.ref(
+        `/${tableName}
+        /${this._currentUser.uid}
+        /${feedData.key}`).off();
+      })    
+    }    
   }
 
   getUserServices() {
