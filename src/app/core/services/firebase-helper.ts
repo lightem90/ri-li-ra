@@ -155,6 +155,37 @@ export class FirebaseHelper
     return new Promise<Work[]>(resolve => resolve([]))
   }
 
+  registerToChange(tableName, uid, callback) {
+    const ref =
+        this.database.database.ref(
+          `/${tableName}
+          /${this._currentUser.uid}
+          /${uid}`);
+    ref.on('value', callback);
+    this.firebaseRefs.push(ref);
+  }
+
+  subscribeToListChanges(tableName, callbackAdd, callbackDel) {
+    // Load all posts information.
+    let feedRef = this.database.database.ref(
+      `/${tableName}
+       /${this._currentUser.uid}`)       
+
+    feedRef.on('child_added', (feedData) => { 
+      callbackAdd(feedData.val());
+    })  
+
+    feedRef.on('child_added', (feedData) => { 
+
+      callbackDel(feedData.val());
+
+      this.database.database.ref(
+      `/${tableName}
+       /${this._currentUser.uid}
+       /${feedData.key}`).off();
+    })    
+  }
+
   getUserServices() {
 
     if (this._currentUser) {

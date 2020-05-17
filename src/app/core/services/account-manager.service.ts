@@ -57,6 +57,28 @@ export class AccountManagerService {
           FirebaseConstant.relationTableNames.userService)
 
   }
+  
+  registerToWorkChange(work: Work, callback) {
+    this._firbaseHelper.registerToChange(
+      FirebaseConstant.relationTableNames.userWork,
+      work.uid,
+      callback)
+  }
+
+  registerToServiceChange(serv: ExternalWork, callback) {
+    this._firbaseHelper.registerToChange(
+      FirebaseConstant.relationTableNames.userService,
+      serv.uid,
+      callback)
+  }
+
+  registerToMaterialChange(material: Material, callback) {
+    this._firbaseHelper.registerToChange(
+      FirebaseConstant.relationTableNames.userMaterial,
+      material.uid,
+      callback)
+  }
+
 
   fetchInternalUserWorks() {
     return this._firbaseHelper.getUserWorks()
