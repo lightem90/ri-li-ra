@@ -130,7 +130,7 @@ export class Work {
         w.tempo_attrezzaggio = tmp.value
       }
 
-      const stages = node.children.filter(c => c.isStage)
+      const stages = node.children.filter(c => c.isStage && c.name !== "")
       for (let index = 0; index < stages.length; index++) {                
         let workChild = node.children[index] 
         let stage = w.fasi[index]

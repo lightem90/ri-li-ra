@@ -27,7 +27,6 @@ export class AccountManagerService implements CanActivate {
     private _firbaseHelper : FirebaseHelper, 
     private _router: Router) {
 
-    console.log("Account manager service ctor")
     this._subscribeToListChanges(
       FirebaseConstant.relationTableNames.userWork,
       this.userWorks,
@@ -162,7 +161,7 @@ export class AccountManagerService implements CanActivate {
       : Observable<boolean> | Promise<boolean> | boolean {
 
       if (this._accountService.userIsLogged()) return true
-      
+
       this._router.navigate(['login'])
       return false
   }

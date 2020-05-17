@@ -43,7 +43,6 @@ export class AccountService implements CanActivate {
     state: RouterStateSnapshot)
       : Observable<boolean> | Promise<boolean> | boolean {
       
-      console.log(this.token)
       if (this.token) {
         this._router.navigate(['user'])        
         return false
