@@ -42,7 +42,18 @@ export class AccountService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot)
       : Observable<boolean> | Promise<boolean> | boolean {
-        return this.token !== null
-    }
+      
+      console.log(this.token)
+      if (this.token) {
+        this._router.navigate(['user'])        
+        return false
+      }
+      
+      return true
+  }
+
+  userIsLogged() {
+    return this.token
+  }
 
 }

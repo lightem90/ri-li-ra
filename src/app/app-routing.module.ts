@@ -15,16 +15,19 @@ import { AppComponent } from './app.component'
 import { ConfiguratorService } from './core/services/configurator.service'
 import { canActivate } from '@angular/fire/auth-guard';
 import { AccountService } from './core/services/account.service';
+import { AccountManagerService } from './core/services/account-manager.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', 
+    canActivate: [AccountService],
+    component: LoginComponent },
   { path: 'register', component: RegisterComponent },  
   { path: 'not-found', component: NotFoundComponent},
   { path: 'about', component: AboutComponent},
   { path: 'contacts', component: ContactsComponent},
   { path: 'faq', component: FaqComponent},
   { path: 'user', 
-    canActivate: [AccountService],
+    canActivate: [AccountManagerService],
     component: UserLandingComponent},  
   { path: 'configurator', 
     canActivate: [ConfiguratorService],

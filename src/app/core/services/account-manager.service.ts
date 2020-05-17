@@ -1,4 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
+
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { FirebaseHelper } from './firebase-helper'
@@ -7,9 +9,10 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router, CanAc
 
 import {Material} from '../domain/material'
 import { Work, ExternalWork } from '../domain/work';
+import { AccountService } from './account.service';
 
 @Injectable()
-export class AccountManagerService {
+export class AccountManagerService implements CanActivate {
 
   worksChanged : EventEmitter<Work[]> = new EventEmitter<Work[]>()
   servicesChanged : EventEmitter<ExternalWork[]> = new EventEmitter<ExternalWork[]>()
@@ -20,9 +23,11 @@ export class AccountManagerService {
   userMaterial : Material[] = []
 
   constructor(
+    private _accountService : AccountService,
     private _firbaseHelper : FirebaseHelper, 
     private _router: Router) {
 
+    console.log("Account manager service ctor")
     this._subscribeToListChanges(
       FirebaseConstant.relationTableNames.userWork,
       this.userWorks,
@@ -149,6 +154,17 @@ export class AccountManagerService {
   getAssetUrl(assetUrl : string){
     //take 1 so i don't need to unsubscribe
     return this._firbaseHelper.getAssetSrc(assetUrl).pipe(take(1))
+  }
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot)
+      : Observable<boolean> | Promise<boolean> | boolean {
+
+      if (this._accountService.userIsLogged()) return true
+      
+      this._router.navigate(['login'])
+      return false
   }
 
 }

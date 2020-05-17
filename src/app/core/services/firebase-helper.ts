@@ -28,8 +28,8 @@ export class FirebaseHelper
     let self = this
     // recommended way to get the current user
     auth.auth.onAuthStateChanged(function(user) {
-      self._authChangedSubject.next(user)
       self._currentUser = user
+      self._authChangedSubject.next(user)
       }      
     )
     // Firebase references that are listened to.
