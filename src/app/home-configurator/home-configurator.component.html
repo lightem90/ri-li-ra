@@ -1,9 +1,12 @@
 
 <div 
-  id="mydiv"
+  id="background-div"
   layout="row" 
   [ngStyle]="{'background-image': 'url(' + background + ')'}"
   >
-  <span class="titleBold">CALCOLARE LE SPESE DI PRODUZIONE NON E' MAI STATO COSI' SEMPLICE</span>
+  <div id="centered">
+  <p>CALCOLARE LE SPESE DI PRODUZIONE NON E' MAI STATO COSI' SEMPLICE</p>
+  <br>
   <button mat-flat-button color="primary" (click)="startConfigurator()">INIZIA SUBITO</button>
+  </div>
 </div>
