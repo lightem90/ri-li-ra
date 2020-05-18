@@ -1,24 +1,23 @@
-<div> 
-  <mat-toolbar color="primary">
-    <div fxShow="true" fxHide.gt-sm="true">
-      <button mat-icon-button (click)="toggleSidenav()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </div>
 
-    <a mat-button class="companyName" routerLink="/">
-      <span>Site name</span>
+<mat-toolbar color="primary">
+  <div fxShow="true" fxHide.gt-sm="true">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <a mat-button class="companyName" routerLink="/">
+    <span>Site name</span>
+  </a>
+  <span class="example-spacer"></span>
+  <div fxShow="true" fxHide.lt-md="true">
+    <a mat-button routerLink="/configurator">Configuratore</a>
+    <a mat-button routerLink="/about">About</a>
+    <a mat-button routerLink="/faq">Faq</a>
+    <a mat-button routerLink="/contacts">Contatti</a>
+    <a [routerLink]="['/login']" mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
     </a>
-    <span class="example-spacer"></span>
-    <div fxShow="true" fxHide.lt-md="true">
-      <a mat-button routerLink="/configurator">Configuratore</a>
-      <a mat-button routerLink="/about">About</a>
-      <a mat-button routerLink="/faq">Faq</a>
-      <a mat-button routerLink="/contacts">Contatti</a>
-      <a [routerLink]="['/login']" mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
-      </a>
-    </div>
+  </div>
 
-  </mat-toolbar>
-</div>
+</mat-toolbar>
