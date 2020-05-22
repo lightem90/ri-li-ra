@@ -1,14 +1,14 @@
 
 <div 
-  id="background-div"
+  class="background-div"
   fxLayoutAlign="space-around center" fxFill
-  [ngStyle]="{'background-image': 'url(' + background + ')'}"
+  [ngStyle]="styleBackground()"
   >
   <div 
     layout="row" 
     class="centered">
     <p>{{ 'landingTitle' | translate}}</p>
-    
+
     <button mat-flat-button color="primary" (click)="startConfigurator()">{{ 'callToAction' | translate}}</button>
   </div>
 </div>

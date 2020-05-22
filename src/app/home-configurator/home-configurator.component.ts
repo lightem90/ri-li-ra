@@ -16,8 +16,8 @@ export class HomeConfiguratorComponent implements OnInit {
   constructor(
     private router: Router,
     private _configuratorService : ConfiguratorService,
-    private _accountManager : AccountManagerService)
-  {
+    private _accountManager : AccountManagerService) {
+
     this._accountManager.getAssetUrl('assets/home_background.jpg')
       .subscribe(res => {
         if (res)
@@ -31,10 +31,15 @@ export class HomeConfiguratorComponent implements OnInit {
   ngOnInit() {
   }
 
-  startConfigurator()
-  {
+  startConfigurator() {
     this._configuratorService.startNewSession();
     this.router.navigate(['configurator']);
+  }
+
+  styleBackground() {
+    return {
+      'background-image' : 'url(' + this.background + ')'
+    }
   }
 
 }
