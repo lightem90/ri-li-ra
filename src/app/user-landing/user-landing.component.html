@@ -1,15 +1,11 @@
-<div class="flex-container" layout="column"> 
-  <div layout="row">
-    <button mat-raised-button color="accent" (click)="logout()"> {{'logout' | translate}} </button>  
-  </div>
-  <div layout="row">
+
+<div class="flex-container" layout="column" fxFill>
+
     <p>{{'usermat' | translate}}  </p>
     <app-material-list
       [showPrices]="true">
     </app-material-list>
-  </div>
 
-  <div layout="row">
     <p>{{'userwork' | translate}}  </p>  
     <app-work-tree
       *ngIf="_userWorksLoaded"
@@ -31,5 +27,6 @@
       (saveRequest)="saveExtWorkForUser($event)"
       (deleteRequest)="removeExtWorkForUser($event)">
     </app-work-tree>  
-  </div>
+    
+    <button mat-raised-button color="accent" (click)="logout()"> {{'logout' | translate}} </button>  
 </div>

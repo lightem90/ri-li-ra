@@ -114,5 +114,6 @@
   "userserv" : "Servizi dell'utente",
   "registerTitle": "Registrazione",
   "loginTitle": "Accedi",
-  "back": "Indietro"
+  "back": "Indietro",
+  "not-found": "Pagina non trovata!"
 }
