@@ -23,11 +23,11 @@ export class FirebaseHelper
   constructor(
     private auth: AngularFireAuth,
     private database: AngularFireDatabase,
-    private storage: AngularFireStorage) 
-  {
+    private storage: AngularFireStorage) {
     let self = this
     // recommended way to get the current user
     auth.auth.onAuthStateChanged(function(user) {
+      console.log("user changed " + user.email)
       self._currentUser = user
       self._authChangedSubject.next(user)
       }      
@@ -145,7 +145,6 @@ export class FirebaseHelper
       })
 
       return feedPromise.then(res => {
-
         const worksId = Object.keys(res);
         var result : Work[] = []
         for (let i = 0; i < worksId.length; i++) {

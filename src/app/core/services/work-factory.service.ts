@@ -402,7 +402,7 @@ export class WorkFactoryService implements IWorkFactoryService {
   }
 
   createFromWork(work: any) : TreeWorkNode {
-    
+
     const w = work as Work
     if (w === null) return null
     
@@ -413,7 +413,11 @@ export class WorkFactoryService implements IWorkFactoryService {
         const nodoFase = this.createStageForWork(w.originalWorkName, s.name)
         result.children.push(nodoFase)
       }
+    } else {
+      //lavorazione salvata senza fasi
+      //console.log("Error")
     }
+
     
     //mappo i dati di lavorazione e stages
     Work.mapTo(w, result)

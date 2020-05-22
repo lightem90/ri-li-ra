@@ -74,7 +74,6 @@ export class WorkTreeComponent implements OnInit {
 
     ngOnInit() {
 
-      this.selectedWorkType  = this.workTypes[0]
       this._treeService = new WorkTreeService(this.workFactoryService)
       this._treeService.dataChange.subscribe(data => {
         this.dataSource.data = data;
@@ -84,7 +83,8 @@ export class WorkTreeComponent implements OnInit {
       //li aggiungo come nodi all'albero solo se li posso salvare (nella landing utente)
       if (this.editAndSave) {
         for(let i = 0; i<this.userWorks.length; i++) {
-          const node = this.workFactoryService.createFromWork(this.userWorks[i])
+          const work = this.userWorks[i]
+          const node = this.workFactoryService.createFromWork(work)
           if (node){
             this._treeService.addNode(node)
           }
@@ -96,6 +96,8 @@ export class WorkTreeComponent implements OnInit {
           this.workTypes.push(this.userWorks[i].name)
         }
       }
+
+      this.selectedWorkType  = this.workTypes[0]
     }
 
     /** Select the category so we can insert the new item. */
