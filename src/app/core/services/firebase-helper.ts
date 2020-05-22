@@ -41,6 +41,10 @@ export class FirebaseHelper
       .signInWithEmailAndPassword(email, password)
   }
 
+  logout(){
+    return this.auth.auth.signOut()
+  }
+
   register(email: string, password: string) {
     return this.auth.auth
       .createUserWithEmailAndPassword(email, password)

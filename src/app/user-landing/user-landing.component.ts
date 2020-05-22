@@ -4,6 +4,7 @@ import {WorkType, Work, ExternalWork} from '../core/domain/work'
 import { AccountManagerService } from '../core/services/account-manager.service';
 import { WorkFactoryService } from '../core/services/work-factory.service';
 import { ExternalWorkFactoryService } from '../core/services/externalwork-factory.service';
+import { AccountService } from '../core/services/account.service';
 
 @Component({
   selector: 'app-user-landing',
@@ -12,6 +13,7 @@ import { ExternalWorkFactoryService } from '../core/services/externalwork-factor
 })
 export class UserLandingComponent implements OnInit {
 
+  username : string = ""
   workTypes : string[] = []
   extWorkTypes : string[] = ["Personalizzato"]
   userWorks : Work[] = []
@@ -20,6 +22,7 @@ export class UserLandingComponent implements OnInit {
   _userExtWorksLoaded : boolean = false
         
   constructor(
+    private _service : AccountService,
     private _accountService : AccountManagerService,
     private _workFactory : WorkFactoryService,
     private _extWorkFactory : ExternalWorkFactoryService) { 
@@ -40,7 +43,7 @@ export class UserLandingComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.username = this._service.token
   }
 
   saveWorkForUser(workNodeToSave: TreeWorkNode){
@@ -71,6 +74,10 @@ export class UserLandingComponent implements OnInit {
       console.log("deleting: " + w)
        this._accountService.deleteUserWork(w.uid)
     }
+  }
+
+  logout() {
+    this._service.logout()
   }
 
 }

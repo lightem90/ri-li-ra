@@ -37,6 +37,12 @@ export class AccountService implements CanActivate {
       .register(email, password)
       .then(r => this._router.navigate(['login']))   
   }
+
+  logout() {
+    this._helper
+      .logout()
+      .then(_ => this._router.navigate(['']))
+  }
   
   canActivate(
     route: ActivatedRouteSnapshot,

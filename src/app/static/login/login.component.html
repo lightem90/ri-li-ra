@@ -1,31 +1,49 @@
-<form class="login-form" (ngSubmit)="login()">
-  <mat-form-field>
-    <mat-label>{{'loginEmail' | translate}}</mat-label>
-    <input matInput 
-      type="email"
-      [formControl]="emailFormControl" 
-      [errorStateMatcher]="matcher"
-      placeholder="{{ 'emailLoginPlaceholder' | translate }}">
-    <mat-hint>{{'emailLoginHint' | translate}}</mat-hint>
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      {{'emailLoginError' | translate}}
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      {{'emailLoginRequired' | translate}}
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{'loginPsw' | translate}}</mat-label>
-    <input matInput 
-      type="password"
-      [formControl]="pswFormControl" 
-      [errorStateMatcher]="matcher"
-      placeholder="{{ 'pswLoginPlaceholder' | translate }}">
-    <mat-hint>{{'pswLoginHint' | translate}}</mat-hint>
-    <mat-error *ngIf="pswFormControl.hasError('required')">
-      {{'pswLoginRequired' | translate}}
-    </mat-error>
-  </mat-form-field>
-  <button type="submit" mat-flat-button color="primary">{{'login' | translate}}</button>
-  <a mat-flat-button routerLink="../register">{{'registra' | translate}}</a>
-</form>
+<div fxLayoutAlign="space-around center" fxFill>
+  <div flex="15"></div>
+  <div fxFlex="70">
+    <mat-card>
+      <mat-card-title>{{'loginTitle' | translate }} </mat-card-title>
+      <form class="login-form" (ngSubmit)="login()">      
+        <div layout="row">
+          <mat-form-field fxFill>
+            <mat-label>{{'loginEmail' | translate}}</mat-label>
+            <input matInput 
+              type="email"
+              [formControl]="emailFormControl" 
+              [errorStateMatcher]="matcher"
+              placeholder="{{ 'emailLoginPlaceholder' | translate }}">
+            <mat-hint>{{'emailLoginHint' | translate}}</mat-hint>
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              {{'emailLoginError' | translate}}
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+              {{'emailLoginRequired' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div layout="row" padding-bottom="20px">
+          <mat-form-field >
+            <mat-label>{{'loginPsw' | translate}}</mat-label>
+            <input matInput 
+              type="password"
+              [formControl]="pswFormControl" 
+              [errorStateMatcher]="matcher"
+              placeholder="{{ 'pswLoginPlaceholder' | translate }}">
+            <mat-hint>{{'pswLoginHint' | translate}}</mat-hint>
+            <mat-error *ngIf="pswFormControl.hasError('required')">
+              {{'pswLoginRequired' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <br>
+        <div layout="row" align="center">
+          <button type="submit" mat-flat-button color="primary">{{'login' | translate}}</button>
+          <a mat-flat-button routerLink="../register">{{'registra' | translate}}</a>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+  <div flex="15"></div>
+
+</div>

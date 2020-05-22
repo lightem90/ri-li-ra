@@ -111,5 +111,8 @@
   "CostoTotaleMateriaPrima" : "Prezzo totale materiale",
   "usermat" : "Materiali dell'utente",
   "userwork" : "Lavorazioni dell'utente",
-  "userserv" : "Servizi dell'utente"
+  "userserv" : "Servizi dell'utente",
+  "registerTitle": "Registrazione",
+  "loginTitle": "Accedi",
+  "back": "Indietro"
 }

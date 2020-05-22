@@ -1,35 +1,35 @@
-<div> 
-  <p>{{'usermat' | translate}}  </p>
-  <app-material-list
-    [showPrices]="true">
-  </app-material-list>
-  <br>
-  
-  <p>{{'userwork' | translate}}  </p>
+<div class="flex-container" layout="column"> 
+  <div layout="row">
+    <button mat-raised-button color="accent" (click)="logout()"> {{'logout' | translate}} </button>  
+  </div>
+  <div layout="row">
+    <p>{{'usermat' | translate}}  </p>
+    <app-material-list
+      [showPrices]="true">
+    </app-material-list>
+  </div>
 
+  <div layout="row">
+    <p>{{'userwork' | translate}}  </p>  
+    <app-work-tree
+      *ngIf="_userWorksLoaded"
+      [userWorks]="userWorks"
+      [editAndSave]="true"
+      [workTypes]="workTypes"
+      [workFactoryService]="_workFactory"
+      (saveRequest)="saveWorkForUser($event)"
+      (deleteRequest)="removeWorkForUser($event)">
+    </app-work-tree>  
 
-  
-  <app-work-tree
-    *ngIf="_userWorksLoaded"
-    [userWorks]="userWorks"
-    [editAndSave]="true"
-    [workTypes]="workTypes"
-    [workFactoryService]="_workFactory"
-    (saveRequest)="saveWorkForUser($event)"
-    (deleteRequest)="removeWorkForUser($event)">
-  </app-work-tree>  
-
-  <app-work-tree
-    *ngIf="_userExtWorksLoaded"
-    [userWorks]="userExtWorks"
-    [editAndSave]="true"
-    [workTypes]="extWorkTypes"
-    [workFactoryService]="_extWorkFactory"
-    (saveRequest)="saveExtWorkForUser($event)"
-    (deleteRequest)="removeExtWorkForUser($event)">
-  </app-work-tree>  
-
-
-  
-  <p>{{'userserv' | translate}}  </p>
+    <p>{{'userserv' | translate}}  </p>
+    <app-work-tree
+      *ngIf="_userExtWorksLoaded"
+      [userWorks]="userExtWorks"
+      [editAndSave]="true"
+      [workTypes]="extWorkTypes"
+      [workFactoryService]="_extWorkFactory"
+      (saveRequest)="saveExtWorkForUser($event)"
+      (deleteRequest)="removeExtWorkForUser($event)">
+    </app-work-tree>  
+  </div>
 </div>
