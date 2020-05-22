@@ -4,13 +4,19 @@
   
   <!-- To render stuff correctly on mobile -->
   <mat-sidenav-container>
-    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
-      <div fxLayout="column">
+    <mat-sidenav 
+      #sidenav 
+      color="primary" 
+      fxLayout="column" 
+      mode="over"  
+      opened="false" 
+      fxHide.gt-sm="true">
+      <div id="menu" fxLayout="column">
         <a mat-button routerLink="/configurator">Configuratore</a>
         <a mat-button routerLink="/about">About</a>
         <a mat-button routerLink="/faq">Faq</a>
         <a mat-button routerLink="/contacts">Contatti</a>
-        <a [routerLink]="['/login']" mat-icon-button>
+        <a id="link_icon"[routerLink]="['/login']" mat-icon-button>
           <mat-icon>account_circle</mat-icon> 
         </a>
       </div>
