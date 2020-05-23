@@ -10,6 +10,7 @@ import { Material } from '../domain/material';
 import { NumberInput } from '../domain/common';
 import { Shape } from '../../core/domain/piece'
 import { Work, ExternalWork } from '../domain/work';
+import { FirebaseConstant } from './firebase-constant';
 
 @Injectable()
 export class ConfiguratorService implements CanActivate {
@@ -139,11 +140,12 @@ export class ConfiguratorService implements CanActivate {
   }
 
   print() {
-
   }
 
   save() {
-
+    this.firbaseHelper._addDataForUser(
+      this.currentSession.mapToDb(this.internalWorks, this.externalWorks),
+      FirebaseConstant.relationTableNames.userBudget)
   }
 
 

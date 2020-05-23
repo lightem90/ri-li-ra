@@ -140,6 +140,12 @@ export class AccountManagerService implements CanActivate {
       .then(res => this.userServices = res.slice())
   }
 
+  fetchUserBudgets() {
+    return this._firbaseHelper
+      .getUserBudgets()
+      .then(res => this.userServices = res.slice())
+  }
+
   deleteUserWork(workId : string) {
     this._firbaseHelper
       .deleteEntryForUser(FirebaseConstant.relationTableNames.userWork, workId)

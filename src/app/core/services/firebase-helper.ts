@@ -162,9 +162,7 @@ export class FirebaseHelper
     if (this._currentUser.uid) {
       const ref =
           this.database.database.ref(
-            `/${tableName}
-            /${this._currentUser.uid}
-            /${uid}`);
+            `/${tableName}/${this._currentUser.uid}/${uid}`);
       ref.on('value', callback);
       this.firebaseRefs.push(ref);
     }
@@ -186,6 +184,34 @@ export class FirebaseHelper
         this.database.database.ref(`/${tableName}/${this._currentUser.uid}/${feedData.key}`).off();
       })    
     }    
+  }
+
+  getUserBudgets() {
+    
+    if (this._currentUser) {
+      let feedPromise : Promise<any> = 
+        this._getFeed(
+          FirebaseConstant.relationTableNames.userBudget 
+          + '/' 
+          + this._currentUser.uid)
+        .then((data) => {
+          const entries = data.val() || {}
+          return entries;
+      })
+
+      return feedPromise.then(res => {
+
+        const budgetId = Object.keys(res);
+        var result : any[] = []
+        for (let i = 0; i < budgetId.length; i++) {
+          var budget = res[budgetId[i]]
+          result.push(budget)
+        }
+
+        return result;
+      })
+    } 
+    return new Promise<any[]>(res => res([])) 
   }
 
   getUserServices() {

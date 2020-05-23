@@ -20,6 +20,8 @@ export class UserLandingComponent implements OnInit {
   _userWorksLoaded : boolean = false
   userExtWorks : ExternalWork[] = []
   _userExtWorksLoaded : boolean = false
+  _userBudgets : any[] = []
+  _budgetsLoaded : boolean = false
         
   constructor(
     private _service : AccountService,
@@ -34,6 +36,7 @@ export class UserLandingComponent implements OnInit {
         this.userWorks = r
         this._userWorksLoaded = true
       })
+
     this._accountService
       .fetchExternalUserWorks()
       .then(r => {
@@ -43,7 +46,14 @@ export class UserLandingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.username = this._service.token
+    this.username = this._service.token    
+
+    this._accountService
+      .fetchUserBudgets()
+      .then(r => {
+        this._userBudgets = r
+        this._budgetsLoaded = true
+    })
   }
 
   saveWorkForUser(workNodeToSave: TreeWorkNode){

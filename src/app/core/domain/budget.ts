@@ -3,6 +3,7 @@ import {Material} from './material';
 import {Shape} from './piece';
 
 import {BehaviorSubject} from 'rxjs';
+import { Work, ExternalWork } from "./work";
 
 //todo
 export class BudgetRecap {
@@ -58,6 +59,16 @@ export class Budget {
 
   public setPdfSource(pdfSrc : string) {
     this.pdfSubject.next(pdfSrc)
+  }
+
+  public mapToDb(works: Work[], services: ExternalWork[]) {
+    return {
+      uid: this.uid,
+      client_name : this.client_name.value,
+      works: works,
+      services: services,
+      total: this.recap_tot.value
+    }
   }
 
   private initDate() {
