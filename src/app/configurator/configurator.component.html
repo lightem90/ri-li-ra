@@ -1,5 +1,5 @@
 
-<div class="flex-container" layout="row">
+<div >
   <mat-accordion class="example-headers-align">
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header [collapsedHeight]="'*'" [expandedHeight]="'*'">
@@ -126,7 +126,8 @@
     <app-recap > </app-recap>
 
     <mat-action-row>
-      <button mat-button color="primary" (click)="nextStep()">Chiudi</button>
+      <button mat-button color="primary" (click)="save()">{{'saveBtn' | translate}}</button>
+      <button mat-button color="accent" (click)="print()">{{'printBtn' | translate}}</button>
     </mat-action-row>
   </mat-expansion-panel>
 

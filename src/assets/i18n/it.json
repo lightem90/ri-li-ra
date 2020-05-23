@@ -117,5 +117,8 @@
   "back": "Indietro",
   "not-found": "Pagina non trovata!",
   "landingTitle": "CALCOLARE LE SPESE DI PRODUZIONE NON E' MAI STATO COSI' SEMPLICE",
-  "callToAction": "INIZIA SUBITO"
+  "callToAction": "INIZIA SUBITO",
+  "saveBtn" : "Salva",
+  "printBtn" : "Stampa",
+  "sendBtn" : "Invia"
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Budget} from '../core/domain/budget'
+import { ConfiguratorService } from '../core/services/configurator.service';
 
 @Component({
   selector: 'app-configurator',
@@ -12,12 +13,12 @@ export class ConfiguratorComponent implements OnInit {
   step = 0;
   budget : Budget
 
-  constructor() {    
-    //todo query db
-    this.budget = new Budget()
+  constructor(private _configurator: ConfiguratorService) {    
+
   }
   
   ngOnInit() {
+    this._configurator.startNewSession()
   }
 
 
@@ -31,6 +32,18 @@ export class ConfiguratorComponent implements OnInit {
 
   prevStep() {
     this.step--;
+  }
+
+  send() {
+    this._configurator.send()  
+  }
+
+  print() {
+    this._configurator.print()
+  }
+
+  save() {
+    this._configurator.save()
   }
 
 

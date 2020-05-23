@@ -138,5 +138,13 @@ export class ConfiguratorService implements CanActivate {
     this.externalWorks = extWorks
   }
 
+  print() {
+
+  }
+
+  save() {
+
+  }
+
 
 }

@@ -173,9 +173,7 @@ export class FirebaseHelper
   subscribeToListChanges(tableName, callbackAdd, callbackDel) {
     if (this._currentUser) {
       // Load all posts information.
-      let feedRef = this.database.database.ref(
-        `/${tableName}
-        /${this._currentUser.uid}`)       
+      let feedRef = this.database.database.ref(`/${tableName}/${this._currentUser.uid}`)       
 
       feedRef.on('child_added', (feedData) => { 
         callbackAdd(feedData.val());
@@ -185,10 +183,7 @@ export class FirebaseHelper
 
         callbackDel(feedData.val());
 
-        this.database.database.ref(
-        `/${tableName}
-        /${this._currentUser.uid}
-        /${feedData.key}`).off();
+        this.database.database.ref(`/${tableName}/${this._currentUser.uid}/${feedData.key}`).off();
       })    
     }    
   }
