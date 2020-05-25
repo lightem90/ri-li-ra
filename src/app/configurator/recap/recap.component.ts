@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import {TextInput, NumberInput} from '../../core/domain/common'
 import { ConfiguratorService } from '../../core/services/configurator.service'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-recap',
@@ -17,7 +18,9 @@ export class RecapComponent implements OnInit {
   pc_pz : TextInput
   pce_pz : TextInput
 
-  constructor(private _configuratorService : ConfiguratorService) {  }
+  constructor(
+    private _configuratorService : ConfiguratorService,
+    private _toastr: ToastrService) {  }
 
   ngOnInit() {
     this.tot_prz = this._configuratorService.currentSession.recap_tot_prz

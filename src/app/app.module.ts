@@ -3,6 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -67,6 +71,7 @@ export function translateHttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports:      [ 
+    CommonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,6 +79,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     HttpClientModule,
     BrowserModule, 
     FormsModule, 

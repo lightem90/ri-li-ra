@@ -1,5 +1,7 @@
 <div> 
-  <app-number-input [input]="tot_prz"> </app-number-input>
+  <app-number-input 
+    (inputChanged)="forceGain()" 
+    [input]="tot_prz"> </app-number-input>
   <app-number-input 
     (inputChanged)="forceGain()" 
     [input]="tot_gain_perc"> 

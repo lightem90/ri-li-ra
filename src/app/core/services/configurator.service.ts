@@ -123,17 +123,17 @@ export class ConfiguratorService implements CanActivate {
 
     var ricavo = przComunicato * pieceCount
     //calcolo il guadagno come differenza tra prezzo comunicato totale e costi totali
-    if (forcedGain > 0) {
+    if (forcedGain <= 0) {
       
+      console.log('NOT forcing gain, result: ' + (ricavo+gain).toFixed(2))
       var costi = pieceCount * +this.currentSession.recap_pc_pz.text
       this.currentSession.recap_tot.text = (ricavo).toFixed(2)
-      console.log('forcing gain, result: ' + (ricavo).toFixed(2))
       this.currentSession.recap_tot_gain.text = (ricavo-costi).toFixed(2)
     } else {
       //il guadagno è inserito in percentuale dall'utente
       var gain = (ricavo * forcedGain / 100)
       
-      console.log('NOT forcing gain, result: ' + (ricavo+gain).toFixed(2))
+      console.log('forcing gain: ' + forcedGain + ', result: ' + (ricavo).toFixed(2))
       this.currentSession.recap_tot.text = (ricavo+gain).toFixed(2)
       this.currentSession.recap_tot_gain.text = (gain).toFixed(2)
     }
