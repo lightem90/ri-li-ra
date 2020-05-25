@@ -18,8 +18,7 @@ export class AppComponent  {
     translateService.setDefaultLang('it');
   }
 
-  toggleSideNavigator()
-  {
+  toggleSideNavigator() {
     this.sidenav.toggle()
   }
 }

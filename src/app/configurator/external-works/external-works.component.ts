@@ -67,6 +67,7 @@ export class ExternalWorksComponent implements OnInit {
     }
 
     updateTreeOne(sumOfWorks : number) {
+      console.log("update tree one, sum is: " + sumOfWorks)
       this.sumThreeOne = sumOfWorks
       this.recalcAll()
     }
@@ -93,6 +94,11 @@ export class ExternalWorksComponent implements OnInit {
         + this.sumThreeFour)
           .toFixed(2)
       
+      console.log("Recalculating for ext: " + (this.sumThreeOne 
+        + this.sumThreeTwo 
+        + this.sumThreeThree
+        + this.sumThreeFour)
+          .toFixed(2))
       this._configuratorService.calculateBudget()
     }
 

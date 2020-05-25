@@ -29,7 +29,7 @@ export class RecapComponent implements OnInit {
   }
 
   forceGain() {
-    this._configuratorService.updateBudgetResult()
+    this._configuratorService.updateBudgetResult(this.tot_gain_perc.value)
   }
 
 }

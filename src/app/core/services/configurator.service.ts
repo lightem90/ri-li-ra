@@ -73,8 +73,10 @@ export class ConfiguratorService implements CanActivate {
 
   private recalcMaterialPrice(){
 
+    console.log('calculating material price')
     //calcolo tutto anche senza materiale (i default sono 0)
     if (this.currentSession.material === null) {
+      console.log('no material available')
       this.calculateBudget()
       return;
     }
@@ -91,16 +93,20 @@ export class ConfiguratorService implements CanActivate {
     this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
     this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
     this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)   
-
+    console.log('tot material price: ' + (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2))
     this.calculateBudget()
   }
 
   //pubblico per ora, solo per le lavorazioni
   calculateBudget() {
+    console.log('calculating budget')
     //valori solo in visualizzazione, il totale del preventivo è inserito dall'utente
-    var prezzoMaterialAlPezzo = +this.currentSession.pieceUnitaryPrice.value
-    var prezzoLavIntAlPezzo  = +this.currentSession.tot_lav_int_charge.value
-    var prezzoLavExtAlPezzo  = +this.currentSession.tot_lav_ext.value
+    var prezzoMaterialAlPezzo = +this.currentSession.pieceUnitaryPrice.text
+    var prezzoLavIntAlPezzo  = +this.currentSession.tot_lav_int_charge.text
+    var prezzoLavExtAlPezzo  = +this.currentSession.tot_lav_ext.text
+
+    console.log('tot lav int: ' + prezzoLavIntAlPezzo)
+    console.log('tot lav ext: ' + prezzoLavExtAlPezzo)
 
     this.currentSession.recap_pc_pz.text = (prezzoMaterialAlPezzo + prezzoLavIntAlPezzo + prezzoLavExtAlPezzo).toFixed(2)
 
@@ -109,23 +115,25 @@ export class ConfiguratorService implements CanActivate {
     this.updateBudgetResult()
   }
 
-  updateBudgetResult() {
+  updateBudgetResult(forcedGain : number = -1) {
 
+    console.log('calcolating result')
     var pieceCount = this.currentSession.n_pieces.value
     var przComunicato = this.currentSession.recap_tot_prz.value
-    var forceGain = this.currentSession.recap_tot_gain_perc.value
 
     var ricavo = przComunicato * pieceCount
     //calcolo il guadagno come differenza tra prezzo comunicato totale e costi totali
-    if (forceGain === 0)
-    {
+    if (forcedGain > 0) {
+      
       var costi = pieceCount * +this.currentSession.recap_pc_pz.text
       this.currentSession.recap_tot.text = (ricavo).toFixed(2)
+      console.log('forcing gain, result: ' + (ricavo).toFixed(2))
       this.currentSession.recap_tot_gain.text = (ricavo-costi).toFixed(2)
     } else {
       //il guadagno è inserito in percentuale dall'utente
-      var gain = (ricavo * forceGain / 100)
-
+      var gain = (ricavo * forcedGain / 100)
+      
+      console.log('NOT forcing gain, result: ' + (ricavo+gain).toFixed(2))
       this.currentSession.recap_tot.text = (ricavo+gain).toFixed(2)
       this.currentSession.recap_tot_gain.text = (gain).toFixed(2)
     }

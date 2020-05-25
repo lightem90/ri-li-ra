@@ -118,6 +118,11 @@ export class WorkTreeComponent implements OnInit {
         workNode.recalculate()
       }
 
+      this._recalcTree()
+    }
+
+    _recalcTree(){
+
       //calcola il totale come somma dei vari totali
       var totWorks = this.dataSource.data
         //.filter(n => n.isWork) non è necessario, gli elementi di 1 livello sono sempre lavorazioni
@@ -131,6 +136,7 @@ export class WorkTreeComponent implements OnInit {
       const parentNodeFlat = this.flatNodeMap.get(parentNode)
       const nestedNode = this.flatNodeMap.get(node);
       this._treeService.updateWorkItem(nestedNode!, parentNodeFlat, stageName, parentNode.name);
+      this._recalcTree()
       this.treeControl.expand(node);
     }
 
@@ -170,6 +176,7 @@ export class WorkTreeComponent implements OnInit {
       //evento per la cancellazione dal db (dove serve)
       this.deleteRequest.emit(node)
     }
+    this._recalcTree()
   }
 
   addWork() {
@@ -190,6 +197,8 @@ export class WorkTreeComponent implements OnInit {
     
     //crea la lavorazione standard
     this._treeService.addWork(selWork)
+
+    this._recalcTree()
   }
 
   canSaveNode(nodeFlat: TreeWorkFlatNode){   

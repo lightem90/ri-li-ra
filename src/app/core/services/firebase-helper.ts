@@ -105,7 +105,7 @@ export class FirebaseHelper
   getMaterials(getDefault : boolean = false) {
     let feedPromise : Promise<any> = null
 
-    if (getDefault === true || this._currentUser === null){
+    if (getDefault === true || !this._currentUser){
       feedPromise = this._getFeed(FirebaseConstant.entityTableNames.default_materials)
         .then((data) => {
           const entries = data.val() || {}

@@ -54,13 +54,18 @@ export class InternalWorksComponent implements OnInit {
     }
 
     updateBudget(sumOfWorks : number) {
+      console.log("tree event: " + sumOfWorks)
       this.tot_lav_int.text = sumOfWorks.toFixed(2)
       this.tot_lav_int_charge.text = (sumOfWorks * (100+this.charge.value)/100).toFixed(2)
+      
+      this.recalculate()
     }
 
     recalculate() {
+      console.log('recalculating from int work component')
       var sumNoCharge = +this.tot_lav_int.text
       this.tot_lav_int_charge.text = (sumNoCharge * (100+this.charge.value)/100).toFixed(2)
+      
       this._configuratorService.calculateBudget()
     }
 
