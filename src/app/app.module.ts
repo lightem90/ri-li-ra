@@ -80,7 +80,10 @@ export function translateHttpLoaderFactory(http: HttpClient) {
       }
     }),
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true}),
     HttpClientModule,
     BrowserModule, 
     FormsModule, 
