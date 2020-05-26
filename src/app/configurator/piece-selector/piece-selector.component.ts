@@ -15,16 +15,16 @@ import { ConfiguratorService } from '../../core/services/configurator.service'
 })
 export class PieceSelectorComponent implements OnInit {
 
-  shapes: Shape[]
+  shapes = []
   selectedShape : Shape = null
   inputs: NumberInput[] = []
-  pieceSelector : FormGroup
+  public pieceSelector : FormGroup
   pdfSrc : string
   totWPerPiece : DisabledInput
 
   constructor(
     private _fb: FormBuilder, 
-    private _configuratorService: ConfiguratorService) { 
+    public _configuratorService: ConfiguratorService) { 
     this.shapes = Object.values(Shape).filter(x => typeof x === 'string')  
     this.pieceSelector = this._fb.group({})
   }
@@ -36,7 +36,7 @@ export class PieceSelectorComponent implements OnInit {
   }
 
   updateInputs(shape : Shape) {
-    switch(Shape[shape]){
+    switch(+shape){
       case Shape.Quadrangular:
         this.inputs = this.quadrangularInputs
           break;

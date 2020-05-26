@@ -23,30 +23,30 @@ export class ExternalWorksComponent implements OnInit {
   public treeServiceSuperficial: WorkTreeService
   public treeServiceExternal: WorkTreeService
 
-  thermalWorks : ExternalWork[] = []
-  extWorks : ExternalWork[] = []
-  supWorks : ExternalWork[] = []
-  customWorks : ExternalWork[] = []
+  thermalWorks = []
+  extWorks = []
+  supWorks = []
+  customWorks = []
 
   sumThreeOne = 0
   sumThreeTwo = 0
   sumThreeThree = 0
   sumThreeFour = 0
   
-  workThermTypes: string[]
-  workSupTypes: string[]
-  workExtTypes: string[]
+  workThermTypes = []
+  workSupTypes = []
+  workExtTypes = []
 
-  userExtTypes: string[]
-  userExtWorks : ExternalWork[] = []
+  userExtTypes = []
+  userExtWorks = []
   _userExtWorksLoaded : boolean = false
 
   tot_lav_ext : DisabledInput
 
   constructor(
     private _accountService : AccountManagerService,
-    private _workFactory : ExternalWorkFactoryService,
-    private _configuratorService : ConfiguratorService) { 
+    public _workFactory : ExternalWorkFactoryService,
+    public _configuratorService : ConfiguratorService) { 
 
       this.workThermTypes = Object.values(ThermalWorkType).filter(x => typeof x === 'string')
       this.workSupTypes = Object.values(SuperficialWorkType).filter(x => typeof x === 'string')

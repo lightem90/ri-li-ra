@@ -33,11 +33,7 @@ export class ConfiguratorComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-
-  send() {
-    this._configurator.send()  
-  }
-
+  
   print() {
     this._configurator.print()
   }

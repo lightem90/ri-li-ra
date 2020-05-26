@@ -100,6 +100,10 @@ export class WorkTreeComponent implements OnInit {
       this.selectedWorkType  = this.workTypes[0]
     }
 
+    getNodeFromFlat(node : TreeWorkFlatNode){
+      return this.flatNodeMap.get(node);
+    }
+
     /** Select the category so we can insert the new item. */
     addNewItem(node : TreeWorkFlatNode) {
       const parentNode = this.flatNodeMap.get(node);
@@ -108,8 +112,9 @@ export class WorkTreeComponent implements OnInit {
     }
 
     //i singoli input richiamano recalculate che triggera il ricalcolo fino alla lavorazione (caso peggiore)
-    recalcNode(node : TreeWorkFlatNode) {
-      const parentNode = this.getParentNode(node)
+    recalcNode(node : TreeWorkNode) {
+      const flatNode = this.nestedNodeMap.get(node)
+      const parentNode = this.getParentNode(flatNode)
       const parentRealNode = this.flatNodeMap.get(parentNode)
       parentRealNode.recalculate()
       const work = this.getParentNode(parentNode)

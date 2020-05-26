@@ -14,7 +14,7 @@
       <!-- Nodo per visualizzare un unico parametro di input -->
       <mat-tree-node *matTreeNodeDef="let node; when: hasOneInput" matTreeNodePadding>
         <app-single-input-node
-          [node]="node"
+          [node]="getNodeFromFlat(node)"
           (recalcRequested)="recalcNode($event)"> 
         </app-single-input-node>
       </mat-tree-node>
@@ -30,7 +30,7 @@
         <p *ngIf="!showInlineEdit(node)"> {{node.name | translate}}</p>
         <app-inline-edit 
           *ngIf="showInlineEdit(node)"
-          [(ngModel)]="this.flatNodeMap.get(node).name" 
+          [(ngModel)]="getNodeFromFlat(node).name" 
           [required]="true" 
           type="text">
         </app-inline-edit>

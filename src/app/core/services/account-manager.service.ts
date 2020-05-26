@@ -71,26 +71,17 @@ export class AccountManagerService implements CanActivate {
     }
   }    
   //lasciamo al chiamante il dovere di chiedere quelli di default o specifici per l'utente
-  getMaterials(getDefault : boolean = false){
-    return this._firbaseHelper.getMaterials(getDefault)
-    .then(res => {
-        if (res)
-        {
-          res.forEach(mat => {            
-            this.getAssetUrl(mat.img_url)
-              .subscribe(res => {
-                if (res && !mat.img_download_url) {                  
-                  mat.img_download_url = res
-                }
-            })
-          })  
-          this.userMaterial = res.slice()
-          return res   
-        } else {
-          console.log('Error fetching default materials')
-          return []
+  async getMaterials(getDefault : boolean = false){
+    let userMaterials = await this._firbaseHelper.getMaterials(getDefault)
+    for(let mat of userMaterials) {
+      this.getAssetUrl(mat.img_url).subscribe(r => {
+          if (r && !mat.img_download_url) {                  
+            mat.img_download_url = r
         }
-      }, err => console.log(err))
+      })
+    }
+    this.userMaterial = userMaterials.slice()
+    return this.userMaterial
   }
 
   saveWorkForUser(work : Work){

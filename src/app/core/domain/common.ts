@@ -67,8 +67,8 @@ export class TreeWorkFlatNode {
   constructor(public calculator: Function = null) { }
 
   public name : string = ""
-  level: number = 0
-  expandable: boolean
+  public level: number = 0
+  public expandable: boolean
   public inputs : NumberInput[] = []
   public outputs : DisabledInput[] = []
   public totPrice : DisabledInput = null

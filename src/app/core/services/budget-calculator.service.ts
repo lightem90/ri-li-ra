@@ -14,7 +14,7 @@ export class BudgetCalculatorService {
     {
       const selectedMaterialSpecWeight = this._budget.material.spec_weight
       let shapeResult = 0
-      switch(Shape[this._budget.selectedShape]) {
+      switch(+this._budget.selectedShape) {
         case Shape.Quadrangular:
             shapeResult = this._calculateQuadrangular()
             break;

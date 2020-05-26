@@ -14,7 +14,7 @@ import { AccountService } from '../core/services/account.service';
 export class UserLandingComponent implements OnInit {
 
   username : string = ""
-  workTypes : string[] = []
+  workTypes = []
   extWorkTypes : string[] = ["Personalizzato"]
   userWorks : Work[] = []
   _userWorksLoaded : boolean = false
@@ -26,8 +26,8 @@ export class UserLandingComponent implements OnInit {
   constructor(
     private _service : AccountService,
     private _accountService : AccountManagerService,
-    private _workFactory : WorkFactoryService,
-    private _extWorkFactory : ExternalWorkFactoryService) { 
+    public _workFactory : WorkFactoryService,
+    public _extWorkFactory : ExternalWorkFactoryService) { 
       
     this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
     this._accountService

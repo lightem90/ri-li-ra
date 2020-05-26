@@ -3,7 +3,7 @@
   <mat-label>{{input.label | translate}}</mat-label>
   <input 
     [(ngModel)]="input.value"   
-    (change)="signalChanged($event)"    
+    (change)="signalChanged()"    
     [ngModelOptions]="{standalone: true}"
     type="text" matInput>
 </mat-form-field>

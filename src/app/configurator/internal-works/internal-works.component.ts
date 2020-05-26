@@ -23,14 +23,14 @@ export class InternalWorksComponent implements OnInit {
     tot_lav_int : DisabledInput
     tot_lav_int_charge : DisabledInput
 
-    workTypes: string[] = []
+    workTypes = []
     userWorks : Work[] = []
     _userWorksLoaded : boolean = false;
 
     constructor(
       private _accountService : AccountManagerService,
-      private _workFactory : WorkFactoryService,
-      private _configuratorService : ConfiguratorService) {  
+      public _workFactory : WorkFactoryService,
+      public _configuratorService : ConfiguratorService) {  
         
       this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
       this._accountService
@@ -42,7 +42,6 @@ export class InternalWorksComponent implements OnInit {
 
       this._accountService.worksChanged.subscribe(works => {
         this.userWorks = works
-        console.log(work)
       })
     }
 

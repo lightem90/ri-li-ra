@@ -19,7 +19,7 @@ export class MaterialListComponent implements OnInit {
   @Output() signalChanged = new EventEmitter()
   selectedMaterialId : string;
   changed : boolean = false;
-  materials: Material[] = []
+  materials = []
   
   constructor(private _accountManager : AccountManagerService) {     
   }
