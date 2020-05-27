@@ -91,11 +91,15 @@ export class ConfiguratorService implements CanActivate {
 
     const chargeOnPiece = this.currentSession.pieceChargePercentage.value
     const prezzoUnitarioConRicarico = unitaryPrice * (100+chargeOnPiece)/100
-
-    this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
+    
+    const przStr = prezzoUnitarioConRicarico.toFixed(2)
+    const changed = this.currentSession.pieceUnitaryPrice.text !== przStr
+    this.currentSession.pieceUnitaryPrice.text = przStr
+    
     console.log("Unitary price: " + unitaryPrice)
-    if (unitaryPrice > 0) {
-      this.toastr.success("Costo del materiale: " + unitaryPrice)
+    
+    if (changed && prezzoUnitarioConRicarico > 0) {
+      this.toastr.success("Costo del materiale: " + przStr)
     }
 
     this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
@@ -115,14 +119,15 @@ export class ConfiguratorService implements CanActivate {
     console.log('tot lav int: ' + prezzoLavIntAlPezzo)
     console.log('tot lav ext: ' + prezzoLavExtAlPezzo)
 
-    this.currentSession.recap_pc_pz.text = (prezzoMaterialAlPezzo + prezzoLavIntAlPezzo + prezzoLavExtAlPezzo).toFixed(2)
-
+    const newVal = (prezzoMaterialAlPezzo + prezzoLavIntAlPezzo + prezzoLavExtAlPezzo).toFixed(2)
+    const notify = newVal !== this.currentSession.recap_pc_pz.text && +newVal > 0
+    
+    this.currentSession.recap_pc_pz.text = newVal
     this.currentSession.recap_pce_pz.text = (prezzoMaterialAlPezzo + prezzoLavExtAlPezzo).toFixed(2)
-
-    this.updateBudgetResult()
+    this.updateBudgetResult(notify)
   }
 
-  updateBudgetResult(forcedGain : number = -1) {
+  updateBudgetResult(notify: boolean, forcedGain : number = -1) {
 
     console.log('calcolating result')
     var pieceCount = this.currentSession.n_pieces.value
@@ -130,7 +135,7 @@ export class ConfiguratorService implements CanActivate {
 
     var costoTotaleAlPezzo = +this.currentSession.recap_pc_pz.text    //costo totale comprese di tutte le lavorazioni
     
-    if (costoTotaleAlPezzo > 0) {
+    if (notify) {
       this.toastr.success("Costo totale del pezzo: " + costoTotaleAlPezzo)
     }
     //calcolo il guadagno come differenza tra prezzo comunicato totale e costi totali
