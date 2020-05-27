@@ -12,15 +12,10 @@ import {NumberInput} from '../../core/domain/common'
   templateUrl: './number-input.component.html',
   styleUrls: ['./number-input.component.css']
 })
-export class NumberInputComponent implements OnInit {
+export class NumberInputComponent {
 
   @Output("inputChanged") changed = new EventEmitter<number>()
   @Input() input : NumberInput
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   signalChanged(event) {
     this.changed.emit(this.input.value)

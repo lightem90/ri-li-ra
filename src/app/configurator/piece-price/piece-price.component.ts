@@ -4,6 +4,7 @@ import {Budget} from '../../core/domain/budget'
 
 import { ConfiguratorService } from '../../core/services/configurator.service'
 import {DisabledInput, NumberInput} from '../../core/domain/common'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-piece-price',

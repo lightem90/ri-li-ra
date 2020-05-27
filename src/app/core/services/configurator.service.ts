@@ -11,6 +11,7 @@ import { NumberInput } from '../domain/common';
 import { Shape } from '../../core/domain/piece'
 import { Work, ExternalWork } from '../domain/work';
 import { FirebaseConstant } from './firebase-constant';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ConfiguratorService implements CanActivate {
@@ -22,7 +23,8 @@ export class ConfiguratorService implements CanActivate {
   externalWorks : ExternalWork[] = []
 
   constructor(
-    private firbaseHelper : FirebaseHelper, 
+    private toastr: ToastrService,
+    private firebaseHelper : FirebaseHelper, 
     private router: Router) { }
  
   //needed to display configurator only if session has started, otherwise I'll show the button to start
@@ -91,6 +93,8 @@ export class ConfiguratorService implements CanActivate {
     const prezzoUnitarioConRicarico = unitaryPrice * (100+chargeOnPiece)/100
 
     this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
+    console.log("Unitary price: " + unitaryPrice)
+    this.toastr.success("Costo del pezzo: " + unitaryPrice)
     this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
     this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)   
     console.log('tot material price: ' + (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2))
@@ -153,7 +157,7 @@ export class ConfiguratorService implements CanActivate {
   }
 
   save() {
-    this.firbaseHelper._addDataForUser(
+    this.firebaseHelper._addDataForUser(
       this.currentSession.mapToDb(this.internalWorks, this.externalWorks),
       FirebaseConstant.relationTableNames.userBudget)
   }

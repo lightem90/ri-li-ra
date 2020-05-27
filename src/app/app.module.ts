@@ -71,8 +71,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
       }
     }),
     ToastrModule.forRoot({
-      timeOut: 2000,
-      positionClass: 'toast-top-right',
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true}),
     CommonModule,
     BrowserAnimationsModule, // required animations module

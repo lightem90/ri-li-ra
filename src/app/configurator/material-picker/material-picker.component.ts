@@ -34,8 +34,9 @@ export class MaterialPickerComponent implements OnInit {
     this.client_name = this._configuratorService.currentSession.client_name 
   }
 
-  updateMaterial(material: Material){    
+  updateMaterial(material: Material){   
     if (material) {
+      console.log('new material ' + material) 
       this._configuratorService.selectMaterial(material)
     }
   }
