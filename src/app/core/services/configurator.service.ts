@@ -134,6 +134,8 @@ export class ConfiguratorService implements CanActivate {
       var gain = (ricavo * forcedGain / 100)
       
       console.log('forcing gain: ' + forcedGain + ', result: ' + (ricavo).toFixed(2))
+      //aggiorno anche il prezzo comunicato (che sarà uguale al totale del preventivo)
+      this.currentSession.recap_tot_prz.text = (ricavo+gain).toFixed(2)
       this.currentSession.recap_tot.text = (ricavo+gain).toFixed(2)
       this.currentSession.recap_tot_gain.text = (gain).toFixed(2)
     }

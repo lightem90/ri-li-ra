@@ -14,7 +14,7 @@ import {NumberInput} from '../../core/domain/common'
 })
 export class NumberInputComponent implements OnInit {
 
-  @Output("inputChanged") changed = new EventEmitter()
+  @Output("inputChanged") changed = new EventEmitter<number>()
   @Input() input : NumberInput
 
   constructor() { }
@@ -23,7 +23,7 @@ export class NumberInputComponent implements OnInit {
   }
 
   signalChanged(event) {
-    this.changed.emit()
+    this.changed.emit(this.input.value)
   }
 
 }

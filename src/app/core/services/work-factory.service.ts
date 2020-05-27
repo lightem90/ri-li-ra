@@ -56,7 +56,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     const stages = []
 
     if(addToolChangePhase) {
-      stages.push(this._createToolChangeStage())
+      stages.push(this._createToolChangeStage(result.hourlyCost))
     }
     //Nodo vuoto per visualizzare subito l'input per la nuova fase
     const emptyStage = new TreeWorkNode()
@@ -126,14 +126,15 @@ export class WorkFactoryService implements IWorkFactoryService {
     return result
   }
 
-  _createToolChangeStage() {
+  _createToolChangeStage(hourlyCost: NumberInput) {
     
     const outputs = [
-      new TextInput(WorkConstant.stage.time_id, "0"), 
-      new TextInput(WorkConstant.stage.price_id, "0")
+      new TextInput(WorkConstant.stage.price_id, "0"),
+      new TextInput(WorkConstant.stage.time_id, "0") 
       ]
-    var result = new TreeWorkNode()
-
+    var result = new TreeWorkNode(calculateToolChange)
+    result.hourlyCost = hourlyCost
+    
     var inputs = []
     inputs.push(new NumberInput(WorkConstant.stage.tc_step_id))
     inputs.push(new NumberInput(WorkConstant.stage.tc_vel_id))
@@ -145,6 +146,24 @@ export class WorkFactoryService implements IWorkFactoryService {
     result.inputs = inputs
     result.isStage = true
     return  result
+
+    
+
+    //outputs ha optional, minuti, prezzo
+    function calculateToolChange(treeWorkNode : TreeWorkNode){
+      const corsa = treeWorkNode.inputs[2].value
+      const velocita = treeWorkNode.inputs[1].value
+      const ncambi = treeWorkNode.inputs[0].value
+      //non posso dividere per 0..
+      if (velocita > 0) {
+        var minuti = (corsa * ncambi)/velocita
+        treeWorkNode.outputs[1].text = minuti.toFixed(2)
+        if (treeWorkNode.hourlyCost)
+        {
+          treeWorkNode.outputs[0].text = (minuti/60 * treeWorkNode.hourlyCost.value).toFixed(2)
+        }
+      }      
+    }
   }
   
   fixChildrens(node : TreeWorkNode) {
