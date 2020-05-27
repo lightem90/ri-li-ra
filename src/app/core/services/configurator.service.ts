@@ -125,23 +125,33 @@ export class ConfiguratorService implements CanActivate {
     var pieceCount = this.currentSession.n_pieces.value
     var przComunicato = this.currentSession.recap_tot_prz.value
 
-    var ricavo = przComunicato * pieceCount
+    var costoTotaleAlPezzo = +this.currentSession.recap_pc_pz.text    //costo totale comprese di tutte le lavorazioni
+    
     //calcolo il guadagno come differenza tra prezzo comunicato totale e costi totali
     if (forcedGain <= 0) {
+      var fatturato = przComunicato * pieceCount                              //fatturato totale
+      var costi = pieceCount * costoTotaleAlPezzo                             //costo totale
       
-      console.log('NOT forcing gain, result: ' + (ricavo+gain).toFixed(2))
-      var costi = pieceCount * +this.currentSession.recap_pc_pz.text
-      this.currentSession.recap_tot.text = (ricavo).toFixed(2)
-      this.currentSession.recap_tot_gain.text = (ricavo-costi).toFixed(2)
+      this.currentSession.recap_tot.text = (fatturato).toFixed(2)
+      this.currentSession.recap_tot_gain.text = (fatturato-costi).toFixed(2)      
     } else {
-      //il guadagno è inserito in percentuale dall'utente
-      var gain = (ricavo * forcedGain / 100)
       
-      console.log('forcing gain: ' + forcedGain + ', result: ' + (ricavo).toFixed(2))
+      //per evitare comportamenti indesiderati se in serisco un guadagno percentuale >= 100
+      let denominator = (1- (forcedGain/100))
+      if (denominator <= 0) denominator = 1
+
+      //il guadagno è inserito in percentuale dall'utente
+      var ricavoTotaleAlPezzo = costoTotaleAlPezzo / denominator
       //aggiorno anche il prezzo comunicato (che sarà uguale al totale del preventivo)
-      this.currentSession.recap_tot_prz.text = (ricavo+gain).toFixed(2)
-      this.currentSession.recap_tot.text = (ricavo+gain).toFixed(2)
-      this.currentSession.recap_tot_gain.text = (gain).toFixed(2)
+      this.currentSession.recap_tot_prz.value = ricavoTotaleAlPezzo //prezzo comunicato (al pz)
+      
+      const ricavoTot = ricavoTotaleAlPezzo * pieceCount
+      this.currentSession.recap_tot.text = (ricavoTotaleAlPezzo * pieceCount).toFixed(2)     //totale preventivo
+      
+      const guadagnoTotale = ricavoTot * forcedGain / 100
+      this.currentSession.recap_tot_gain.text = (guadagnoTotale).toFixed(2)       //totale guadagno
+      
+      console.log('Forcing gain: ' + forcedGain + ', result: ' + (ricavoTotaleAlPezzo).toFixed(2) + " al pezzo")
     }
   }
 
