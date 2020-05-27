@@ -7,13 +7,10 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
+import { FirebaseModule } from './firebase.module';
+
 import { environment } from './environments/environment';
 
 import { AppComponent } from './app.component';
@@ -26,14 +23,11 @@ import {WorkTreeService} from './core/services/work-tree.service'
 import {AccountService} from './core/services/account.service'
 import {AccountManagerService} from './core/services/account-manager.service'
 
-
-
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import * as firebase from 'firebase/app';
 import { LoginComponent } from './static/login/login.component';
 import { RegisterComponent } from './static/register/register.component'
 import { NotFoundComponent } from './static/not-found/not-found.component';
@@ -57,13 +51,8 @@ import { WorkTreeComponent } from './shared/work-tree/work-tree.component';
 import { SingleInputNodeComponent } from './shared/work-tree/single-input-node/single-input-node.component';
 import { MaterialListComponent } from './shared/material-list/material-list.component';
 import { InlineEditComponent } from './shared/inline-edit/inline-edit.component';
-
-
 import { UserLandingComponent } from './user-landing/user-landing.component';
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(environment.firebase);
-}
 
 export function translateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -71,7 +60,9 @@ export function translateHttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports:      [ 
-    CommonModule,
+    AppRoutingModule,
+    MaterialModule,
+    FirebaseModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -79,22 +70,16 @@ export function translateHttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true}),
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
     HttpClientModule,
     BrowserModule, 
     FormsModule, 
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule,
-    AngularFireAuthModule,
-    AngularFireDatabaseModule,
-    AppRoutingModule,
-    MaterialModule,
-    ],
+    ReactiveFormsModule],
   declarations: [ 
     AppComponent, 
     LoginComponent, 
@@ -122,6 +107,12 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     MaterialListComponent,
     InlineEditComponent],
   bootstrap:    [ AppComponent ],
-  providers: [FirebaseHelper, ConfiguratorService, WorkFactoryService, ExternalWorkFactoryService, AccountService, AccountManagerService]
+  providers: [
+    FirebaseHelper, 
+    ConfiguratorService, 
+    WorkFactoryService, 
+    ExternalWorkFactoryService, 
+    AccountService, 
+    AccountManagerService]
 })
 export class AppModule { }

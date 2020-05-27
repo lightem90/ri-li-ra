@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase, AngularFireList , AngularFireObject } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 import firebase from 'firebase';
 
