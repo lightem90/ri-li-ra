@@ -71,7 +71,7 @@ export function translateHttpLoaderFactory(http: HttpClient) {
       }
     }),
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 3000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true}),
     CommonModule,

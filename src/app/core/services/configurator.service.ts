@@ -94,7 +94,10 @@ export class ConfiguratorService implements CanActivate {
 
     this.currentSession.pieceUnitaryPrice.text = prezzoUnitarioConRicarico.toFixed(2)
     console.log("Unitary price: " + unitaryPrice)
-    this.toastr.success("Costo del pezzo: " + unitaryPrice)
+    if (unitaryPrice > 0) {
+      this.toastr.success("Costo del materiale: " + unitaryPrice)
+    }
+
     this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
     this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)   
     console.log('tot material price: ' + (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2))
@@ -127,6 +130,9 @@ export class ConfiguratorService implements CanActivate {
 
     var costoTotaleAlPezzo = +this.currentSession.recap_pc_pz.text    //costo totale comprese di tutte le lavorazioni
     
+    if (costoTotaleAlPezzo > 0) {
+      this.toastr.success("Costo totale del pezzo: " + costoTotaleAlPezzo)
+    }
     //calcolo il guadagno come differenza tra prezzo comunicato totale e costi totali
     if (forcedGain <= 0) {
       var fatturato = przComunicato * pieceCount                              //fatturato totale
@@ -153,6 +159,7 @@ export class ConfiguratorService implements CanActivate {
       
       console.log('Forcing gain: ' + forcedGain + ', result: ' + (ricavoTotaleAlPezzo).toFixed(2) + " al pezzo")
     }
+    
   }
 
   setInternalWorks(works: Work[]){

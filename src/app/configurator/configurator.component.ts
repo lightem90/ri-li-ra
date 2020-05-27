@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {Budget} from '../core/domain/budget'
 import { ConfiguratorService } from '../core/services/configurator.service';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configurator',
@@ -10,14 +11,17 @@ import { ConfiguratorService } from '../core/services/configurator.service';
 })
 export class ConfiguratorComponent implements OnInit {
 
+  @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
+
   step = 0;
   budget : Budget
 
-  constructor(private _configurator: ConfiguratorService) {    
-
-  }
+  constructor(
+    private toastr: ToastrService,
+    private _configurator: ConfiguratorService) { }
   
-  ngOnInit() {
+  ngOnInit() {    
+    this.toastr.overlayContainer = this.toastContainer;
     this._configurator.startNewSession()
   }
 
