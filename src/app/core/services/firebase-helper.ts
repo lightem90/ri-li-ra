@@ -26,7 +26,7 @@ export class FirebaseHelper
     private storage: AngularFireStorage) {
     let self = this
     // recommended way to get the current user
-    auth.auth.onAuthStateChanged(function(user) {
+    auth.onAuthStateChanged(function(user) {
       console.log("user changed " + user.email)
       self._currentUser = user
       self._authChangedSubject.next(user)
@@ -37,16 +37,16 @@ export class FirebaseHelper
   }
 
   login(email: string, password: string) {
-    return this.auth.auth
+    return this.auth
       .signInWithEmailAndPassword(email, password)
   }
 
   logout(){
-    return this.auth.auth.signOut()
+    return this.auth.signOut()
   }
 
   register(email: string, password: string) {
-    return this.auth.auth
+    return this.auth
       .createUserWithEmailAndPassword(email, password)
       .then(r => {
         this._addDataForUser({
@@ -61,7 +61,7 @@ export class FirebaseHelper
   doFacebookLogin() {
     return new Promise<any>((resolve, reject) => {
       const provider = new firebase.auth.FacebookAuthProvider();
-      this.auth.auth
+      this.auth
       .signInWithPopup(provider)
       .then(res => {
         resolve(res);
@@ -77,7 +77,7 @@ export class FirebaseHelper
       const provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
-      this.auth.auth
+      this.auth
       .signInWithPopup(provider)
       .then(res => {
         resolve(res);
@@ -87,7 +87,7 @@ export class FirebaseHelper
 
   signInAnonymously(){
     return new Promise<any>((resolve, reject) => {
-      this.auth.auth
+      this.auth
       .signInAnonymously()
       .then(res => {
         resolve(res);

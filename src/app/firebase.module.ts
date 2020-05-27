@@ -6,7 +6,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
-import { environment } from '../environments/environment';
+import { environment } from './environments/environment';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(environment.firebase);
