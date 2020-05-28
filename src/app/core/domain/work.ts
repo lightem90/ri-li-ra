@@ -106,12 +106,14 @@ export class Work {
   //inizializza un TreeWorkNode con i dati della lavorazione, il tree work node deve essere già stato inizializzato
   static mapTo(w: Work, node: TreeWorkNode) {
     if (node.isWork) {
+
       node.originalWorkName = w.originalWorkName
       node.name = w.name
       node.totTime.value = w.tempo_totale
+
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
       if (tmpD) {
-        tmpD.text = w.costo_orario.toFixed(2)
+        tmpD.text = w.costo_totale.toFixed(2)
       }
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
       if (tmp) {
@@ -131,11 +133,11 @@ export class Work {
       }
 
       if (w.fasi && w.fasi.length > 0) {
-        const stages = node.children.filter(c => c.name !== "")
+        const stages = node.children.filter(c => c.name !== "" && c.isStage)
         for (let index = 0; index < stages.length; index++) {   
           let workChild = node.children[index] 
           let stage = w.fasi[index]
-          stage.mapTo(workChild)               
+          Stage.mapTo(stage, workChild)   
         }    
       } else {
         //non ci sono nodi salvati per le fasi, quindi li rimuovo dall'albero
@@ -154,7 +156,7 @@ export class Work {
 
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
       if (tmpD) {
-        this.costo_orario = +(tmpD.text)
+        this.costo_totale = +(tmpD.text)
       }
 
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
@@ -199,54 +201,52 @@ export class Stage {
   }
 
   //inizializza un TreeWorkNode con i dati della lavorazione
-  public mapTo(node: TreeWorkNode) : Stage {
-    if (node.isStage) {
+  public static mapTo(s : Stage, node: TreeWorkNode) : Stage {
 
-      console.log("MAPPING NODE FROM STAGE: " + this.name)
-      node.name = this.name
-      for(const prop in this.property_bag) {
+    if (node.isStage) {
+      //console.log("MAPPING NODE FROM STAGE: " + s.name)
+      node.name = s.name
+      for(const prop in s.property_bag) {
         const propName = WorkConstant.stage[prop]
-        console.log("Property name: " + propName)
+        //console.log("Property name: " + propName)
         let validIn = node.inputs.find(inp => inp.label === propName)
         if (validIn) {
-          console.log("Input: " + i + " value: " + validIn.value)
-          validIn.value = this.property_bag[prop]
+          //console.log("Input: " + validIn + " value: " + s.property_bag[prop])
+          validIn.value = s.property_bag[prop]
         }
 
         let validOut = node.outputs.find(out => out.label === propName)
         if (validOut) {
-          console.log("Output: " + i + " value: " + validOut.text)
-          validOut.text = (this.property_bag[prop]).toFixed(2)
+          //console.log("Output: " + validOut + " value: " + s.property_bag[prop])
+          validOut.text = (s.property_bag[prop]).toFixed(2)
         }
       }
     }
-    console.log("END MAPPING")
-    return this
+    return s
   }
 
   //inizializza la lavorazione dal TreeWorkNode
   mapFrom(node: TreeWorkNode) : Stage {
     if (node.isStage) {
-      console.log("MAPPING STAGE FROM NODE: " + node.name)
+      //console.log("MAPPING STAGE FROM NODE: " + node.name)
       this.name = node.name
 
       for(let i in WorkConstant.stage) {
         const propName = WorkConstant.stage[i]
-        console.log("Property name: " + propName)
+        //console.log("Property name: " + propName)
         let validIn = node.inputs.find(inp => inp.label === propName)
         if (validIn) {
-          console.log("Input: " + i + " value: " + validIn.value)
+          //console.log("Input: " + i + " value: " + validIn.value)
           this.property_bag[i] = validIn.value
         }
 
         let validOut = node.outputs.find(out => out.label === propName)
         if (validOut) {
-          console.log("Output: " + i + " value: " + validOut.text)
+          //console.log("Output: " + i + " value: " + validOut.text)
           this.property_bag[i] = +(validOut.text)
         }
       }
     }
-    console.log("END MAPPING")
     return this;    
   }
 }

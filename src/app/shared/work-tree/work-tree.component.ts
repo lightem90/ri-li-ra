@@ -82,6 +82,7 @@ export class WorkTreeComponent implements OnInit {
 
       //li aggiungo come nodi all'albero solo se li posso salvare (nella landing utente)
       if (this.editAndSave) {
+        
         for(let i = 0; i<this.userWorks.length; i++) {
           const work = this.userWorks[i]
           const node = this.workFactoryService.createFromWork(work)
