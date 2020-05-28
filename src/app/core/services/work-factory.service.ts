@@ -430,7 +430,10 @@ export class WorkFactoryService implements IWorkFactoryService {
     if (w.fasi) {
       for(const s of w.fasi){
         const nodoFase = this.createStageForWork(w.originalWorkName, s.name)
-        result.children.push(nodoFase)
+        //Questo per evitare di creare 2 stage di cambio utensile (se ci sono)
+        if (!result.children.some(c => c.name === s.name)) {
+          result.children.push(nodoFase)
+        }
       }
     } else {
       //lavorazione salvata senza fasi

@@ -113,23 +113,32 @@ export class Work {
 
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
       if (tmpD) {
+        //console.log("Found tot price: " + w.costo_totale.toFixed(2))        
         tmpD.text = w.costo_totale.toFixed(2)
       }
       let tmp = node.inputs.find(i => i.label === WorkConstant.work.hourly_price_id)
       if (tmp) {
-        tmp.text = w.costo_orario.toFixed(2)
+        //console.log("Found hourly price: " + w.costo_orario.toFixed(2))
+        tmp.value = w.costo_orario 
+        //console.log(tmp)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.placement_time_id)
       if (tmp) {
-        tmp.text = w.tempo_piazzamento.toFixed(2)
+        //console.log("Found t piaz: " + w.tempo_piazzamento.toFixed(2))
+        tmp.value = w.tempo_piazzamento
+        //console.log(tmp)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.program_time_id)
       if (tmp) {
-        tmp.text = w.tempo_programma.toFixed(2)
+        //console.log("Found t prog: " + w.tempo_programma.toFixed(2))
+        tmp.value = w.tempo_programma
+        //console.log(tmp)
       }
       tmp = node.inputs.find(i => i.label === WorkConstant.work.tooling_time_id)
       if (tmp) {
-        w.tempo_attrezzaggio = tmp.value
+        //console.log("Found t attr: " + w.tempo_attrezzaggio.toFixed(2))
+        tmp.value = w.tempo_attrezzaggio
+        //console.log(tmp)
       }
 
       if (w.fasi && w.fasi.length > 0) {
@@ -179,10 +188,12 @@ export class Work {
         this.tempo_attrezzaggio = tmp.value
       }
 
+      let i = 0
       for(let child of node.children.filter(c => c.isStage)){
-        var stage = new Stage()
+        var stage = new Stage(i.toString())
         stage.mapFrom(child)
         this.fasi.push(stage)
+        i++
       }
     }
 
