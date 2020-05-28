@@ -110,6 +110,7 @@ export class Work {
       node.originalWorkName = w.originalWorkName
       node.name = w.name
       node.totTime.value = w.tempo_totale
+      node.uid = w.uid
 
       let tmpD = node.outputs.find(out => out.label === WorkConstant.work.tot_price_id)
       if (tmpD) {
@@ -159,6 +160,7 @@ export class Work {
   //inizializza la lavorazione dal TreeWorkNode
   public mapFrom(node: TreeWorkNode) : Work {    
     if (node.isWork) {
+      this.uid = node.uid
       this.name = node.name
       this.originalWorkName = node.originalWorkName
       this.tempo_totale = node.totTime.value
@@ -275,6 +277,7 @@ export class ExternalWork {
   public mapFrom(node: TreeWorkNode) : ExternalWork {
 
     this.name = node.name
+    this.uid = node.uid
 
     let tmp = node.inputs.find(i => i.label === WorkConstant.ext_work.quantity_id)
     if (tmp){
@@ -300,7 +303,7 @@ export class ExternalWork {
   //inizializza un TreeWorkNode con i dati della lavorazione
   static mapTo(w: ExternalWork, node: TreeWorkNode) : ExternalWork{
       node.name = w.name
-
+      node.uid = w.uid
       let tmpD = node.outputs.find(out => out.label === WorkConstant.ext_work.tot_price_id)
       if (tmpD) {
         tmpD.text = w.costo_totale.toFixed(2)

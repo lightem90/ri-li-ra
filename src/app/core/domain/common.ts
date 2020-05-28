@@ -55,6 +55,9 @@ export class TreeWorkNode {
   public isStage : boolean = false
   public isWork : boolean = false
   public canAddLevel : boolean = false
+  
+  //per fare correttamente update
+  public uid : string = ""
 
   //l'input del tempo di lavorazione è visualizzabile solo se non ci sono stage
   workTimeEnabled() {

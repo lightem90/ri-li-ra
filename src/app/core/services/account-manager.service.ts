@@ -64,7 +64,7 @@ export class AccountManagerService implements CanActivate {
 
   saveMaterialForCurrentUser(materials: Material[]) {
     for(const mat of materials){      
-      this._firbaseHelper._addDataForUser(
+      this._firbaseHelper.addOrUpdateDataForUser(
         mat.map_to_db(),
         FirebaseConstant.entityTableNames.material
       )
@@ -85,13 +85,13 @@ export class AccountManagerService implements CanActivate {
   }
 
   saveWorkForUser(work : Work){
-    return this._firbaseHelper._addDataForUser(
+    return this._firbaseHelper.addOrUpdateDataForUser(
           work,
           FirebaseConstant.relationTableNames.userWork)
   }
 
   saveExternalWorkForUser(extWork : ExternalWork) {
-    return this._firbaseHelper._addDataForUser(
+    return this._firbaseHelper.addOrUpdateDataForUser(
           extWork,
           FirebaseConstant.relationTableNames.userService)
 

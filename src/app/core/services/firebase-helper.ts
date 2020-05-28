@@ -49,7 +49,7 @@ export class FirebaseHelper
     return this.auth
       .createUserWithEmailAndPassword(email, password)
       .then(r => {
-        this._addDataForUser({
+        this.addOrUpdateDataForUser({
           email : email,
           password : password
         },
@@ -276,18 +276,29 @@ export class FirebaseHelper
   }
 
   //adds into a table a new document
-  _addDataForUser(
+  addOrUpdateDataForUser(
     dataToAdd: any, 
     dataTableName: string) {
 
-    var newDataKey = this.database.database
-      .ref()
-      .child(dataTableName + '/' + this._currentUser.uid)
-      .push()
-      .key;
+    console.log(dataToAdd.uid)
+    if (!dataToAdd.uid || dataToAdd.uid === "") { //no uid = add
+        
+        var newDataKey = this.database.database
+        .ref()
+        .child(dataTableName + '/' + this._currentUser.uid)
+        .push()
+        .key;
 
-    dataToAdd.uid = newDataKey;
+      dataToAdd.uid = newDataKey;
 
-    return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
+      return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
+    } else { //yes uid = update
+            
+      var updates = {};
+      updates['/' + dataTableName + '/' + this._currentUser.uid + '/' + dataToAdd.uid] = dataToAdd;
+      
+      return this.database.database.ref().update(updates);
+    }
+    
   }  
 }

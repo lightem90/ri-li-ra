@@ -179,7 +179,7 @@ export class ConfiguratorService implements CanActivate {
   }
 
   save() {
-    this.firebaseHelper._addDataForUser(
+    this.firebaseHelper.addOrUpdateDataForUser(
       this.currentSession.mapToDb(this.internalWorks, this.externalWorks),
       FirebaseConstant.relationTableNames.userBudget)
   }
