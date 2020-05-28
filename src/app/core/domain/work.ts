@@ -130,9 +130,8 @@ export class Work {
         w.tempo_attrezzaggio = tmp.value
       }
 
-      if (w.fasi)
-      {
-        const stages = node.children.filter(c => c.isStage && c.name !== "")
+      if (w.fasi && w.fasi.length > 0) {
+        const stages = node.children.filter(c => c.name !== "")
         for (let index = 0; index < stages.length; index++) {   
           let workChild = node.children[index] 
           let stage = w.fasi[index]
@@ -203,43 +202,51 @@ export class Stage {
   public mapTo(node: TreeWorkNode) : Stage {
     if (node.isStage) {
 
+      console.log("MAPPING NODE FROM STAGE: " + this.name)
       node.name = this.name
       for(const prop in this.property_bag) {
-
-        let validIn = node.inputs.find(inp => inp.label === WorkConstant.stage[prop])
+        const propName = WorkConstant.stage[prop]
+        console.log("Property name: " + propName)
+        let validIn = node.inputs.find(inp => inp.label === propName)
         if (validIn) {
+          console.log("Input: " + i + " value: " + validIn.value)
           validIn.value = this.property_bag[prop]
         }
 
-        let validOut = node.outputs.find(out => out.label === WorkConstant.stage[prop])
+        let validOut = node.outputs.find(out => out.label === propName)
         if (validOut) {
+          console.log("Output: " + i + " value: " + validOut.text)
           validOut.text = (this.property_bag[prop]).toFixed(2)
         }
       }
     }
+    console.log("END MAPPING")
     return this
   }
 
   //inizializza la lavorazione dal TreeWorkNode
   mapFrom(node: TreeWorkNode) : Stage {
     if (node.isStage) {
+      console.log("MAPPING STAGE FROM NODE: " + node.name)
       this.name = node.name
 
       for(let i in WorkConstant.stage) {
         const propName = WorkConstant.stage[i]
-
+        console.log("Property name: " + propName)
         let validIn = node.inputs.find(inp => inp.label === propName)
         if (validIn) {
+          console.log("Input: " + i + " value: " + validIn.value)
           this.property_bag[i] = validIn.value
         }
 
         let validOut = node.outputs.find(out => out.label === propName)
         if (validOut) {
+          console.log("Output: " + i + " value: " + validOut.text)
           this.property_bag[i] = +(validOut.text)
         }
       }
     }
-
+    console.log("END MAPPING")
     return this;    
   }
 }

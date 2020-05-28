@@ -30,7 +30,6 @@
     <app-work-tree
       *ngIf="_userExtWorksLoaded"
       [userWorks]="userExtWorks"
-      [workTypes]="userExtTypes"
       [workFactoryService]="_workFactory"
       (dataChanged)="updateServWorks($event)"
       (recalculated)="updateTreeFour($event)">
