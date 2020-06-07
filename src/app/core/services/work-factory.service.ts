@@ -409,11 +409,11 @@ export class WorkFactoryService implements IWorkFactoryService {
       treeWorkNode.outputs[0].text = velocita.toFixed(2)
       //non posso dividere per 0..
       if (pezzi > 0 && velocita > 0) {
-        var minuti = (distanza * passate * velocita)
+        var minuti = (distanza * passate / velocita)
         treeWorkNode.outputs[1].text = minuti.toFixed(2)
         if (treeWorkNode.hourlyCost)
         {
-          treeWorkNode.outputs[2].text = (minuti * treeWorkNode.hourlyCost.value).toFixed(2)
+          treeWorkNode.outputs[2].text = (minuti /60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
 

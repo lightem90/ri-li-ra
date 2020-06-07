@@ -78,6 +78,7 @@ export class BudgetCalculatorService {
 
   //ok
   _calculateQuadrangularTube() {
+    
     let spessLama = this._budget.shapeInputs[2].value
     let h10 = this._budget.shapeInputs[4].value
     let b19 = h10 + spessLama
@@ -85,6 +86,9 @@ export class BudgetCalculatorService {
     let d19 = this._budget.shapeInputs[1].value
     let h11 = this._budget.shapeInputs[2].value
     let i11 = this._budget.shapeInputs[3].value
+    
+    //altezza, base esterna, altezza esterna -
+    //altezza, base interna, altezza interna
 
     return (b19*c19*d19)-(b19*h11*i11)
   }
