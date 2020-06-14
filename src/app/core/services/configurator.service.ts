@@ -102,7 +102,6 @@ export class ConfiguratorService implements CanActivate {
       this.toastr.success("Costo del materiale: " + przStr)
     }
 
-    this.currentSession.totWeigth.text = (numberOfPieces * pieceUnitaryWeight).toFixed(2)
     this.currentSession.tot_material_price.text = (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2)   
     console.log('tot material price: ' + (prezzoUnitarioConRicarico*numberOfPieces).toFixed(2))
     this.calculateBudget()
@@ -142,11 +141,16 @@ export class ConfiguratorService implements CanActivate {
     if (forcedGain <= 0) {
       var fatturato = przComunicato * pieceCount                              //fatturato totale
       var costi = pieceCount * costoTotaleAlPezzo                             //costo totale
+
+      var guadagno = fatturato-costi
+      var guadagnoPerc = fatturato > 0 ? 100*guadagno/fatturato : 0
       
-      this.currentSession.recap_tot.text = (fatturato).toFixed(2)
-      this.currentSession.recap_tot_gain.text = (fatturato-costi).toFixed(2)      
-    } else {
-      
+      this.currentSession.recap_tot.text = fatturato.toFixed(2)
+      this.currentSession.recap_tot_gain.text = guadagno.toFixed(2)  
+      this.currentSession.recap_tot_gain_perc.text = guadagnoPerc.toFixed(2)
+
+    } else { //NON PIU' USATO!
+      console.log("ERRORE DI CALCOLO, FUNZIONE NON SUPPORTATA")
       //per evitare comportamenti indesiderati se in serisco un guadagno percentuale >= 100
       let denominator = (1- (forcedGain/100))
       if (denominator <= 0) denominator = 1

@@ -101,8 +101,8 @@ export class PieceSelectorComponent implements OnInit {
           new NumberInput("LamaTaglio", 5)]
 
   exagonal = [
-          new NumberInput("LunghezzaLato",  0), 
           new NumberInput("Lunghezza",  0),
+          new NumberInput("LunghezzaLato",  0), 
           new NumberInput("LamaTaglio", 5)]
 
   lAngular = [

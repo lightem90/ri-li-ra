@@ -45,7 +45,7 @@ export class BudgetCalculatorService {
           return false
       }  
       const weightPerPiece = shapeResult * selectedMaterialSpecWeight / 1000000
-      this._budget.totWeigthPerPiece.text = weightPerPiece.toString()
+      this._budget.totWeigthPerPiece.text = weightPerPiece.toFixed(5)
       return true
     } 
     return false
@@ -63,49 +63,50 @@ export class BudgetCalculatorService {
 
   //ok
   _calculateCylinder() {
+    let nPieces = this._budget.n_pieces.value
     let b17 = this._budget.shapeInputs[0].value  / 2
-    let c17 = this._budget.shapeInputs[1].value + this._budget.shapeInputs[2].value
+    let c17 = (this._budget.shapeInputs[1].value*nPieces) + this._budget.shapeInputs[2].value
     return b17 * b17 * this._pi * c17
   }
 
   //ok
   _calculateCylinderTube() {
+    let nPieces = this._budget.n_pieces.value
     let b18 = this._budget.shapeInputs[0].value  / 2
-    let c18 = this._budget.shapeInputs[2].value + this._budget.shapeInputs[3].value
+    let c18 = (this._budget.shapeInputs[2].value*nPieces) + this._budget.shapeInputs[3].value
     let h11 = this._budget.shapeInputs[1].value
     return (((b18*b18*this._pi)-((h11/2)*(h11/2)*this._pi))*c18)
   }
 
   //ok
-  _calculateQuadrangularTube() {
-    
-    let spessLama = this._budget.shapeInputs[2].value
+  _calculateQuadrangularTube() {    
+    let nPieces = this._budget.n_pieces.value
+    let spessLama = this._budget.shapeInputs[5].value
     let h10 = this._budget.shapeInputs[4].value
-    let b19 = h10 + spessLama
+    let b19 = (h10 + spessLama)*nPieces
     let c19 = this._budget.shapeInputs[0].value
     let d19 = this._budget.shapeInputs[1].value
     let h11 = this._budget.shapeInputs[2].value
     let i11 = this._budget.shapeInputs[3].value
-    
-    //altezza, base esterna, altezza esterna -
-    //altezza, base interna, altezza interna
 
     return (b19*c19*d19)-(b19*h11*i11)
   }
 
   //ok
   _calculateExagonal() {
+    let nPieces = this._budget.n_pieces.value
     let spessLama = this._budget.shapeInputs[2].value
-    let h = this._budget.shapeInputs[0].value + spessLama
+    let l = (this._budget.shapeInputs[0].value + spessLama)*nPieces
     let a = this._budget.shapeInputs[1].value * this._budget.shapeInputs[1].value  * 0.866
-    return a * h
+    return a * l
   }
 
   //ok
   _calculateLAngular() {
+    let nPieces = this._budget.n_pieces.value
     let spessLama = this._budget.shapeInputs[4].value
     let h10 = this._budget.shapeInputs[3].value
-    let b21 = spessLama + h10
+    let b21 = (spessLama + h10)*nPieces
     let h13 = this._budget.shapeInputs[0].value
     let i13 = this._budget.shapeInputs[1].value
     let d21 = this._budget.shapeInputs[2].value
