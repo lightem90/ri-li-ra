@@ -32,10 +32,11 @@ export class WorkFactoryService implements IWorkFactoryService {
   _createSimpleWork(wType : WorkType, calculate: Function, optInputs : NumberInput[] = [], addToolChangePhase: boolean  = false) {
 
     var totPrice = new TextInput(WorkConstant.work.tot_price_id, "0")
+    var totMinutes = new TextInput(WorkConstant.work.tot_minutes_id, "0")
     var result = new TreeWorkNode(calculate)
     result.originalWorkName = WorkType[wType]
     result.name = WorkType[wType]
-    result.outputs = [totPrice]
+    result.outputs = [totPrice, totMinutes]
     result.editable = true
     result.isWork = true
     
@@ -54,19 +55,21 @@ export class WorkFactoryService implements IWorkFactoryService {
     }
 
     const stages = []
-
-    if(addToolChangePhase) {
-      stages.push(this._createToolChangeStage(result.hourlyCost))
-    }
-    //Nodo vuoto per visualizzare subito l'input per la nuova fase
-    const emptyStage = new TreeWorkNode()
-    emptyStage.isStage = true
-    stages.push()
     const singleInputs = inputs.map(i => this._createSingleInputFrom(i))
     //aggiungo anche gli input singoli alla lista dei "children", a fianco alle ExternalWorkFactoryService(verificare se non si possa fare diversamente...)
     for(let sIn of singleInputs) {
       stages.push(sIn)
     }
+
+    //la fase di cambio utensile va dopo
+    if(addToolChangePhase) {
+      stages.push(this._createToolChangeStage(result.hourlyCost))
+    }
+
+    //Nodo vuoto per visualizzare subito l'input per la nuova fase
+    const emptyStage = new TreeWorkNode()
+    emptyStage.isStage = true
+    stages.push(emptyStage)
 
     result.canAddLevel = true
     result.children = stages
@@ -239,6 +242,7 @@ export class WorkFactoryService implements IWorkFactoryService {
 
       var prezzoOrario = treeWorkNode.hourlyCost.value
       var totPriceOutput = treeWorkNode.outputs[0]
+      var totMinutesOutput = treeWorkNode.outputs[1]
 
       //se non ci sono stage validi si comporta come una lavorazione esterna
       if (treeWorkNode.workTimeEnabled()) {
@@ -267,6 +271,8 @@ export class WorkFactoryService implements IWorkFactoryService {
         treeWorkNode.totTime.value = totPrice/prezzoOrario * 60
         totPriceOutput.text = totPrice.toFixed(2)
       }
+      
+      totMinutesOutput.text = treeWorkNode.totTime.value.toFixed(2)
     }
   }
 
@@ -351,8 +357,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         var secondi = minuti * 60
         treeWorkNode.outputs[1].text = minuti.toFixed(2)
         treeWorkNode.outputs[0].text = secondi.toFixed(2)
-        if (treeWorkNode.hourlyCost)
-        {
+        if (treeWorkNode.hourlyCost){
           treeWorkNode.outputs[2].text = (minuti/60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }      
@@ -370,13 +375,13 @@ export class WorkFactoryService implements IWorkFactoryService {
       //non posso dividere per 0..
       if (pezzi > 0 && velocitaZ > 0 && velocita) {
         var j13 = 
-          ((distanzaZ * passateZ) / velocitaZ)/60 + 
-          ((distanza * passate) / velocita)/60
+          ((distanzaZ * passateZ) / velocitaZ) + 
+          ((distanza * passate) / velocita)
         var k45 = j13 * pezzi
         treeWorkNode.outputs[0].text = k45.toFixed(2)
-        if (treeWorkNode.hourlyCost)
-        {
-          treeWorkNode.outputs[1].text = (k45 * treeWorkNode.hourlyCost.value).toFixed(2)
+
+        if (treeWorkNode.hourlyCost){
+          treeWorkNode.outputs[1].text = (k45/60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }      
     }
@@ -388,11 +393,10 @@ export class WorkFactoryService implements IWorkFactoryService {
       const distanza = treeWorkNode.inputs[3].value
       //non posso dividere per 0..
       if (pezzi > 0 && velocita) {
-        var minuti = ((distanza * passate) / velocita)/60
+        var minuti = ((distanza * passate) / velocita)
         treeWorkNode.outputs[0].text = minuti.toFixed(2)
-        if (treeWorkNode.hourlyCost)
-        {
-          treeWorkNode.outputs[1].text = (minuti * treeWorkNode.hourlyCost.value).toFixed(2)
+        if (treeWorkNode.hourlyCost){
+          treeWorkNode.outputs[1].text = (minuti/60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
     }
@@ -411,12 +415,10 @@ export class WorkFactoryService implements IWorkFactoryService {
       if (pezzi > 0 && velocita > 0) {
         var minuti = (distanza * passate / velocita)
         treeWorkNode.outputs[1].text = minuti.toFixed(2)
-        if (treeWorkNode.hourlyCost)
-        {
+        if (treeWorkNode.hourlyCost) {
           treeWorkNode.outputs[2].text = (minuti /60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
-
     }
   }
 
