@@ -41,7 +41,7 @@ export class PieceSelectorComponent implements OnInit {
     switch(Shape[shape]){
       case Shape.Quadrangular:
         this.inputs = this.quadrangularInputs
-          break
+          break;
       case Shape.Cylinder:
         this.inputs = this.cylinderInputs
         break;

@@ -125,9 +125,9 @@ export class BudgetCalculatorService {
     let diamFresa = this._budget.shapeInputs[5].value
     let b26 = Math.floor(b25/(h10+diamFresa))
     let c26 = Math.floor(c25/(i10+diamFresa))
-    let numPezzi = b26 * c26 //cosa fare? aggiornare quelli del budget?
-    console.log("Numero di pezzi nesting: " + numPezzi)
+    let numPezzi = b26 * c26 
 
+    this._budget.n_pieces.value = numPezzi
     //volume della lastra
     return (b25*c25*d25)
   }
