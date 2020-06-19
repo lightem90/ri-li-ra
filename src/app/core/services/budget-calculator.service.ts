@@ -37,9 +37,9 @@ export class BudgetCalculatorService {
         case Shape.Sheet:
             shapeResult = this._calculateSheet()
           break;
-        case Shape.SheetR:
-            shapeResult = this._calculateSheetR()
-          break;
+        // case Shape.SheetR:
+        //     shapeResult = this._calculateSheetR()
+        //   break;
         default:
           console.log("Error shape type: " + this._budget.selectedShape)
           return false

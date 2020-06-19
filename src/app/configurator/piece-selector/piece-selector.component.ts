@@ -41,7 +41,7 @@ export class PieceSelectorComponent implements OnInit {
     switch(Shape[shape]){
       case Shape.Quadrangular:
         this.inputs = this.quadrangularInputs
-          break;
+          break
       case Shape.Cylinder:
         this.inputs = this.cylinderInputs
         break;
@@ -60,9 +60,9 @@ export class PieceSelectorComponent implements OnInit {
       case Shape.Sheet:
       this.inputs = this.sheetInputs
         break;
-      case Shape.SheetR:
-        this.inputs = this.sheetRInputs
-        break;
+      // case Shape.SheetR:
+      //   this.inputs = this.sheetRInputs
+      //   break;
       default:
         console.log("Error shape type: " + shape)
         break;
@@ -122,12 +122,12 @@ export class PieceSelectorComponent implements OnInit {
           new NumberInput("SpessoreLastra",  0), 
           new NumberInput("DiametroFresa",  0), ]
 
-  sheetRInputs = [
-          new NumberInput("Diametro",  0), 
-          new NumberInput("LunghezzaLastra",  0), 
-          new NumberInput("LarghezzaLastra",  0),
-          new NumberInput("SpessoreLastra",  0), 
-          new NumberInput("DiametroFresa",  0), ]
+  // sheetRInputs = [
+  //         new NumberInput("Diametro",  0), 
+  //         new NumberInput("LunghezzaLastra",  0), 
+  //         new NumberInput("LarghezzaLastra",  0),
+  //         new NumberInput("SpessoreLastra",  0), 
+  //         new NumberInput("DiametroFresa",  0), ]
 
         
 }

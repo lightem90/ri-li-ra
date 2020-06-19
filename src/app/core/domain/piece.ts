@@ -6,6 +6,6 @@ export enum Shape {
   Hexagonal,
   LAngular,
   Sheet,
-  SheetR
+  //SheetR
 }
 
