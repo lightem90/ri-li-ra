@@ -44,8 +44,9 @@ export class BudgetCalculatorService {
           console.log("Error shape type: " + this._budget.selectedShape)
           return false
       }  
-      const weightPerPiece = shapeResult * selectedMaterialSpecWeight / 1000000
-      this._budget.totWeigthPerPiece.text = weightPerPiece.toFixed(5)
+      const tot = shapeResult * selectedMaterialSpecWeight / 1000000
+      this._budget.totWeigth.text = tot.toFixed(5)
+      this._budget.totWeigthPerPiece.text = (tot / this._budget.n_pieces.value).toFixed(5)
       return true
     } 
     return false

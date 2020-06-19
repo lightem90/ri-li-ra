@@ -21,6 +21,7 @@ export class PieceSelectorComponent implements OnInit {
   public pieceSelector : FormGroup
   pdfSrc : string
   totWPerPiece : DisabledInput
+  totWeigth : DisabledInput
 
   constructor(
     private _fb: FormBuilder, 
@@ -33,6 +34,7 @@ export class PieceSelectorComponent implements OnInit {
     this.selectedShape = this.shapes[0]
     this.updateInputs(this.selectedShape)
     this.totWPerPiece = this._configuratorService.currentSession.totWeigthPerPiece
+    this.totWeigth = this._configuratorService.currentSession.totWeigth
   }
 
   updateInputs(shape : Shape) {
