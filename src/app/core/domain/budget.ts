@@ -36,6 +36,7 @@ export class Budget {
     public client_name = new TextInput("client_name", ""),
     public pieceChargePercentage = new NumberInput("PercRic", 0),
     public totWeigthPerPiece = new TextInput("PesoTotPerPz", "0"),
+    public nestingResult = new TextInput("NestingRes", "0"),    
     public totWeigth = new TextInput("PesoTot", "0"),
     public pieceUnitaryPrice = new TextInput("CostoAlPz", "0"),    
     public tot_material_price = new TextInput("CostoTotaleMateriaPrima", "0"),

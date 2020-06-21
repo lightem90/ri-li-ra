@@ -22,6 +22,8 @@ export class PieceSelectorComponent implements OnInit {
   pdfSrc : string
   totWPerPiece : DisabledInput
   totWeigth : DisabledInput
+  nestRes : DisabledInput
+  optOutputs : DisabledInput[] = []
 
   constructor(
     private _fb: FormBuilder, 
@@ -35,9 +37,11 @@ export class PieceSelectorComponent implements OnInit {
     this.updateInputs(this.selectedShape)
     this.totWPerPiece = this._configuratorService.currentSession.totWeigthPerPiece
     this.totWeigth = this._configuratorService.currentSession.totWeigth
+    this.nestRes = this._configuratorService.currentSession.nestingResult
   }
 
   updateInputs(shape : Shape) {
+    this.optOutputs = []
     switch(Shape[shape]){
       case Shape.Quadrangular:
         this.inputs = this.quadrangularInputs
@@ -59,6 +63,7 @@ export class PieceSelectorComponent implements OnInit {
         break;
       case Shape.Sheet:
       this.inputs = this.sheetInputs
+      this.optOutputs = [this.nestRes]
         break;
       // case Shape.SheetR:
       //   this.inputs = this.sheetRInputs

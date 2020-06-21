@@ -126,8 +126,8 @@ export class BudgetCalculatorService {
     let b26 = Math.floor(b25/(h10+diamFresa))
     let c26 = Math.floor(c25/(i10+diamFresa))
     let numPezzi = b26 * c26 
-
-    this._budget.n_pieces.value = numPezzi
+    this._budget.nestingResult.text = numPezzi.toFixed(0)
+    //this._budget.n_pieces.value = numPezzi
     //volume della lastra
     return (b25*c25*d25)
   }

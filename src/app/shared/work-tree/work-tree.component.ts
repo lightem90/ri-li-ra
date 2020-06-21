@@ -53,7 +53,7 @@ export class WorkTreeComponent implements OnInit {
       flatNode.inputs = node.inputs
       flatNode.outputs = node.outputs
       flatNode.isSingleNode = node.isSingleNode
-      flatNode.canAddLevelFlag = node.canAddLevel
+      flatNode.canAddLevelFlag = node.isWork || node.isStage
       flatNode.isWork = node.isWork
       this.flatNodeMap.set(flatNode, node);
       this.nestedNodeMap.set(node, flatNode);
@@ -106,10 +106,23 @@ export class WorkTreeComponent implements OnInit {
     }
 
     /** Select the category so we can insert the new item. */
-    addNewItem(node : TreeWorkFlatNode) {
-      const parentNode = this.flatNodeMap.get(node);
-      this._treeService.addDefault(parentNode)
-      this.treeControl.expand(node);
+    addNewItem(nodeFlat : TreeWorkFlatNode) {
+      const node = this.flatNodeMap.get(nodeFlat);
+      if (node.isWork){
+        this._addDefault(node, nodeFlat)
+      } else if (node.isStage) {
+        const workFlat = this.getParentNode(nodeFlat)
+        const work = this.flatNodeMap.get(workFlat)
+        if (work.isWork) {
+          this._addDefault(work, workFlat)
+        }
+      }
+    }
+
+    //aggiunge una fase (vuota)
+    _addDefault(work: TreeWorkNode, node: TreeWorkFlatNode) {
+        this._treeService.addDefault(work)
+        this.treeControl.expand(node)
     }
 
     //i singoli input richiamano recalculate che triggera il ricalcolo fino alla lavorazione (caso peggiore)

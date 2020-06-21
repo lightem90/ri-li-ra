@@ -120,5 +120,6 @@
   "callToAction": "INIZIA SUBITO",
   "saveBtn" : "Salva",
   "printBtn" : "Stampa",
-  "sendBtn" : "Invia"
+  "sendBtn" : "Invia",
+  "NestingRes" : "Pezzi risultanti dal nesti"
 }

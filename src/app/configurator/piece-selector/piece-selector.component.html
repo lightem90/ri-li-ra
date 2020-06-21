@@ -25,6 +25,11 @@
     <div> 
       <app-disabled-input [input]="totWPerPiece"> </app-disabled-input>
       <app-disabled-input [input]="totWeigth"> </app-disabled-input>
+      <!-- Introdotto per i pezzi risultanti dal nesting -->
+      <app-disabled-input 
+        *ngFor="let o of optOutputs"
+        [input]="o"> 
+      </app-disabled-input>
     </div>
     <app-pdf-uploader
       [budget]="_configuratorService.currentSession"
