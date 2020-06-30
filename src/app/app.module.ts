@@ -52,6 +52,7 @@ import { SingleInputNodeComponent } from './shared/work-tree/single-input-node/s
 import { MaterialListComponent } from './shared/material-list/material-list.component';
 import { InlineEditComponent } from './shared/inline-edit/inline-edit.component';
 import { UserLandingComponent } from './user-landing/user-landing.component';
+import { MultipleValueInputComponent } from './shared/multiple-value-input/multiple-value-input.component';
 
 
 export function translateHttpLoaderFactory(http: HttpClient) {
@@ -105,7 +106,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     UserLandingComponent,
     SingleInputNodeComponent,
     MaterialListComponent,
-    InlineEditComponent],
+    InlineEditComponent,
+    MultipleValueInputComponent],
   bootstrap:    [ AppComponent ],
   providers: [
     FirebaseHelper, 

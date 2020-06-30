@@ -1,7 +1,12 @@
 <div>
   <app-number-input
-    *ngIf="node.inputs.length === 1"
+    *ngIf="!isMultiple()"
     (inputChanged)="recalc()"
     [input]="node.inputs[0]">
   </app-number-input> 
+  <app-multiple-value-input
+    *ngIf="isMultiple()"
+    (inputChanged)="recalc()"
+    [input]="node.inputs[0]">
+  </app-multiple-value-input>
 </div>
