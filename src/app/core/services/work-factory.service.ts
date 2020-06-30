@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {WorkType, WorkConstant, Stage, Work} from '../domain/work'
+import {WorkType, WorkConstant, Stage, Work, Speed} from '../domain/work'
 import {NumberInput, TextInput, DisabledInput, 
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
@@ -100,6 +100,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     wType : WorkType, 
     stageName: string,
     calc : Function,
+    speedType : Speed = Speed.Standard,
     optOutputs: DisabledInput[] = [],
     optInputs: NumberInput[] = [],
     addDefault = true) {      
@@ -110,6 +111,13 @@ export class WorkFactoryService implements IWorkFactoryService {
     const outputs = optOutputs.slice()
     outputs.push(sMin)
     outputs.push(sPrice)
+    
+    let vel_id = WorkConstant.stage.vel_id;
+    if (speedType === Speed.Laser) {
+      vel_id = WorkConstant.stage.laser_speed_id
+    } else if (speedType === Speed.QualityControl) {
+      vel_id = WorkConstant.stage.cc_speed_id
+    }
 
     const inputs = optInputs.slice()
     //questo flag serve perchè il taglio ha parametri totalmente diversi dagli altri
@@ -117,7 +125,7 @@ export class WorkFactoryService implements IWorkFactoryService {
     {
       inputs.push(new NumberInput(WorkConstant.stage.piece_count_id, 1))
       inputs.push(new NumberInput(WorkConstant.stage.step_count_id))
-      inputs.push(new NumberInput(WorkConstant.stage.vel_id))
+      inputs.push(new NumberInput(vel_id))
       inputs.push(new NumberInput(WorkConstant.stage.dist_id))
     }
     var result = new TreeWorkNode(calc)
@@ -281,25 +289,33 @@ export class WorkFactoryService implements IWorkFactoryService {
     switch(wType) {
       case WorkType.Dentatura:
       case WorkType.Fresatura:
-      case WorkType.IncisioneLaser:
       case WorkType.RettificaTangenziale:
       case WorkType.RettificaVerticale:
       case WorkType.Sabbiatura:
       case WorkType.Saldatura:
       case WorkType.Sbavatura:
-      case WorkType.Stozzatura:
-      {
+      case WorkType.Stozzatura: {
         return this._internalCreateStageForWork(wType, stageName, calculateStandardStage)
+        break;
+      }
+      case WorkType.IncisioneLaser: {
+        const optValues = [
+          new NumberInput(WorkConstant.stage.piece_count_id, 1),
+          new NumberInput(WorkConstant.stage.laser_dist_id),
+          new NumberInput(WorkConstant.stage.step_count_id, 1),
+          new NumberInput(WorkConstant.stage.laser_speed_id)]
+
+        return this._internalCreateStageForWork(wType, stageName, calculateLaserStage, Speed.Laser, [], optValues, false)
         break;
       }
       case WorkType.ControlloQualita:
       {
         const optValues = [
-          new NumberInput(WorkConstant.stage.cc_distz_id),
           new NumberInput(WorkConstant.stage.cc_stepz_id),
-          new NumberInput(WorkConstant.stage.cc_velz_id)
+          new NumberInput(WorkConstant.stage.cc_velz_id),
+          new NumberInput(WorkConstant.stage.cc_distz_id),
         ]
-        return this._internalCreateStageForWork(wType, stageName,calculateCQualita, [], optValues)
+        return this._internalCreateStageForWork(wType, stageName,calculateCQualita, Speed.QualityControl, [], optValues)
         break;
       }
       case WorkType.Taglio:
@@ -312,7 +328,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         const optOutput = [
           new TextInput(WorkConstant.stage.t_vel_id, '0')
         ]
-        return this._internalCreateStageForWork(wType, stageName, calculateStageTaglio, optOutput, optValues, false)
+        return this._internalCreateStageForWork(wType, stageName, calculateStageTaglio, Speed.Standard,optOutput, optValues, false)
         break;
       }
       case WorkType.Tornitura:
@@ -325,7 +341,7 @@ export class WorkFactoryService implements IWorkFactoryService {
           new TextInput(WorkConstant.stage.tor_vel_min_id, '0')
         ]
           
-        var tornitura = this._internalCreateStageForWork(wType, stageName,  calculateTornituraStage, optOutput, optValues)
+        var tornitura = this._internalCreateStageForWork(wType, stageName,  calculateTornituraStage, Speed.Standard, optOutput, optValues)
 
         var velIn = tornitura.inputs.find(i => i.label === WorkConstant.stage.vel_id)
         var velC = tornitura.children.find(c => c.name === WorkConstant.stage.vel_id)
@@ -358,6 +374,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         treeWorkNode.outputs[1].text = minuti.toFixed(2)
         treeWorkNode.outputs[0].text = secondi.toFixed(2)
         if (treeWorkNode.hourlyCost){
+          //costo orario, quindi / 60 di nuovo
           treeWorkNode.outputs[2].text = (minuti/60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }      
@@ -365,23 +382,25 @@ export class WorkFactoryService implements IWorkFactoryService {
 
     //outputs ha optional, minuti, prezzo
     function calculateCQualita(treeWorkNode : TreeWorkNode){
-      const distanzaZ = treeWorkNode.inputs[0].value
-      const passateZ = treeWorkNode.inputs[1].value
-      const velocitaZ = treeWorkNode.inputs[2].value
+      const distanzaZ = treeWorkNode.inputs[2].value
+      const passateZ = treeWorkNode.inputs[0].value
+      const velocitaZ = treeWorkNode.inputs[1].value
       const pezzi = treeWorkNode.inputs[3].value
       const passate = treeWorkNode.inputs[4].value
       const velocita = treeWorkNode.inputs[5].value
       const distanza = treeWorkNode.inputs[6].value
       //non posso dividere per 0..
-      if (pezzi > 0 && velocitaZ > 0 && velocita) {
+      if (pezzi > 0 && velocitaZ > 0 && velocita > 0) {
         var j13 = 
           ((distanzaZ * passateZ) / velocitaZ) + 
           ((distanza * passate) / velocita)
         var k45 = j13 * pezzi
-        treeWorkNode.outputs[0].text = k45.toFixed(2)
+        const minuti = k45 / 60;
+        treeWorkNode.outputs[0].text = minuti.toFixed(2)
 
         if (treeWorkNode.hourlyCost){
-          treeWorkNode.outputs[1].text = (k45/60 * treeWorkNode.hourlyCost.value).toFixed(2)
+          //costo orario, quindi / 60 di nuovo
+          treeWorkNode.outputs[1].text = (minuti/60 * treeWorkNode.hourlyCost.value ).toFixed(2)
         }
       }      
     }
@@ -396,6 +415,7 @@ export class WorkFactoryService implements IWorkFactoryService {
         var minuti = ((distanza * passate) / velocita)
         treeWorkNode.outputs[0].text = minuti.toFixed(2)
         if (treeWorkNode.hourlyCost){
+          //costo orario, quindi / 60 di nuovo
           treeWorkNode.outputs[1].text = (minuti/60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
@@ -416,7 +436,25 @@ export class WorkFactoryService implements IWorkFactoryService {
         var minuti = (distanza * passate / velocita)
         treeWorkNode.outputs[1].text = minuti.toFixed(2)
         if (treeWorkNode.hourlyCost) {
+          //costo orario, quindi / 60 di nuovo
           treeWorkNode.outputs[2].text = (minuti /60 * treeWorkNode.hourlyCost.value).toFixed(2)
+        }
+      }
+    }
+
+    function calculateLaserStage(treeWorkNode : TreeWorkNode) {
+
+      const pezzi = treeWorkNode.inputs[0].value
+      const dist = treeWorkNode.inputs[1].value
+      const passate = treeWorkNode.inputs[2].value
+      const vel = treeWorkNode.inputs[3].value
+
+      if (pezzi > 0 && vel > 0) {
+        var minuti = (dist/1000 * passate / vel)*60
+        treeWorkNode.outputs[0].text = minuti.toFixed(2)
+        if (treeWorkNode.hourlyCost) {
+          //costo orario, quindi / 60 di nuovo
+          treeWorkNode.outputs[1].text = (minuti /60 * treeWorkNode.hourlyCost.value).toFixed(2)
         }
       }
     }

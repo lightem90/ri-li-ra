@@ -121,5 +121,8 @@
   "saveBtn" : "Salva",
   "printBtn" : "Stampa",
   "sendBtn" : "Invia",
-  "NestingRes" : "Pezzi risultanti dal nesti"
+  "NestingRes" : "Pezzi risultanti dal nesting",
+  "s_z": "Velocità (mm/sec)",
+  "laser_speed": "Avanzamento (m/sec)",    
+  "laser_dist": "Distanza (mm)"    
 }

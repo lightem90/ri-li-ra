@@ -40,6 +40,12 @@ export enum ExternalWorkType {
   TaglioLaser
 }
 
+export enum Speed {
+  Standard,
+  QualityControl,
+  Laser
+}
+
 export class WorkConstant { 
 
   //{ [key: string]: boolean}
@@ -75,6 +81,7 @@ export class WorkConstant {
     cc_distz_id : 'mm_z',
     cc_stepz_id : 'p_z',
     cc_velz_id : 'v_z',
+    cc_speed_id : 's_z',
     //taglio
     t_area_id : 't_area',
     t_resa_id : 't_resa',
@@ -83,6 +90,9 @@ export class WorkConstant {
     tor_giri_min_id : 'tor_giri_min',
     tor_mm_giro_id : 'tor_mm_giro',
     tor_vel_min_id : 'tornMMin',
+    //incisione laser
+    laser_speed_id : 'laser_speed',
+    laser_dist_id : 'laser_dist'
   }
 }
 

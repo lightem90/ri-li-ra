@@ -54,11 +54,12 @@ export class BudgetCalculatorService {
 
   //ok
   _calculateQuadrangular() {
+    let nPieces = this._budget.n_pieces.value
     let spessLama = this._budget.shapeInputs[3].value
     let h10 = this._budget.shapeInputs[0].value
     let c16 = this._budget.shapeInputs[1].value
     let d16 = this._budget.shapeInputs[2].value
-    let b16 = h10 + spessLama
+    let b16 = (h10 + spessLama)*nPieces
     return b16 * c16 * d16
   }
 
