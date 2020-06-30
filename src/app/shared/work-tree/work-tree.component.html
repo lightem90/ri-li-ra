@@ -18,6 +18,14 @@
           (recalcRequested)="recalcNode($event)"> 
         </app-single-input-node>
       </mat-tree-node>
+      
+      <!-- Nodo per visualizzare un unico parametro di input -->
+      <mat-tree-node *matTreeNodeDef="let node; when: hasOneInput" matTreeNodePadding>
+        <app-single-input-node
+          [node]="getNodeFromFlat(node)"
+          (recalcRequested)="recalcNode($event)"> 
+        </app-single-input-node>
+      </mat-tree-node>
 
       <!-- Nodo normale -->
       <!-- so che non si dovrebbe fare: [ngModel]="getTreeNodeName(node)" nasce per il two way binding, "da sotto" non verrà mai cambiato, ma serve aggiornare il name del vero nodo e non del flat -->
@@ -62,14 +70,14 @@
     <br>
     <mat-form-field>
       <mat-label>{{'workTypeSel' | translate}}</mat-label>
-        <mat-select 
-          [(value)]="selectedWorkType">
-          <mat-option *ngFor="let wType of workTypes" 
-          [value]="wType">
-            {{wType | translate}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-select 
+        [(value)]="selectedWorkType">
+        <mat-option *ngFor="let wType of workTypes" 
+        [value]="wType">
+          {{wType | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <button mat-raised-button (click)="addWork()" translate>
       {{'addWork' | translate}}
     </button>

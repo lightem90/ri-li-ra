@@ -1,7 +1,7 @@
 <div>
   <app-number-input
-    (inputChanged)="recalc()"
     *ngIf="node.inputs.length === 1"
+    (inputChanged)="recalc()"
     [input]="node.inputs[0]">
   </app-number-input> 
 </div>

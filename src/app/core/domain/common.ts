@@ -18,6 +18,23 @@ export class TextInput implements DisabledInput {
   }
 }
 
+export class MultipleValueInput implements DisabledInput {
+  
+  public text : string
+
+  constructor(
+    public label: string, 
+    public value: string,
+    public values: string[] = []) {
+      
+      if (values.length > 0) {
+        this.text = values[0].toString()
+      } else {
+        this.text = value
+      }      
+  }
+}
+
 export class NumberInput implements DisabledInput{
   
   public text : string
