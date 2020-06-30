@@ -13,8 +13,10 @@ export class MultipleValueInputComponent implements OnInit {
 
   availableTypes : string[] = []
   selT : string
+  label : string
 
   ngOnInit() {
+    this.label = this.input.label
     this.availableTypes = this.input.values
     this.selT = this.input.value
   }
@@ -22,5 +24,6 @@ export class MultipleValueInputComponent implements OnInit {
   signalChanged(event) {
     this.input.value = this.selT
     this.changed.emit(this.selT)
+    console.log(this.selT)
   }
 }

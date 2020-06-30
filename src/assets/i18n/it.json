@@ -124,5 +124,10 @@
   "NestingRes" : "Pezzi risultanti dal nesting",
   "s_z": "Velocità (mm/sec)",
   "laser_speed": "Avanzamento (m/sec)",    
-  "laser_dist": "Distanza (mm)"    
+  "laser_dist": "Distanza (mm)",
+  "um": "Unità di misura",
+  "um_h": "Ore",
+  "um_w": "Kg",
+  "um_l": "Metri",
+  "um_p" : "Numero pezzi"
 }

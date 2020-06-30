@@ -51,9 +51,14 @@ export class WorkConstant {
   //{ [key: string]: boolean}
   public static ext_work = {
     quantity_id : 'qty',
+    um_id : 'um',
     unitary_price_id : 'unitaryPrice',
     charge_perc_id : 'PercRic',
-    tot_price_id : 'totPrice'
+    tot_price_id : 'totPrice',
+    um_p_id : 'um_p',
+    um_h_id : 'um_h',
+    um_w_id : 'um_w',
+    um_l_id : 'um_l',
   }
 
   public static work = {

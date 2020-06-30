@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import {WorkType, WorkConstant, ExternalWork} from '../domain/work'
-import {NumberInput, TextInput, DisabledInput, 
+import {NumberInput, TextInput, DisabledInput, MultipleValueInput,
         TreeWorkNode,  TreeWorkFlatNode, IWorkFactoryService} from '../domain/common'
 
 @Injectable()
@@ -24,6 +24,16 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
     result.isSingleNode = true
     result.canAddLevel = false
     return result
+  }
+
+  _createUmInput() {
+    var ums = [
+      WorkConstant.ext_work.um_p_id,
+      WorkConstant.ext_work.um_h_id,
+      WorkConstant.ext_work.um_w_id,
+      WorkConstant.ext_work.um_l_id,
+    ]
+    return new MultipleValueInput(WorkConstant.ext_work.um_id, ums[0], ums)
   }
 
   _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
