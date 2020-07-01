@@ -28,10 +28,10 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
 
   _createUmInput() {
     var ums = [
-      WorkConstant.ext_work.um_p_id,
-      WorkConstant.ext_work.um_h_id,
-      WorkConstant.ext_work.um_w_id,
-      WorkConstant.ext_work.um_l_id,
+      WorkConstant.ext_work.available_um.um_p_id,
+      WorkConstant.ext_work.available_um.um_h_id,
+      WorkConstant.ext_work.available_um.um_w_id,
+      WorkConstant.ext_work.available_um.um_l_id,
     ]
     return new MultipleValueInput(WorkConstant.ext_work.um_id, ums[0], ums)
   }
@@ -39,6 +39,7 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
   _createExternalWorkNode(wTypeString : string) : TreeWorkNode {
     const result = new TreeWorkNode(calculateExtWork)
     //servono per gli if di interfaccia
+    result.inputs.push(this._createUmInput())
     result.inputs.push(new NumberInput(WorkConstant.ext_work.quantity_id, 0))
     result.inputs.push(new NumberInput(WorkConstant.ext_work.unitary_price_id, 0))
     result.inputs.push(new NumberInput(WorkConstant.ext_work.charge_perc_id, 0))
@@ -58,9 +59,9 @@ export class ExternalWorkFactoryService implements IWorkFactoryService {
         //se non ci sono stage validi si comporta come una lavorazione esterna
         var totPriceOutput = treeWorkNode.outputs[0]
 
-        var quantita = result.inputs[0].value
-        var pUnitario = result.inputs[1].value
-        var ricarico = result.inputs[2].value
+        var quantita = result.inputs[1].value
+        var pUnitario = result.inputs[2].value
+        var ricarico = result.inputs[3].value
 
         totPriceOutput.text = ((quantita * pUnitario) * (100+ricarico)/100).toFixed(2)
     }

@@ -55,10 +55,12 @@ export class WorkConstant {
     unitary_price_id : 'unitaryPrice',
     charge_perc_id : 'PercRic',
     tot_price_id : 'totPrice',
-    um_p_id : 'um_p',
-    um_h_id : 'um_h',
-    um_w_id : 'um_w',
-    um_l_id : 'um_l',
+    available_um: {
+      um_p_id : 'um_p',
+      um_h_id : 'um_h',
+      um_w_id : 'um_w',
+      um_l_id : 'um_l',
+    }
   }
 
   public static work = {

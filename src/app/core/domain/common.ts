@@ -64,7 +64,7 @@ export class TreeWorkNode {
   public originalWorkName : string = ""
   public name : string = ""
   public editable : boolean
-  public inputs : NumberInput []= []
+  public inputs : DisabledInput []= []
   public outputs : DisabledInput[]= []
   public totTime : NumberInput = null
   public children : TreeWorkNode[]= []
