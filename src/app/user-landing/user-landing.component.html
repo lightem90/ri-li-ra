@@ -6,7 +6,9 @@
       [showPrices]="true">
     </app-material-list>
 
-    <p>{{'userwork' | translate}}  </p>  
+
+    <!-- Lavorazioni template al momento nascoste -->
+    <!-- <p>{{'userwork' | translate}}  </p>  
     <app-work-tree
       *ngIf="_userWorksLoaded"
       [userWorks]="userWorks"
@@ -26,7 +28,7 @@
       [workFactoryService]="_extWorkFactory"
       (saveRequest)="saveExtWorkForUser($event)"
       (deleteRequest)="removeExtWorkForUser($event)">
-    </app-work-tree>  
+    </app-work-tree>   -->
     
     <button mat-raised-button color="accent" (click)="logout()"> {{'logout' | translate}} </button>  
 </div>

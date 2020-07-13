@@ -73,13 +73,14 @@ export class AccountManagerService implements CanActivate {
   //lasciamo al chiamante il dovere di chiedere quelli di default o specifici per l'utente
   async getMaterials(getDefault : boolean = false){
     let userMaterials = await this._firbaseHelper.getMaterials(getDefault)
-    for(let mat of userMaterials) {
-      this.getAssetUrl(mat.img_url).subscribe(r => {
-          if (r && !mat.img_download_url) {                  
-            mat.img_download_url = r
-        }
-      })
-    }
+    //immagine disabilitata da specifica
+    // for(let mat of userMaterials) {
+    //   this.getAssetUrl(mat.img_url).subscribe(r => {
+    //       if (r && !mat.img_download_url) {                  
+    //         mat.img_download_url = r
+    //     }
+    //   })
+    // }
     this.userMaterial = userMaterials.slice()
     return this.userMaterial
   }

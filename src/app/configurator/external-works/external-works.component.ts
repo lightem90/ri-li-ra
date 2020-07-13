@@ -39,7 +39,7 @@ export class ExternalWorksComponent implements OnInit {
 
   userExtTypes = []
   userExtWorks = []
-  _userExtWorksLoaded : boolean = false
+  _userExtWorksLoaded : boolean = true
 
   tot_lav_ext : DisabledInput
 
@@ -52,13 +52,13 @@ export class ExternalWorksComponent implements OnInit {
       this.workSupTypes = Object.values(SuperficialWorkType).filter(x => typeof x === 'string')
       this.workExtTypes = Object.values(ExternalWorkType).filter(x => typeof x === 'string')
 
-      this._accountService
-        .fetchExternalUserWorks()
-        .then(r => {
-          this.userExtWorks = r
-          this.userExtTypes = r.map(w => w.name)
-          this._userExtWorksLoaded = true
-        })
+      // this._accountService
+      //   .fetchExternalUserWorks()
+      //   .then(r => {
+      //     this.userExtWorks = r
+      //     this.userExtTypes = r.map(w => w.name)
+      //     this._userExtWorksLoaded = true
+      //   })
     }
 
 

@@ -25,7 +25,7 @@ export class InternalWorksComponent implements OnInit {
 
     workTypes = []
     userWorks : Work[] = []
-    _userWorksLoaded : boolean = false;
+    _userWorksLoaded : boolean = true;
 
     constructor(
       private _accountService : AccountManagerService,
@@ -33,16 +33,16 @@ export class InternalWorksComponent implements OnInit {
       public _configuratorService : ConfiguratorService) {  
         
       this.workTypes = Object.values(WorkType).filter(x => typeof x === 'string')
-      this._accountService
-      .fetchInternalUserWorks()
-      .then(r => {
-        this.userWorks = r
-        this._userWorksLoaded = true
-      })
+      // this._accountService
+      // .fetchInternalUserWorks()
+      // .then(r => {
+      //   this.userWorks = r
+      //   this._userWorksLoaded = true
+      // })
 
-      this._accountService.worksChanged.subscribe(works => {
-        this.userWorks = works
-      })
+      // this._accountService.worksChanged.subscribe(works => {
+      //   this.userWorks = works
+      // })
     }
 
 
