@@ -27,13 +27,17 @@ export class FirebaseHelper
     let self = this
     // recommended way to get the current user
     auth.onAuthStateChanged(function(user) {
-      console.log("user changed " + user.email)
-      self._currentUser = user
-      self._authChangedSubject.next(user)
-      }      
-    )
+      if (user){
+        self._updateUser(user)
+      }
+    })
     // Firebase references that are listened to.
     this.firebaseRefs = [];
+  }
+
+  _updateUser(newUser : firebase.User) {
+      this._currentUser = newUser
+      this._authChangedSubject.next(newUser)
   }
 
   login(email: string, password: string) {
