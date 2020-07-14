@@ -42,7 +42,7 @@
           [required]="true" 
           type="text">
         </app-inline-edit>
-        <div fxLayout="row" >        
+        <div fxLayout="row" fxLayout.xs="column wrap">        
           <app-disabled-input 
             *ngFor="let out of node.outputs"
             [input]="out">

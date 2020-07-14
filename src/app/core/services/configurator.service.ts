@@ -19,6 +19,7 @@ export class ConfiguratorService implements CanActivate {
   calculatorService : BudgetCalculatorService
   currentSession : Budget = null
 
+  _lastSavedBudget = null;
   internalWorks : Work[] = []
   externalWorks : ExternalWork[] = []
 
@@ -180,12 +181,29 @@ export class ConfiguratorService implements CanActivate {
   }
 
   print() {
+    if (this._lastSavedBudget == null) {
+      this.save()
+    } 
+    //inizializza _lastSavedBudget
+    
+    this.router.navigate(['/budget', this._lastSavedBudget.uid]);
+    
   }
 
   save() {
-    this.firebaseHelper.addOrUpdateDataForUser(
-      this.currentSession.mapToDb(this.internalWorks, this.externalWorks),
+    let candidateToSave = this.currentSession.mapToDb(this.internalWorks, this.externalWorks)
+    if (this._lastSavedBudget != null) {
+      candidateToSave.uid = this._lastSavedBudget.uid
+    }
+
+    return this.firebaseHelper.addOrUpdateDataForUser(
+      candidateToSave,
       FirebaseConstant.relationTableNames.userBudget)
+        .then(result => {
+            console.log("Saved correctly: " + result)
+            this._lastSavedBudget = candidateToSave
+      }
+    )
   }
 
 
