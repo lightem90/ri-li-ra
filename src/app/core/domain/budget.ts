@@ -62,6 +62,7 @@ export class Budget {
     this.pdfSubject.next(pdfSrc)
   }
 
+  //todo: classe per visualizzare nella stampa
   public mapToDb(works: Work[], services: ExternalWork[]) {
     return {
       uid: this.uid,

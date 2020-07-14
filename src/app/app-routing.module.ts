@@ -17,6 +17,8 @@ import { canActivate } from '@angular/fire/auth-guard';
 import { AccountService } from './core/services/account.service';
 import { AccountManagerService } from './core/services/account-manager.service';
 
+import { BudgetPrintComponent } from './shared/budget-print/budget-print.component';
+
 const routes: Routes = [
   { path: 'login', 
     canActivate: [AccountService],
@@ -32,6 +34,7 @@ const routes: Routes = [
   { path: 'configurator', 
     canActivate: [ConfiguratorService],
     component: ConfiguratorComponent},
+  { path: 'budget/:id', component: BudgetPrintComponent },
   { path: '', component: HomeConfiguratorComponent},
   // { path: '**', redirectTo: '/not-found'}
   { path: '**', redirectTo: '/not-found'} // MUST BE LAST, IT IDENTIFIES ALL PATHS!

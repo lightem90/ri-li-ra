@@ -53,6 +53,7 @@ import { MaterialListComponent } from './shared/material-list/material-list.comp
 import { InlineEditComponent } from './shared/inline-edit/inline-edit.component';
 import { UserLandingComponent } from './user-landing/user-landing.component';
 import { MultipleValueInputComponent } from './shared/multiple-value-input/multiple-value-input.component';
+import { BudgetPrintComponent } from './shared/budget-print/budget-print.component';
 
 
 export function translateHttpLoaderFactory(http: HttpClient) {
@@ -107,7 +108,8 @@ export function translateHttpLoaderFactory(http: HttpClient) {
     SingleInputNodeComponent,
     MaterialListComponent,
     InlineEditComponent,
-    MultipleValueInputComponent],
+    MultipleValueInputComponent,
+    BudgetPrintComponent],
   bootstrap:    [ AppComponent ],
   providers: [
     FirebaseHelper, 
