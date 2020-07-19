@@ -21,6 +21,7 @@ export class MaterialPickerComponent implements OnInit {
 
   n_pieces : NumberInput
   client_name : TextInput
+  client_code : TextInput
   budget_date : DisabledInput
   
   constructor(
@@ -31,7 +32,8 @@ export class MaterialPickerComponent implements OnInit {
   ngOnInit() {
     this.budget_date = this._configuratorService.currentSession.budget_date 
     this.n_pieces = this._configuratorService.currentSession.n_pieces 
-    this.client_name = this._configuratorService.currentSession.client_name 
+    this.client_name = this._configuratorService.currentSession.client_name
+    this.client_code = this._configuratorService.currentSession.client_code     
   }
 
   updateMaterial(material: Material){   

@@ -284,7 +284,7 @@ export class FirebaseHelper
     dataToAdd: any, 
     dataTableName: string) {
 
-    console.log(dataToAdd.uid)
+    //console.log(dataToAdd.uid)
     if (!dataToAdd.uid || dataToAdd.uid === "") { //no uid = add
         
         var newDataKey = this.database.database
@@ -292,12 +292,13 @@ export class FirebaseHelper
         .child(dataTableName + '/' + this._currentUser.uid)
         .push()
         .key;
-
+      console.log("yes")
       dataToAdd.uid = newDataKey;
 
       return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
     } else { //yes uid = update
             
+      console.log("no")
       var updates = {};
       updates['/' + dataTableName + '/' + this._currentUser.uid + '/' + dataToAdd.uid] = dataToAdd;
       
