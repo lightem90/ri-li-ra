@@ -66,7 +66,7 @@ export class Budget {
   //todo: classe per visualizzare nella stampa
   public mapToDb(works: Work[], services: ExternalWork[]) {
     const nPieces = this.n_pieces.value
-
+    console.log(this.shapeInputs)
     return {
       uid: this.uid,
       client_name : this.client_name.value,
@@ -75,7 +75,10 @@ export class Budget {
       date : this.budget_date.text,
       material_name : this.material.name,
       shape : this.selectedShape,
-      shape_measures : this.shapeInputs.map(s => {name: s.label; value: s.value}),
+      shape_measures : this.shapeInputs.map(s => ({
+        name: s.label, 
+        value: s.value
+      })),
       weigth : this.totWeigth.value,
       material_price_piece : this.pieceUnitaryPrice.value,
       material_price : this.tot_material_price.value,

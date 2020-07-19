@@ -292,13 +292,11 @@ export class FirebaseHelper
         .child(dataTableName + '/' + this._currentUser.uid)
         .push()
         .key;
-      console.log("yes")
       dataToAdd.uid = newDataKey;
 
       return this._updateDataForUser(newDataKey, dataToAdd, dataTableName)
     } else { //yes uid = update
             
-      console.log("no")
       var updates = {};
       updates['/' + dataTableName + '/' + this._currentUser.uid + '/' + dataToAdd.uid] = dataToAdd;
       

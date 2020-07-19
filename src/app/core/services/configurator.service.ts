@@ -181,21 +181,25 @@ export class ConfiguratorService implements CanActivate {
   }
 
   print() {
-    if (this._lastSavedBudget == null) {
-      this.save()
-    } 
-    //inizializza _lastSavedBudget
-    
-    this.router.navigate(['/budget', this._lastSavedBudget.uid]);
-    
+    if (this._lastSavedBudget === null) {
+      //inizializza _lastSavedBudget
+      this.save().then(r => 
+        this.router.navigate(['/budget', this._lastSavedBudget.uid])
+      )
+    } else {
+      this.router.navigate(['/budget', this._lastSavedBudget.uid]);
+    }        
   }
 
   save() {
-    let candidateToSave = this.currentSession.mapToDb(this.internalWorks, this.externalWorks)
-    if (this._lastSavedBudget != null) {
+    let candidateToSave = this.currentSession.mapToDb(
+      this.internalWorks, 
+      this.externalWorks)
+      
+    if (this._lastSavedBudget) {
       candidateToSave.uid = this._lastSavedBudget.uid
     }
-
+    
     return this.firebaseHelper.addOrUpdateDataForUser(
       candidateToSave,
       FirebaseConstant.relationTableNames.userBudget)

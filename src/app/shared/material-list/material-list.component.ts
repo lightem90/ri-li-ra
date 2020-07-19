@@ -30,6 +30,7 @@ export class MaterialListComponent implements OnInit {
 
   ngOnInit() {    
     this.fetchMaterials()
+    this.udapteSelectedMaterial(this.materials[0])
   }
 
   setChanged() {
