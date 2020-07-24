@@ -5,7 +5,7 @@
   fxLayoutAlign="space-around start" 
   fxFill>
   <!-- Gli offset per iniziare a visualizzare sotto "sitename" -->
-  <div fxLayout="row" xLayoutAlign="start" fxLayout="row" fxFlexOffset="15"> 
+  <div id="show" fxLayout="row" xLayoutAlign="start" fxFlexOffset="35"> 
     <div fxFlex="50">
       <span> ----------------------------- </span>
       <!-- Contenitore di sinistra coi dati utente, lo span serve per applicare la size giusta -->
@@ -31,25 +31,31 @@
       </div>
     </div>
   </div>
-  <div id="show" fxLayout="row" xLayoutAlign="start" background="red">
-    <div fxFlex="20"> 
-      <span> ------------- LOTTO PEZZI --------------- </span>
-    </div>      
-    <div fxFill> </div>      
-    <div  fxFlex="20"> 
-      <span> DATA </span>
+  <div id="show2" fxLayout="row" xLayoutAlign="start"> 
+    <div fxLayout="column">
+      <div> 
+        <span> ------------- LOTTO PEZZI --------------- </span>
+      </div>      
+      <div > </div>      
+      <div> 
+        <span> 50</span>
+      </div>
     </div>
-  </div>
-  <div fxLayout="row" xLayoutAlign="start">
-    <div fxFlex="20"> 
-      <span> 50</span>
-    </div>      
-    <div fxFill> </div>   
-    <div fxFlex="20"> 
+    <div fxLayout="column" fxFill> </div>
+    <div fxLayout="column">
+      <div> 
+        <span> ------------- DATA --------------- </span>
+      </div>      
+      <div > </div>      
+      <div> 
       <span> 11/02/1998 </span>
+      </div>
     </div>
-  </div>
+  </div>   
+  
+  <div id="show" fxLayout="row" xLayoutAlign="start">  
     
+  </div>
 
     <div 
       fxLayout="row"
