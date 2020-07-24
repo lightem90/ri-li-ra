@@ -35,6 +35,7 @@ const routes: Routes = [
     canActivate: [ConfiguratorService],
     component: ConfiguratorComponent},
   { path: 'budget/:id', component: BudgetPrintComponent },
+  { path: 'budget', component: BudgetPrintComponent },
   { path: '', component: HomeConfiguratorComponent},
   // { path: '**', redirectTo: '/not-found'}
   { path: '**', redirectTo: '/not-found'} // MUST BE LAST, IT IDENTIFIES ALL PATHS!

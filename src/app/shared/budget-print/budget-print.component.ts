@@ -18,20 +18,20 @@ export class BudgetPrintComponent implements OnInit {
     private _activatedroute : ActivatedRoute,
     private _accountManager : AccountManagerService) {
 
-    this._activatedroute.paramMap.subscribe(params => { 
-      this._budgetId = params.get('id'); 
-    });        
+    // this._activatedroute.paramMap.subscribe(params => { 
+    //   this._budgetId = params.get('id'); 
+    // });        
    }
 
   async ngOnInit() {
-    console.log("requested budget id: " + this._budgetId)
-    const allSavedBudgets = await this._accountManager.fetchUserBudgets()
-    console.log(allSavedBudgets)
-    this._budget = allSavedBudgets.find(b => b.uid === this._budgetId)
-    if (this._budget){
-      this._loadingSuccessfull = true
-      console.log("budget to print found")
-      }  
+    // console.log("requested budget id: " + this._budgetId)
+    // const allSavedBudgets = await this._accountManager.fetchUserBudgets()
+    // console.log(allSavedBudgets)
+    // this._budget = allSavedBudgets.find(b => b.uid === this._budgetId)
+    // if (this._budget){
+    //   this._loadingSuccessfull = true
+    //   console.log("budget to print found")
+    //   }  
   }
 
 }
