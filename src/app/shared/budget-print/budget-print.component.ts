@@ -36,9 +36,12 @@ export class BudgetPrintComponent implements OnInit {
     //   this._loadingSuccessfull = true
     //   console.log("budget to print found")
     //   }  
+
+    //https://pdfmake.github.io/docs/getting-started/client-side/methods/
+    pdfMake.createPdf(this.budgetDefinition()).open();
   }
 
-  budgetDefinitio() {
+  budgetDefinition() {
     let docDefinition =  
     {
       content: [
