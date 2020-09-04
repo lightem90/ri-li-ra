@@ -44,20 +44,73 @@ export class BudgetPrintComponent implements OnInit {
   budgetDefinition() {
     let docDefinition =  
     {
-      content: [
-        {text: 'Tables', style: 'header'},
-        'Official documentation is in progress, this document is just a glimpse of what is possible with pdfmake and its layout engine.',
-        {text: 'A simple table (no headers, no width specified, no spans, no styling)', style: 'subheader'},
-        'The following table has nothing more than a body array',
+      content: [        
         {
           style: 'tableExample',
           table: {
+            widths: [200, '*', 200],
             body: [
-              ['Column 1', 'Column 2', 'Column 3'],
-              ['One value goes here', 'Another one here', 'OK?']
+              [{text: 'M.Conti', style: 'tableHeader', alignment: 'center'},
+               '', 
+               {text: 'Spettabile \n Cliente: ' + "client_name", style: 'tableHeader', alignment: 'center'}],
+              [{text: 'M.Conti s.r.l.\n via Brigata G.A.P. 17\n61122 Pesaro', style: 'tableHeader', alignment: 'left'}, 
+              '', 
+                {
+                  columns: [
+                  {
+                    type: 'none',
+                    ul: [
+                        'CODICE',
+                        'RIFERIMENTO',
+                    ]
+                  },
+                  {
+                    type: 'none',
+                    ul: [
+                        'T00R293934',
+                        'G.GABELLINI',
+                      ]
+                    }
+                  ]
+                }
+              ]
             ]
           }
-        }],
+        },
+        {
+            style: 'tableExample',
+            table: {
+              widths: [200, '*', 200],
+              body: [
+                [{text: 'N.Lotto pezzi', style: 'tableHeader', alignment: 'center'},
+                '',
+                {text: 'DATA', style: 'tableHeader', alignment: 'center'}],
+                [
+                  'TODO lotto pezzi',
+                  '',
+                  'TODO data'
+                ]
+              ]
+          }
+        },
+        {
+          style: 'tableExample',
+          table: {
+            widths: ['auto', 'auto', 'auto','auto'],
+            body: [
+              [{text: 'Tipo materiale', style: 'tableHeader', alignment: 'center'},
+                {text: 'Forma materiale', style: 'tableHeader', alignment: 'center'},
+                {text: 'Peso totale', style: 'tableHeader', alignment: 'center'},
+                {text: 'Dimensioni', style: 'tableHeader', alignment: 'center'}],
+                [{text: 'Tipo TODO', style: 'tableHeader', alignment: 'center'},
+                {text: 'Forma TODO', style: 'tableHeader', alignment: 'center'},
+                {text: 'Peso TODO', style: 'tableHeader', alignment: 'center'},
+                {text: 'Dimensioni TODO', style: 'tableHeader', alignment: 'center'}]
+            ]
+    
+        }
+        }]
+        ,
         styles: {
           header: {
             fontSize: 18,
@@ -84,5 +137,5 @@ export class BudgetPrintComponent implements OnInit {
      }
      return docDefinition
   }
-
+  
 }
