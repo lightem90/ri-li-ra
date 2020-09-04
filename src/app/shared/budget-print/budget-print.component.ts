@@ -6,6 +6,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import { ActivatedRoute } from '@angular/router';
 import { AccountManagerService } from '../../core/services/account-manager.service';
+import { SuperficialWorkType } from '../../core/domain/work';
 
 @Component({
   selector: 'app-budget-print',
@@ -22,39 +23,52 @@ export class BudgetPrintComponent implements OnInit {
     private _activatedroute : ActivatedRoute,
     private _accountManager : AccountManagerService) {
 
-    // this._activatedroute.paramMap.subscribe(params => { 
-    //   this._budgetId = params.get('id'); 
-    // });        
+     this._activatedroute.paramMap.subscribe(params => { 
+       this._budgetId = params.get('id'); 
+     });        
    }
 
   async ngOnInit() {
-    // console.log("requested budget id: " + this._budgetId)
-    // const allSavedBudgets = await this._accountManager.fetchUserBudgets()
-    // console.log(allSavedBudgets)
-    // this._budget = allSavedBudgets.find(b => b.uid === this._budgetId)
-    // if (this._budget){
-    //   this._loadingSuccessfull = true
-    //   console.log("budget to print found")
-    //   }  
+    console.log("requested budget id: " + this._budgetId)
+    const allSavedBudgets = await this._accountManager.fetchUserBudgets()
+    console.log(allSavedBudgets)
+    this._budget = allSavedBudgets.find(b => b.uid === this._budgetId)
+    if (this._budget){
+        this._loadingSuccessfull = true
+        console.log("budget to print found")
+        //https://pdfmake.github.io/docs/getting-started/client-side/methods/
+        pdfMake.createPdf(this.budgetDefinition()).open();
+    }  
 
-    //https://pdfmake.github.io/docs/getting-started/client-side/methods/
-    pdfMake.createPdf(this.budgetDefinition()).open();
   }
 
   budgetDefinition() {
     let works = []
-    works.push(['CENTRO DI COSTO', 'MINUTI AL PEZZO', 'MINUTI TOTALI', 'COSTO TOTALE (€)'])
 
-    //let min_per_piece = 1
-    //for (let w of this._budget.works) {
-    //  works.push([w.name, min_per_piece, w.tempo_totale, w.costo_totale])
-    //}
+    let p = this._budget.pieces
+    let tot_w_cost = 0
+    if (this._budget.works) {
+      works.push(['CENTRO DI COSTO', 'MINUTI AL PEZZO', 'MINUTI TOTALI', 'COSTO TOTALE (€)'])
+      for (let w of this._budget.works) {
+        works.push([w.name, w.tempo_totale / p, w.tempo_totale, w.costo_totale])
+        tot_w_cost += w.costo_totale
+      }
+    }
 
     let ext_services = []
-    ext_services.push(['SERVIZI ESTERNI','COSTO TOTALE'])
-    //for (let e of this._budget.services) {
-    //  ext_services.push([e.name, e.costo_totale])
-    //}
+    let tot_ext_cost = 0
+    let tot_t_cost = 0
+    if (this._budget.services) {
+      ext_services.push(['SERVIZI ESTERNI','COSTO TOTALE'])
+      for (let e of this._budget.services) {
+        ext_services.push([e.name, e.costo_totale])
+        tot_ext_cost += e.costo_totale
+        if (SuperficialWorkType[e.name] !== null)
+        {
+          tot_t_cost += e.costo_totale
+        }
+      }
+    }
 
     let docDefinition =  
     {
@@ -64,11 +78,12 @@ export class BudgetPrintComponent implements OnInit {
           //intestazione
           style: 'tableExample',
           table: {
+            border: [false, false, false],
             widths: [200, '*', 200],
             body: [
               [{text: 'M.Conti', style: 'tableHeader', alignment: 'center'},
                '', 
-               {text: 'Spettabile \n Cliente: ' + "client_name", style: 'tableHeader', alignment: 'center'}],
+               {text: 'Spettabile \n Cliente: ' + this._budget.client_name, style: 'tableHeader', alignment: 'center'}],
               [{text: 'M.Conti s.r.l.\n via Brigata G.A.P. 17\n61122 Pesaro', style: 'tableHeader', alignment: 'left'}, 
               '', 
                 {
@@ -83,8 +98,8 @@ export class BudgetPrintComponent implements OnInit {
                   {
                     type: 'none',
                     ul: [
-                        'T00R293934',
-                        'G.GABELLINI',
+                        this._budget.client_code,
+                        this._budget.client_name,
                       ]
                     }
                   ]
@@ -97,15 +112,16 @@ export class BudgetPrintComponent implements OnInit {
           //info
             style: 'tableExample',
             table: {
+            border: [false, false, false],
               widths: [200, '*', 200],
               body: [
                 [{text: 'N.Lotto pezzi', style: 'tableHeader', alignment: 'center'},
                 '',
                 {text: 'DATA', style: 'tableHeader', alignment: 'center'}],
                 [
-                  'TODO lotto pezzi',
+                  this._budget.pieces,
                   '',
-                  'TODO data'
+                  this._budget.date
                 ]
               ]
           }
@@ -114,16 +130,19 @@ export class BudgetPrintComponent implements OnInit {
           //pezzo e materiale
           style: 'tableExample',
           table: {
+            border: [false, false, false, false],
             widths: ['auto', 'auto', 'auto','auto'],
             body: [
               [{text: 'Tipo materiale', style: 'tableHeader', alignment: 'center'},
                 {text: 'Forma materiale', style: 'tableHeader', alignment: 'center'},
                 {text: 'Peso totale', style: 'tableHeader', alignment: 'center'},
                 {text: 'Dimensioni', style: 'tableHeader', alignment: 'center'}],
-                [{text: 'Tipo TODO', style: 'tableHeader', alignment: 'center'},
-                {text: 'Forma TODO', style: 'tableHeader', alignment: 'center'},
-                {text: 'Peso TODO', style: 'tableHeader', alignment: 'center'},
-                {text: 'Dimensioni TODO', style: 'tableHeader', alignment: 'center'}]
+                [{text: this._budget.material_name, style: 'tableHeader', alignment: 'center'},
+                {text: this._budget.shape, style: 'tableHeader', alignment: 'center'},
+                {text: this._budget.weigth, style: 'tableHeader', alignment: 'center'},
+                {text: this._budget.shape_measures
+                  .map(m => m.name)
+                  .join("x"), style: 'tableHeader', alignment: 'center'}]
             ]    
           }
         },
@@ -163,14 +182,14 @@ export class BudgetPrintComponent implements OnInit {
           {
             type: 'none',
             ul: [
-                'TODO',
-                'TODO',
-                'TODO',
-                'TODO',
+                this._budget.material_price_piece,
+                tot_w_cost / p,
+                tot_ext_cost / p,
+                tot_t_cost / p,
                 '',
-                'TODO',
+                this._budget.total_cost_piece,
                 '',
-                'TODO',
+                this._budget.client_price,
                 ''
             ]
           },
@@ -191,15 +210,15 @@ export class BudgetPrintComponent implements OnInit {
           {
             type: 'none',
             ul: [
-                'todo',
-                'todo',
-                'todo',
-                'todo',
+                this._budget.material_price,
+                tot_w_cost,
+                tot_ext_cost,
+                tot_t_cost,
                 '',
-                'todo',
+                this._budget.total_cost,
                 '',
-                'todo',
-                'todo'
+                this._budget.revenue,
+                this._budget.gain
             ]
           }
           ]}
