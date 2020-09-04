@@ -42,10 +42,26 @@ export class BudgetPrintComponent implements OnInit {
   }
 
   budgetDefinition() {
+    let works = []
+    works.push(['CENTRO DI COSTO', 'MINUTI AL PEZZO', 'MINUTI TOTALI', 'COSTO TOTALE (€)'])
+
+    //let min_per_piece = 1
+    //for (let w of this._budget.works) {
+    //  works.push([w.name, min_per_piece, w.tempo_totale, w.costo_totale])
+    //}
+
+    let ext_services = []
+    ext_services.push(['SERVIZI ESTERNI','COSTO TOTALE'])
+    //for (let e of this._budget.services) {
+    //  ext_services.push([e.name, e.costo_totale])
+    //}
+
     let docDefinition =  
     {
-      content: [        
+      content: 
+      [        
         {
+          //intestazione
           style: 'tableExample',
           table: {
             widths: [200, '*', 200],
@@ -78,6 +94,7 @@ export class BudgetPrintComponent implements OnInit {
           }
         },
         {
+          //info
             style: 'tableExample',
             table: {
               widths: [200, '*', 200],
@@ -94,6 +111,7 @@ export class BudgetPrintComponent implements OnInit {
           }
         },
         {
+          //pezzo e materiale
           style: 'tableExample',
           table: {
             widths: ['auto', 'auto', 'auto','auto'],
@@ -106,10 +124,86 @@ export class BudgetPrintComponent implements OnInit {
                 {text: 'Forma TODO', style: 'tableHeader', alignment: 'center'},
                 {text: 'Peso TODO', style: 'tableHeader', alignment: 'center'},
                 {text: 'Dimensioni TODO', style: 'tableHeader', alignment: 'center'}]
+            ]    
+          }
+        },
+        {
+          //lavorazioni
+          style: 'tableExample',
+          table: {
+            widths: ['auto', 'auto', 'auto', 'auto'],
+            body: works    
+          }
+        },
+        {
+          //servizi
+          style: 'tableExample',
+          table: {
+            widths: ['auto', 'auto'],
+            body: ext_services    
+          }
+        },
+        {
+          //riepilogo (no tab)
+          columns: 
+          [{
+            type: 'none',
+            ul: [
+                'COSTO MATERIA PRIMA AL PEZZO',
+                'COSTO LAVORAZIONI INTERNE AL PEZZO',
+                'COSTO TRATTAMENTI AL PEZZO',
+                'COSTO LAVORAZIONI ESTERNE AL PEZZO',
+                '',
+                'COSTO TOTALE AL PEZZO',
+                '',
+                'PREZZO AL CLIENTE',
+                ''
             ]
-    
-        }
-        }]
+          },
+          {
+            type: 'none',
+            ul: [
+                'TODO',
+                'TODO',
+                'TODO',
+                'TODO',
+                '',
+                'TODO',
+                '',
+                'TODO',
+                ''
+            ]
+          },
+          {
+            type: 'none',
+            ul: [
+                'COSTO MATERIA PRIMA LOTTO',
+                'COSTO LAVORAZIONI INTERNE LOTTO',
+                'COSTO TRATTAMENTI LOTTO',
+                'COSTO LAVORAZIONI ESTERNE LOTTO',
+                '',
+                'COSTO TOTALE LOTTO',
+                '',
+                'TOTALE FATTURATO',
+                'TOTALE GUADAGNO'
+            ]
+          },
+          {
+            type: 'none',
+            ul: [
+                'todo',
+                'todo',
+                'todo',
+                'todo',
+                '',
+                'todo',
+                '',
+                'todo',
+                'todo'
+            ]
+          }
+          ]}
+      ]
         ,
         styles: {
           header: {
