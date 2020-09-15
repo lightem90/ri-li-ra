@@ -43,19 +43,19 @@ export class BudgetPrintComponent implements OnInit {
   }
 
   budgetDefinition() {
-    let works = []
 
+    let works = [[]]
     let p = this._budget.pieces
     let tot_w_cost = 0
     if (this._budget.works) {
       works.push(['CENTRO DI COSTO', 'MINUTI AL PEZZO', 'MINUTI TOTALI', 'COSTO TOTALE (€)'])
       for (let w of this._budget.works) {
-        works.push([w.name, w.tempo_totale / p, w.tempo_totale, w.costo_totale])
+        works.push([w.name, (w.tempo_totale / p).toFixed(2), w.tempo_totale, w.costo_totale])
         tot_w_cost += w.costo_totale
       }
     }
 
-    let ext_services = []
+    let ext_services = [[]]
     let tot_ext_cost = 0
     let tot_t_cost = 0
     if (this._budget.services) {
@@ -69,6 +69,10 @@ export class BudgetPrintComponent implements OnInit {
         }
       }
     }
+
+    const shape_measures = this._budget.shape_measures
+                  .map(m => m.name)
+                  .join("x")
 
     let docDefinition =  
     {
@@ -131,7 +135,7 @@ export class BudgetPrintComponent implements OnInit {
           style: 'tableExample',
           table: {
             border: [false, false, false, false],
-            widths: ['auto', 'auto', 'auto','auto'],
+            widths: ['auto', 'auto', 'auto', 'auto'],
             body: [
               [{text: 'Tipo materiale', style: 'tableHeader', alignment: 'center'},
                 {text: 'Forma materiale', style: 'tableHeader', alignment: 'center'},
@@ -140,12 +144,10 @@ export class BudgetPrintComponent implements OnInit {
                 [{text: this._budget.material_name, style: 'tableHeader', alignment: 'center'},
                 {text: this._budget.shape, style: 'tableHeader', alignment: 'center'},
                 {text: this._budget.weigth, style: 'tableHeader', alignment: 'center'},
-                {text: this._budget.shape_measures
-                  .map(m => m.name)
-                  .join("x"), style: 'tableHeader', alignment: 'center'}]
-            ]    
+                {text: shape_measures, style: 'tableHeader', alignment: 'center'}]
+            ]
           }
-        },
+        },        
         {
           //lavorazioni
           style: 'tableExample',
